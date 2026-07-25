@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Guide</title>
+<style>
+  :root {
+    /* --- iOS Light Mode Variables --- */
+    --text-main: #000000;
+    --text-muted: #8e8e93;
+    
+    /* Apple Core Colors */
+    --accent: #007aff; 
+    --danger: #ff3b30;
+    
+    /* True iOS Glass */
+    --glass-bg: rgba(255, 255, 255, 0.65);
+    --glass-border: rgba(255, 255, 255, 0.4);
+    --glass-shadow: 0 10px 40px rgba(0, 0, 0, 0.1); 
+    
+    /* iOS standard translucent fill for inputs/pills */
+    --fill-color: rgba(118, 118, 128, 0.12); 
+    --fill-color-hover: rgba(118, 118, 128, 0.2); 
+    
+    /* Segmented Control (Tabs) */
+    --tab-bg: rgba(118, 118, 128, 0.12);
+    --tab-active-bg: #ffffff;
+    --tab-active-shadow: 0 3px 8px rgba(0,0,0,0.12), 0 3px 1px rgba(0,0,0,0.04);
+    --tab-text: #000000;
+
+    /* Light Image Background */
+    --bg-color: #f2f2f7;
+    --bg-image: url('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+
+    --radius-sm: 10px;
+    --radius-md: 14px;
+    --radius-lg: 24px;
+  }
+
+  body.dark-mode {
+    /* --- iOS Dark Mode Variables --- */
+    --text-main: #ffffff;
+    --text-muted: #ebebf5;
+    
+    /* Apple Core Colors (Dark mode variants) */
+    --accent: #0a84ff; 
+    --danger: #ff453a;
+    
+    /* True iOS Dark Glass */
+    --glass-bg: rgba(30, 30, 30, 0.65);
+    --glass-border: rgba(255, 255, 255, 0.15);
+    --glass-shadow: 0 10px 50px rgba(0, 0, 0, 0.6);
+    
+    --fill-color: rgba(118, 118, 128, 0.24); 
+    --fill-color-hover: rgba(118, 118, 128, 0.35); 
+
+    /* Segmented Control (Tabs) */
+    --tab-bg: rgba(118, 118, 128, 0.24);
+    --tab-active-bg: #636366;
+    --tab-active-shadow: 0 3px 8px rgba(0,0,0,0.3), 0 3px 1px rgba(0,0,0,0.15);
+    --tab-text: #ffffff;
+
+    /* Dark Image Background */
+    --bg-color: #000000;
+    --bg-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+  }
+  
+  * { 
+    box-sizing: border-box; 
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    /* Native Apple Fonts */
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    background-image: var(--bg-image);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: var(--text-main);
+    display: flex;
+    justify-content: center;
+    align-items: stretch; 
+    min-height: 100vh;
+    padding: clamp(20px, 4vw, 40px) 16px; 
+    transition: background-image 0.5s ease, background-color 0.5s ease, color 0.3s ease;
+  }
+
+  /* --- Theme Toggle Button --- */
+  .theme-toggle {
+    position: fixed;
+    top: clamp(10px, 3vw, 20px);
+    right: clamp(10px, 3vw, 24px);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--glass-bg);
+    border: 0.5px solid var(--glass-border);
+    /* Heavy iOS Blur & Saturation */
+    backdrop-filter: blur(25px) saturate(200%);
+    -webkit-backdrop-filter: blur(25px) saturate(200%);
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: var(--glass-shadow);
+    transition: all 0.3s ease;
+    z-index: 1000;
+  }
+
+  .theme-toggle:hover {
+    transform: scale(1.05);
+    background: var(--fill-color);
+  }
+
+  /* --- Main Card (iOS Glass) --- */
+  .card {
+    width: 100%;
+    max-width: 460px; 
+    display: flex;
+    flex-direction: column; 
+    background: var(--glass-bg);
+    
+    /* Heavy iOS Blur & Saturation */
+    backdrop-filter: blur(25px) saturate(200%);
+    -webkit-backdrop-filter: blur(25px) saturate(200%);
+    
+    border: 0.5px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--glass-shadow);
+    position: relative;
+    max-height: 900px; 
+    transition: all 0.3s ease;
+  }
+
+  /* --- iOS Segmented Control (Tabs) --- */
+  .tabs-wrapper {
+    padding: 16px 16px 0 16px;
+    flex-shrink: 0;
+  }
+
+  .tabs {
+    display: flex;
+    background: var(--tab-bg);
+    padding: 3px;
+    border-radius: 9px;
+    gap: 2px;
+  }
+
+  .tab-btn {
+    flex: 1;
+    padding: 6px 12px;
+    text-align: center;
+    background: transparent;
+    border: none;
+    font-size: 13px; 
+    font-weight: 600;
+    color: var(--text-main);
+    cursor: pointer;
+    border-radius: 7px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .tab-btn.active {
+    background: var(--tab-active-bg);
+    color: var(--tab-text);
+    box-shadow: var(--tab-active-shadow);
+    font-weight: 600;
+  }
+
+  /* --- Tab Content --- */
+  .tab-content { 
+    display: none; 
+    flex: 1; 
+    flex-direction: column;
+    padding: 24px 20px; 
+    animation: fadeScale 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .tab-content.active { display: flex; }
+
+  @keyframes fadeScale {
+    from { opacity: 0; transform: scale(0.98); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .tab-header {
+    display: flex;
+    flex-shrink: 0;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .tab-header h2 {
+    font-size: 22px; 
+    margin: 0;
+    color: var(--text-main);
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+
+  /* --- Clear Button --- */
+  .clear-btn {
+    padding: 8px 18px; 
+    border-radius: var(--radius-sm);
+    border: none;
+    background: var(--fill-color);
+    color: var(--danger);
+    font-size: 14px; 
+    font-weight: 600;
+    letter-spacing: -0.2px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .clear-btn:hover {
+    background: var(--danger);
+    color: #fff;
+  }
+
+  label {
+    display: block;
+    font-size: 12px; 
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+    margin-left: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .field { 
+    margin-bottom: 16px; 
+    flex-shrink: 0; 
+  }
+  
+  .row {
+    display: flex;
+    flex-shrink: 0;
+    gap: 12px;
+    align-items: flex-start;
+    margin-bottom: 16px;
+  }
+
+  .row .field { margin-bottom: 0; flex: 1; }
+  .row .side-field { flex: 0 0 110px; } 
+
+  /* --- iOS Inputs --- */
+  input[type="text"],
+  input[type="number"],
+  input[type="date"],
+  select,
+  textarea {
+    width: 100%;
+    padding: 12px 14px; 
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 15px;
+    font-weight: 400;
+    background: var(--fill-color);
+    color: var(--text-main);
+    font-family: inherit;
+    transition: all 0.2s ease;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    background: var(--fill-color-hover);
+    box-shadow: 0 0 0 2px var(--accent);
+  }
+
+  input[readonly] {
+    opacity: 0.7;
+    font-weight: 600;
+  }
+
+  input.invalid {
+    box-shadow: 0 0 0 2px var(--danger) !important;
+    animation: shake 0.4s ease-in-out;
+  }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    75% { transform: translateX(4px); }
+  }
+
+  /* --- Expanding Textarea Logic --- */
+  .expand-field {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0; 
+    min-height: 0; 
+  }
+
+  textarea {
+    font-size: 13px; 
+    line-height: 1.5;
+    resize: none; 
+  }
+
+  .expand-field textarea {
+    flex: 1; 
+  }
+
+  /* --- Pills --- */
+  .pills {
+    display: flex;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    gap: 8px; 
+    margin: 10px 0 16px;
+    padding: 16px 0 0;
+    border-top: 0.5px solid var(--glass-border);
+  }
+
+  .pill {
+    padding: 6px 14px;
+    border-radius: 16px;
+    border: none;
+    background: var(--fill-color);
+    color: var(--text-main);
+    font-size: 12.5px; 
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .pill:hover { 
+    background: var(--fill-color-hover);
+  }
+
+  .pill.selected {
+    background: var(--accent);
+    color: #fff;
+    box-shadow: none; 
+  }
+
+  .pill.selected[data-name="Delay03"] {
+    background: var(--danger);
+  }
+
+  /* --- LRP & Email Buttons --- */
+  .lrp-row {
+    display: flex;
+    flex-shrink: 0;
+    gap: 12px;
+    padding: 0 0 20px;
+    border-bottom: 0.5px solid var(--glass-border);
+    margin-bottom: 20px;
+  }
+
+  .lrp-btn {
+    flex: 1;
+    padding: 8px; 
+    border-radius: var(--radius-sm);
+    border: none;
+    background: rgba(0, 122, 255, 0.15); 
+    color: var(--accent);
+    font-size: 12.5px; 
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  body.dark-mode .lrp-btn {
+    background: rgba(10, 132, 255, 0.2);
+  }
+
+  .lrp-btn:hover {
+    background: var(--accent);
+    color: #fff;
+  }
+
+  .payment-btn {
+    background: var(--accent);
+    color: #fff;
+  }
+  .payment-btn:hover { 
+    opacity: 0.85;
+  }
+  .payment-btn#recBtn {
+    background: var(--fill-color);
+    color: var(--text-main);
+  }
+  .payment-btn#recBtn:hover {
+    background: var(--fill-color-hover);
+  }
+
+  /* --- iOS Style Toast Notification --- */
+  .toast {
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px) scale(0.9);
+    background: rgba(30, 30, 30, 0.75);
+    backdrop-filter: blur(20px) saturate(200%);
+    -webkit-backdrop-filter: blur(20px) saturate(200%);
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 999px;
+    font-size: 14px; 
+    font-weight: 600;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 100;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  body.dark-mode .toast {
+    background: rgba(220, 220, 220, 0.85);
+    color: #000;
+  }
+
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+
+  /* --- Responsive Layout for Mobile --- */
+  @media (max-width: 480px) {
+    .row {
+      flex-direction: column;
+      gap: 12px;
+    }
+    .row .side-field {
+      flex: 1 1 100%;
+      width: 100%;
+    }
+    .tab-content {
+      padding: 20px 16px;
+    }
+    .tab-btn {
+      font-size: 11.5px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<button class="theme-toggle" id="themeToggle" aria-label="Toggle Dark Mode">
+  <!-- Sun Icon (Default) -->
+  <svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+  </svg>
+</button>
+
+<div class="card">
+  <!-- iOS Segmented Control Tab Wrapper -->
+  <div class="tabs-wrapper">
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="call">Call</button>
+      <button class="tab-btn" data-tab="payment">Paid</button>
+      <button class="tab-btn" data-tab="th">T&amp;H</button>
+    </div>
+  </div>
+
+  <!-- CALL TAB -->
+  <div class="tab-content active" id="call">
+    <div class="tab-header">
+      <h2>My Notes</h2>
+      <button class="clear-btn" id="clearBtn">Clear</button>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label for="totalBalance">Total Balance ($)</label>
+        <input type="text" id="totalBalance" placeholder="0.00" inputmode="decimal">
+      </div>
+      <div class="side-field">
+        <label for="months">Term (Mo)</label>
+        <select id="months">
+          <option value="">--</option>
+          <option>1</option><option>2</option><option>3</option><option>4</option>
+          <option>5</option><option>6</option><option>7</option><option>8</option>
+          <option>9</option><option>10</option><option>11</option><option>12</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label for="monthly">Monthly Due</label>
+        <input type="text" id="monthly" placeholder="0.00" readonly>
+      </div>
+      <div class="side-field">
+        <label for="startDate">Start Date</label>
+        <input type="date" id="startDate">
+      </div>
+    </div>
+
+    <div class="pills" id="pillGroup">
+      <button class="pill" data-name="VM">Voicemail</button>
+      <button class="pill" data-name="No VM">No VM</button>
+      <button class="pill" data-name="Agreed">Confirm</button>
+      <button class="pill" data-name="Delay03">Del 3</button>
+      <button class="pill" data-name="Nil">Nil</button>
+      <button class="pill" data-name="Propose">Propose</button>
+    </div>
+
+    <div class="lrp-row">
+      <button class="lrp-btn" id="lrpBtn">LRP</button>
+      <button class="lrp-btn" id="emailBtn">Email</button>
+    </div>
+
+    <!-- Expanding Field ensures textarea fills bottom space -->
+    <div class="field expand-field">
+      <label for="notes">Notes</label>
+      <textarea id="notes" placeholder="..."></textarea>
+    </div>
+  </div>
+
+  <!-- PAYMENT TAB -->
+  <div class="tab-content" id="payment">
+    <div class="tab-header">
+      <h2>PD</h2>
+      <button class="clear-btn" id="clearPaymentBtn">Clear</button>
+    </div>
+
+    <div class="field">
+      <label for="paymentNotes">Notes</label>
+      <textarea id="paymentNotes" style="min-height: 120px;" placeholder="..."></textarea>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label for="upField">UP</label>
+        <input type="text" id="upField" placeholder="...">
+      </div>
+      <div class="field">
+        <label for="pidField">PID Code</label>
+        <input type="text" id="pidField" placeholder="Code">
+      </div>
+    </div>
+
+    <div class="pills" id="paymentBtnGroup" style="border-top:none; padding-top:0;">
+      <button class="pill payment-btn" id="normBtn" data-name="NORM">Copy Normal</button>
+      <button class="pill payment-btn" id="recBtn" data-name="REC">Copy Rec</button>
+    </div>
+  </div>
+
+  <!-- T&H TAB -->
+  <div class="tab-content" id="th">
+    <div class="tab-header">
+      <h2>T&amp;H</h2>
+      <button class="clear-btn" id="clearThBtn">Clear</button>
+    </div>
+    
+    <div class="field expand-field">
+      <label for="thNotes">Notes</label>
+      <textarea id="thNotes" placeholder="..."></textarea>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+  <span id="toastMsg"></span>
+</div>
+
+<script>
+  // ---------- Dark Mode Toggle ----------
+  const themeToggle = document.getElementById('themeToggle');
+  const themeIcon = document.getElementById('themeIcon');
+  
+  themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    
+    if (document.body.classList.contains('dark-mode')) {
+      themeIcon.innerHTML = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
+    } else {
+      themeIcon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+    }
+  });
+
+  // ---------- Tab switching ----------
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const tabContents = document.querySelectorAll('.tab-content');
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabBtns.forEach(b => b.classList.remove('active'));
+      tabContents.forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  // ---------- Field refs ----------
+  const totalBalanceEl = document.getElementById('totalBalance');
+  const monthsEl = document.getElementById('months');
+  const monthlyEl = document.getElementById('monthly');
+  const startDateEl = document.getElementById('startDate');
+  const notesEl = document.getElementById('notes');
+  const toastEl = document.getElementById('toast');
+  const toastMsg = document.getElementById('toastMsg');
+  const paymentNotesEl = document.getElementById('paymentNotes');
+  const upFieldEl = document.getElementById('upField');
+  const pidFieldEl = document.getElementById('pidField');
+  const thNotesEl = document.getElementById('thNotes');
+
+  // ---------- Start Date: always defaults to 10 days from today ----------
+  function formatDateInput(d) {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${y}-${m}-${day}`;
+  }
+  function getDatePlus10() {
+    const d = new Date();
+    d.setDate(d.getDate() + 10);
+    return d;
+  }
+  function resetStartDate() {
+    const plus10 = formatDateInput(getDatePlus10());
+    startDateEl.value = plus10;
+    startDateEl.min = plus10;
+  }
+  resetStartDate();
+
+  // ---------- Auto compute Monthly = Total Balance / Months ----------
+  function computeMonthly() {
+    const total = parseFloat(totalBalanceEl.value);
+    const months = parseInt(monthsEl.value, 10);
+    if (!isNaN(total) && !isNaN(months) && months > 0) {
+      monthlyEl.value = (total / months).toFixed(2);
+    } else {
+      monthlyEl.value = '';
+    }
+  }
+  totalBalanceEl.addEventListener('input', () => {
+    const original = totalBalanceEl.value;
+    const cleaned = original.replace(/[^0-9.]/g, '');
+    if (cleaned !== original) {
+      totalBalanceEl.value = cleaned;
+      totalBalanceEl.classList.remove('invalid');
+      void totalBalanceEl.offsetWidth;
+      totalBalanceEl.classList.add('invalid');
+      clearTimeout(totalBalanceEl._invalidTimer);
+      totalBalanceEl._invalidTimer = setTimeout(() => {
+        totalBalanceEl.classList.remove('invalid');
+      }, 700);
+    }
+    computeMonthly();
+  });
+  monthsEl.addEventListener('change', computeMonthly);
+
+  // ---------- Toast ----------
+  let toastTimer;
+  function showToast(msg) {
+    clearTimeout(toastTimer);
+    toastMsg.textContent = msg;
+    toastEl.classList.add('show');
+    toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2000);
+  }
+
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(() => {
+      showToast('Copied to clipboard');
+    }).catch(() => {
+      showToast('Could not copy — copy manually');
+    });
+  }
+
+  // ---------- Formatted values for messages ----------
+  function getMonthsVal() { return monthsEl.value || '[months]'; }
+  function getAmountVal() { return monthlyEl.value || '[amount]'; }
+  function getDateVal() {
+    if (!startDateEl.value) return '[start date]';
+    const d = new Date(startDateEl.value + 'T00:00:00');
+    return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  }
+
+  const TRAILING_SENTENCE = 'Please change to analyst repay once confirmation/payment has been received.';
+
+  const pillMessages = {
+    'VM': () => `Unable to reach the agent. Left VM instead. Sent a payment plan proposal email for ${getMonthsVal()} months, amounting to $${getAmountVal()}, and starting on ${getDateVal()}. ${TRAILING_SENTENCE}`,
+    'No VM': () => `Unable to reach the agent. Sent a payment plan proposal email for ${getMonthsVal()} months, amounting to $${getAmountVal()}, and starting on ${getDateVal()}. ${TRAILING_SENTENCE}`,
+    'Agreed': () => `Reached an agreement of a repayment plan for ${getMonthsVal()} months, amounting to $${getAmountVal()}, and starting on ${getDateVal()}. Sent confirmation email.`,
+    'Nil': () => `Repayment plan no longer needed for Outstanding balance is NIL.`,
+    'Delay03': () => `Still unable to reach agent after Del3. Changed work item status to CALLCLOSED. sent email follow-up to confirm repay plan for ${getMonthsVal()} months, amounting to $${getAmountVal()}, and starting on ${getDateVal()}. ${TRAILING_SENTENCE}`,
+    'Propose': () => `Sent a payment plan proposal email for ${getMonthsVal()} months, amounting to $${getAmountVal()}, and starting on ${getDateVal()}. ${TRAILING_SENTENCE}`
+  };
+
+  // ---------- Pills: single-select, click copies message ----------
+  let selectedPill = null;
+  const pillEls = document.querySelectorAll('.pill');
+  pillEls.forEach(pill => {
+    if(!pill.classList.contains('payment-btn')) {
+      pill.addEventListener('click', () => {
+        const name = pill.dataset.name;
+        pillEls.forEach(p => p.classList.remove('selected'));
+        pill.classList.add('selected');
+        selectedPill = name;
+        const message = pillMessages[name]();
+        copyText(message);
+      });
+    }
+  });
+
+  // ---------- LRP button ----------
+  document.getElementById('lrpBtn').addEventListener('click', () => {
+    if (!selectedPill) {
+      showToast('Select a pill first');
+      return;
+    }
+    let message = pillMessages[selectedPill]();
+    message = message.replace(' ' + TRAILING_SENTENCE, '').replace(TRAILING_SENTENCE, '').trim();
+    copyText(message);
+  });
+
+  // ---------- Email button ----------
+  document.getElementById('emailBtn').addEventListener('click', () => {
+    const bal = totalBalanceEl.value ? '$' + totalBalanceEl.value : '[balance]';
+    const amount = monthlyEl.value ? '$' + monthlyEl.value : '[amount]';
+    const date = getDateVal();
+    
+    const appendText = `Outstanding balance: ${bal}\nMonthly Payment: ${amount}\nStart Date: ${date}`;
+    
+    if (notesEl.value.trim() !== '') {
+      notesEl.value = notesEl.value.trim() + '\n\n' + appendText;
+    } else {
+      notesEl.value = appendText;
+    }
+    
+    showToast('Appended to Notes');
+    notesEl.scrollTop = notesEl.scrollHeight;
+  });
+
+  // ---------- Clear button (Call Tab) ----------
+  document.getElementById('clearBtn').addEventListener('click', () => {
+    totalBalanceEl.value = '';
+    totalBalanceEl.classList.remove('invalid');
+    monthsEl.value = '';
+    monthlyEl.value = '';
+    resetStartDate();
+    notesEl.value = '';
+    pillEls.forEach(p => p.classList.remove('selected'));
+    selectedPill = null;
+    showToast('Data Cleared');
+  });
+
+  // ---------- Payment tab: NORM / REC ----------
+  let lastKnownAmount = '';
+  let lastKnownCode = '';
+
+  function getPaymentAmount() {
+    const match = paymentNotesEl.value.match(/Amount\s*\$\s*([\d][\d,]*(?:\.\d{1,2})?)/i);
+    if (match) lastKnownAmount = match[1];
+    return lastKnownAmount || '[amount]';
+  }
+  function getApprovalCode() {
+    const match = paymentNotesEl.value.match(/Approval code\D{0,15}(\d{5})/i);
+    if (match) lastKnownCode = match[1];
+    return lastKnownCode || '[approval code]';
+  }
+  function getTodayMD() {
+    const d = new Date();
+    return `${d.getMonth() + 1}/${d.getDate()}`;
+  }
+
+  document.getElementById('normBtn').addEventListener('click', () => {
+    const message = `AWD took c card pmt $${getPaymentAmount()} auth ${getApprovalCode()} added ${getTodayMD()} MWF`;
+    copyText(message);
+  });
+
+  document.getElementById('recBtn').addEventListener('click', () => {
+    const up = upFieldEl.value || '[Up]';
+    const pid = pidFieldEl.value || '[PID]';
+    const message = `AWD took c card pmt $${getPaymentAmount()} auth ${getApprovalCode()} added ${getTodayMD()} MWF CC recouped to ${up} ${pid}`;
+    copyText(message);
+  });
+
+  // ---------- Clear button (Payment Tab) ----------
+  document.getElementById('clearPaymentBtn').addEventListener('click', () => {
+    paymentNotesEl.value = '';
+    upFieldEl.value = '';
+    pidFieldEl.value = '';
+    lastKnownAmount = '';
+    lastKnownCode = '';
+    showToast('Data Cleared');
+  });
+
+  // ---------- Clear button (T&H Tab) ----------
+  document.getElementById('clearThBtn').addEventListener('click', () => {
+    thNotesEl.value = '';
+    showToast('Data Cleared');
+  });
+</script>
+
+</body>
+</html>
