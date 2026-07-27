@@ -761,11 +761,13 @@
 
   function getPaymentAmount() {
     const match = paymentNotesEl.value.match(/Amount\s*\$\s*([\d][\d,]*(?:\.\d{1,2})?)/i);
-    if (match) lastKnownAmount = match[1];
+    // Strips commas out of the matched amount so $1,000.00 becomes $1000.00
+    if (match) lastKnownAmount = match[1].replace(/,/g, ''); 
     return lastKnownAmount || '[amount]';
   }
   function getApprovalCode() {
-    const match = paymentNotesEl.value.match(/Approval code\D{0,15}(\d{5})/i);
+    // Looks for exactly 6 digits instead of 5
+    const match = paymentNotesEl.value.match(/Approval code\D{0,15}(\d{6})/i);
     if (match) lastKnownCode = match[1];
     return lastKnownCode || '[approval code]';
   }
@@ -784,6 +786,16 @@
     const pid = pidFieldEl.value || '[PID]';
     const message = `AWD took c card pmt $${getPaymentAmount()} auth ${getApprovalCode()} added ${getTodayMD()} MWF CC recouped to ${up} ${pid}`;
     copyText(message);
+  });
+
+  // Auto-strip commas physically from the text area when users paste values in the Paid tab notes
+  paymentNotesEl.addEventListener('input', () => {
+      const original = paymentNotesEl.value;
+      // Replaces occurrences of commas specifically trapped inside dollar amounts
+      const cleaned = original.replace(/(Amount\s*\$\s*\d+),(\d{3}(?:\.\d{1,2})?)/gi, '$1$2');
+      if (original !== cleaned) {
+          paymentNotesEl.value = cleaned;
+      }
   });
 
   // ---------- Clear button (Payment Tab) ----------
