@@ -545,7 +545,7 @@
       </div>
       <div class="field">
         <label for="pidField">PID Code</label>
-        <input type="text" id="pidField" placeholder="Code">
+        <input type="text" id="pidField" placeholder="Code" inputmode="numeric">
       </div>
     </div>
 
@@ -613,6 +613,26 @@
   const upFieldEl = document.getElementById('upField');
   const pidFieldEl = document.getElementById('pidField');
   const thNotesEl = document.getElementById('thNotes');
+
+  // Ensure PID Field only accepts numbers AND shakes red when letters are typed/pasted
+  pidFieldEl.addEventListener('input', () => {
+    const original = pidFieldEl.value;
+    const cleaned = original.replace(/\D/g, ''); // Remove non-numeric characters
+    
+    if (cleaned !== original) {
+      pidFieldEl.value = cleaned;
+      
+      // Trigger the shake animation
+      pidFieldEl.classList.remove('invalid');
+      void pidFieldEl.offsetWidth; // Force a reflow
+      pidFieldEl.classList.add('invalid');
+      
+      clearTimeout(pidFieldEl._invalidTimer);
+      pidFieldEl._invalidTimer = setTimeout(() => {
+        pidFieldEl.classList.remove('invalid');
+      }, 700);
+    }
+  });
 
   // ---------- Start Date: always defaults to 10 days from today ----------
   function formatDateInput(d) {
@@ -803,6 +823,10 @@
     paymentNotesEl.value = '';
     upFieldEl.value = '';
     pidFieldEl.value = '';
+    
+    // reset animation classes if present
+    pidFieldEl.classList.remove('invalid');
+    
     lastKnownAmount = '';
     lastKnownCode = '';
     showToast('Data Cleared');
