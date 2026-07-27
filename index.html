@@ -785,10 +785,10 @@
     if (match) lastKnownAmount = match[1].replace(/,/g, ''); 
     return lastKnownAmount || '[amount]';
   }
-  function getApprovalCode() {
-    // Looks for exactly 6 digits instead of 5
-    const match = paymentNotesEl.value.match(/Approval code\D{0,15}(\d{6})/i);
-    if (match) lastKnownCode = match[1];
+ function getApprovalCode() {
+    // Looks for exactly 6 alphanumeric characters (letters and/or numbers)
+    const match = paymentNotesEl.value.match(/Approval code[^a-zA-Z0-9]{0,15}([a-zA-Z0-9]{6})/i);
+    if (match) lastKnownCode = match[1].toUpperCase(); // Optional: .toUpperCase() standardizes it
     return lastKnownCode || '[approval code]';
   }
   function getTodayMD() {
