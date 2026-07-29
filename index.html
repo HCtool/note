@@ -654,11 +654,16 @@
   resetStartDate();
 
   // ---------- Auto compute Monthly = Total Balance / Months ----------
-  function computeMonthly() {
+ function computeMonthly() {
     const total = parseFloat(totalBalanceEl.value);
     const months = parseInt(monthsEl.value, 10);
     if (!isNaN(total) && !isNaN(months) && months > 0) {
-      monthlyEl.value = (total / months).toFixed(2);
+      const rawMonthly = total / months;
+      
+      // Safely round UP to the nearest cent (2 decimal places)
+      const roundedMonthly = Number(Math.ceil(rawMonthly + 'e2') + 'e-2');
+      
+      monthlyEl.value = roundedMonthly.toFixed(2);
     } else {
       monthlyEl.value = '';
     }
