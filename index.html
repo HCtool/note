@@ -314,6 +314,8 @@
     font-size: 13px; 
     line-height: 1.5;
     resize: none; 
+    /* Prevent textareas from forcing uppercase */
+    text-transform: none;
   }
 
   .expand-field textarea {
@@ -624,9 +626,10 @@
 
 <script>
   // ---------- Auto-Uppercase Force Listener ----------
-  // This physically alters the backend value of the text boxes/text areas to uppercase as you type or paste
+  // This physically alters the backend value of the text boxes to uppercase as you type or paste
   document.addEventListener('input', (e) => {
-    if ((e.target.tagName === 'INPUT' && e.target.type === 'text') || e.target.tagName === 'TEXTAREA') {
+    // Removed TEXTAREA from this condition so it only forces caps on standard input text fields
+    if ((e.target.tagName === 'INPUT' && e.target.type === 'text')) {
       const start = e.target.selectionStart;
       const end = e.target.selectionEnd;
       const upper = e.target.value.toUpperCase();
@@ -783,15 +786,16 @@
     return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
   }
 
-  const TRAILING_SENTENCE = 'PLEASE CHANGE TO ANALYST REPAY ONCE CONFIRMATION/PAYMENT HAS BEEN RECEIVED.';
+  const TRAILING_SENTENCE = 'Please change to analyst repay once confirmation/payment has been received.';
 
+  // Modified to sentence case format: only first letters capitalized
   const pillMessages = {
-    'VM': () => `UNABLE TO REACH THE AGENT. LEFT VM INSTEAD. SENT A PAYMENT PLAN PROPOSAL EMAIL FOR ${getMonthsVal()} MONTHS, AMOUNTING TO $${getAmountVal()}, AND STARTING ON ${getDateVal().toUpperCase()}. ${TRAILING_SENTENCE}`,
-    'No VM': () => `UNABLE TO REACH THE AGENT. SENT A PAYMENT PLAN PROPOSAL EMAIL FOR ${getMonthsVal()} MONTHS, AMOUNTING TO $${getAmountVal()}, AND STARTING ON ${getDateVal().toUpperCase()}. ${TRAILING_SENTENCE}`,
-    'Agreed': () => `REACHED AN AGREEMENT OF A REPAYMENT PLAN FOR ${getMonthsVal()} MONTHS, AMOUNTING TO $${getAmountVal()}, AND STARTING ON ${getDateVal().toUpperCase()}. SENT CONFIRMATION EMAIL.`,
-    'Nil': () => `REPAYMENT PLAN NO LONGER NEEDED FOR OUTSTANDING BALANCE IS NIL.`,
-    'Delay03': () => `STILL UNABLE TO REACH AGENT AFTER DEL3. CHANGED WORK ITEM STATUS TO CALLCLOSED. SENT EMAIL FOLLOW-UP TO CONFIRM REPAY PLAN FOR ${getMonthsVal()} MONTHS, AMOUNTING TO $${getAmountVal()}, AND STARTING ON ${getDateVal().toUpperCase()}. ${TRAILING_SENTENCE}`,
-    'Propose': () => `SENT A PAYMENT PLAN PROPOSAL EMAIL FOR ${getMonthsVal()} MONTHS, AMOUNTING TO $${getAmountVal()}, AND STARTING ON ${getDateVal().toUpperCase()}. ${TRAILING_SENTENCE}`
+    'VM': () => `Unable to reach the agent. Left VM instead. Sent a payment plan proposal email for ${getMonthsVal()} months, amounting to $${getAmountVal()}, and starting on ${getDateVal()}. ${TRAILING_SENTENCE}`,
+    'No VM': () => `Unable to reach the agent. Sent a payment plan proposal email for ${getMonthsVal()} months, amounting to $${getAmountVal()}, and starting on ${getDateVal()}. ${TRAILING_SENTENCE}`,
+    'Agreed': () => `Reached an agreement of a repayment plan for ${getMonthsVal()} months, amounting to $${getAmountVal()}, and starting on ${getDateVal()}. Sent confirmation email.`,
+    'Nil': () => `Repayment plan no longer needed for outstanding balance is nil.`,
+    'Delay03': () => `Still unable to reach agent after DEL3. Changed work item status to CALLCLOSED. Sent email follow-up to confirm repay plan for ${getMonthsVal()} months, amounting to $${getAmountVal()}, and starting on ${getDateVal()}. ${TRAILING_SENTENCE}`,
+    'Propose': () => `Sent a payment plan proposal email for ${getMonthsVal()} months, amounting to $${getAmountVal()}, and starting on ${getDateVal()}. ${TRAILING_SENTENCE}`
   };
 
   // ---------- Pills: single-select, click copies message ----------
@@ -825,9 +829,10 @@
   document.getElementById('emailBtn').addEventListener('click', () => {
     const bal = totalBalanceEl.value ? '$' + totalBalanceEl.value : '[balance]';
     const amount = monthlyEl.value ? '$' + monthlyEl.value : '[amount]';
-    const date = getDateVal().toUpperCase();
+    // Kept standard casing here as well to match the new sentence structure preference
+    const date = getDateVal();
     
-    const appendText = `OUTSTANDING BALANCE: ${bal}\nMONTHLY PAYMENT: ${amount}\nSTART DATE: ${date}`;
+    const appendText = `Outstanding balance: ${bal}\nMonthly payment: ${amount}\nStart date: ${date}`;
     
     if (notesEl.value.trim() !== '') {
       notesEl.value = notesEl.value.trim() + '\n\n' + appendText;
@@ -944,7 +949,17 @@
   // Click Save to Tracker
   document.getElementById('savePaymentTrackerBtn').addEventListener('click', () => {
     saveToPaymentTracker();
-    showToast('Saved to Tracker!');
+    
+    // CLEAR REQUESTED FIELDS AFTER SAVE
+    fromFieldEl.value = '';
+    agentFieldEl.value = '';
+    codeFieldEl.value = '';
+    pidFieldEl.value = '';
+    
+    // Remove the 9-digit SSN directly from the notes textbox while preserving everything else
+    paymentNotesEl.value = paymentNotesEl.value.replace(/\b\d{9}\b/g, '').trim();
+
+    showToast('Saved to Tracker & Fields Cleared!');
   });
 
   // Download Payment Excel
