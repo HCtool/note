@@ -871,6 +871,12 @@
       }
       return '[PHONE]';
   }
+
+  // Extracts the Email address out of the Notes textbox, stripping the leading/trailing hyphens and spaces
+  function getEmailVal() {
+      const match = notesEl.value.match(/Email:[\s-]*([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/i);
+      return match ? match[1] : '';
+  }
   
   function getDateVal() {
     if (!startDateEl.value) return '[start date]';
@@ -972,8 +978,10 @@
 
     const emailSubject = encodeURIComponent(`Repayment Plan for ${aName} ${aCode}`);
     const emailBody = encodeURIComponent(templateText);
+    const recipientEmail = getEmailVal(); // Extracts clean email if it exists
     
-    window.location.href = `mailto:?subject=${emailSubject}&body=${emailBody}`;
+    // Injects the extracted email into the mailto link's 'to' section
+    window.location.href = `mailto:${recipientEmail}?subject=${emailSubject}&body=${emailBody}`;
     
     showToast('Opening Outlook...');
   });
