@@ -75,7 +75,6 @@
   }
 
   body {
-    /* Native Apple Fonts */
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     background-color: var(--bg-color);
     background-image: var(--bg-image);
@@ -101,7 +100,6 @@
     border-radius: 50%;
     background: var(--glass-bg);
     border: 0.5px solid var(--glass-border);
-    /* Heavy iOS Blur & Saturation */
     backdrop-filter: blur(25px) saturate(200%);
     -webkit-backdrop-filter: blur(25px) saturate(200%);
     color: var(--text-main);
@@ -126,11 +124,8 @@
     display: flex;
     flex-direction: column; 
     background: var(--glass-bg);
-    
-    /* Heavy iOS Blur & Saturation */
     backdrop-filter: blur(25px) saturate(200%);
     -webkit-backdrop-filter: blur(25px) saturate(200%);
-    
     border: 0.5px solid var(--glass-border);
     border-radius: var(--radius-lg);
     overflow: hidden;
@@ -156,11 +151,11 @@
 
   .tab-btn {
     flex: 1;
-    padding: 6px 12px;
+    padding: 6px 8px; 
     text-align: center;
     background: transparent;
     border: none;
-    font-size: 13px; 
+    font-size: 12.5px; 
     font-weight: 600;
     color: var(--text-main);
     cursor: pointer;
@@ -259,6 +254,7 @@
 
   /* --- iOS Inputs --- */
   input[type="text"],
+  input[type="tel"],
   input[type="number"],
   input[type="date"],
   select,
@@ -267,13 +263,11 @@
     padding: 12px 14px; 
     border: none;
     border-radius: var(--radius-sm);
-    /* Changed to 13px to match Notes textarea uniformly */
     font-size: 13px; 
     font-weight: 400;
     background: var(--fill-color);
     color: var(--text-main);
     font-family: inherit;
-    /* Added to visually force uppercase immediately */
     text-transform: uppercase;
     transition: all 0.2s ease;
   }
@@ -310,12 +304,10 @@
   }
 
   textarea {
-    /* 13px standard size */
     font-size: 13px; 
     line-height: 1.5;
     resize: none; 
-    /* Prevent textareas from forcing uppercase */
-    text-transform: none;
+    text-transform: none; 
   }
 
   .expand-field textarea {
@@ -399,7 +391,6 @@
     opacity: 0.85;
   }
   
-  /* Gradient Pink Rec Button */
   .payment-btn#recBtn {
     background: linear-gradient(135deg, #ff7eb3, #ff4d79);
     color: #fff;
@@ -444,7 +435,6 @@
     transform: translateX(-50%) translateY(0) scale(1);
   }
 
-  /* --- Responsive Layout for Mobile --- */
   @media (max-width: 480px) {
     .row {
       flex-direction: column;
@@ -461,12 +451,18 @@
       font-size: 11.5px;
     }
   }
+  
+  .helper-text {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      line-height: 1.4;
+  }
 </style>
 </head>
 <body>
 
 <button class="theme-toggle" id="themeToggle" aria-label="Toggle Dark Mode">
-  <!-- Sun Icon (Default) -->
   <svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
   </svg>
@@ -479,6 +475,8 @@
       <button class="tab-btn active" data-tab="call">Call</button>
       <button class="tab-btn" data-tab="payment">Paid</button>
       <button class="tab-btn" data-tab="th">T&amp;H</button>
+      <button class="tab-btn" data-tab="emailTemplateTab">Template</button>
+      <button class="tab-btn" data-tab="statementsTab">Stmts</button>
     </div>
   </div>
 
@@ -521,16 +519,27 @@
       <button class="pill" data-name="No VM">No VM</button>
       <button class="pill" data-name="Agreed">Confirm</button>
       <button class="pill" data-name="Delay03">Del 3</button>
-      <button class="pill" data-name="Nil">Nil</button>
+      <!-- Merged Decline/Nil -->
+      <button class="pill" data-name="Nil">Decline (Nil)</button>
       <button class="pill" data-name="Propose">Propose</button>
     </div>
 
-    <div class="lrp-row">
+    <div class="lrp-row" style="margin-bottom: 12px; padding-bottom: 16px;">
       <button class="lrp-btn" id="lrpBtn">LRP</button>
       <button class="lrp-btn" id="emailBtn">Email</button>
     </div>
+    
+    <div class="row">
+      <div class="field">
+        <label for="callAgentName">Agent Name</label>
+        <input type="text" id="callAgentName" placeholder="Name">
+      </div>
+      <div class="field">
+        <label for="callAgentCode">Code</label>
+        <input type="text" id="callAgentCode" placeholder="Code">
+      </div>
+    </div>
 
-    <!-- Expanding Field ensures textarea fills bottom space -->
     <div class="field expand-field">
       <label for="notes">Notes</label>
       <textarea id="notes" placeholder="..."></textarea>
@@ -540,7 +549,6 @@
   <!-- PAYMENT TAB -->
   <div class="tab-content" id="payment">
     <div class="tab-header">
-      <!-- Initials input retains custom 14px size distinctly -->
       <div style="display: flex; align-items: center; gap: 12px;">
         <h2>PD</h2>
         <input type="text" id="pdInitials" maxlength="5" placeholder="Initials" style="width: 80px; padding: 6px; font-size: 14px; text-transform: uppercase;">
@@ -548,13 +556,11 @@
       <button class="clear-btn" id="clearPaymentBtn">Clear</button>
     </div>
 
-    <!-- Added expand-field here and inline margin to separate from the fields below -->
     <div class="field expand-field" style="margin-bottom: 16px;">
       <label for="paymentNotes">Notes</label>
       <textarea id="paymentNotes" placeholder="..."></textarea>
     </div>
 
-    <!-- Added From, Agent, and Code inputs (Swapped per user request) -->
     <div class="row">
       <div class="field">
         <label for="fromField">From</label>
@@ -572,18 +578,15 @@
 
     <div class="row">
       <div class="field">
-        <!-- Clarified label to indicate it's for Name -->
         <label for="upField">UP (Name)</label>
         <input type="text" id="upField" placeholder="...">
       </div>
       <div class="field">
-        <!-- Clarified label to indicate 10 digits -->
         <label for="pidField">PID Code (10-Digit Primary ID)</label>
         <input type="text" id="pidField" placeholder="Code" inputmode="numeric">
       </div>
     </div>
     
-    <!-- Added Calendar Selection below PID Code -->
     <div class="row">
       <div class="field">
         <label for="paymentDateBtn">Payment Date</label>
@@ -594,11 +597,9 @@
     <div class="pills" id="paymentBtnGroup" style="border-top:none; padding-top:0;">
       <button class="pill payment-btn" id="normBtn" data-name="NORM">Copy Normal</button>
       <button class="pill payment-btn" id="recBtn" data-name="REC">Copy Rec</button>
-      <!-- New Dedicated Save to Tracker Button -->
       <button class="pill payment-btn" id="savePaymentTrackerBtn" style="background: linear-gradient(135deg, #34c759, #28a745); color: #fff; border: none; margin-left: auto;">Save to Tracker</button>
     </div>
     
-    <!-- Excel & Reset Actions for Paid Tab -->
     <div class="row" style="margin-top: 10px; margin-bottom: 0px; border-top: 0.5px solid var(--glass-border); padding-top: 16px;">
       <button class="pill payment-btn" id="downloadPaymentExcelBtn" style="flex: 1; text-align: center;">📊 Download Excel</button>
       <button class="clear-btn" id="resetPaymentTrackerBtn" style="background: var(--danger); color: white; padding: 6px 12px; font-size: 13px;">Reset Data</button>
@@ -617,6 +618,49 @@
       <textarea id="thNotes" placeholder="..."></textarea>
     </div>
   </div>
+
+  <!-- EMAIL TEMPLATE TAB -->
+  <div class="tab-content" id="emailTemplateTab">
+    <div class="tab-header">
+      <h2>Email Setup</h2>
+      <button class="clear-btn" id="resetTemplateBtn">Reset</button>
+    </div>
+    
+    <div class="helper-text">
+      Select a scenario below to edit its specific email format. It saves automatically.<br><br>
+      <strong>Available Tags:</strong><br>
+      <code>[NAME]</code> <code>[CODE]</code> <code>[PHONE]</code> <code>[BALANCE]</code><br>
+      <code>[AMOUNT]</code> <code>[MONTHS]</code> <code>[DATE]</code> <code>[DAY]</code> <code>[PILL]</code> <code>[INITIAL]</code>
+    </div>
+    
+    <!-- Template Scenario Selector -->
+    <div class="field">
+      <label for="templateSelector">Select Scenario to Edit</label>
+      <select id="templateSelector">
+        <option value="VM">Voicemail</option>
+        <option value="No VM">No Voicemail</option>
+        <option value="Agreed">Confirm</option>
+        <option value="Nil">Decline (Nil)</option>
+        <option value="Propose">Propose</option>
+        <option value="Delay03">Delay 3</option>
+      </select>
+    </div>
+    
+    <div class="field expand-field">
+      <label for="savedEmailTemplate">Format</label>
+      <textarea id="savedEmailTemplate" placeholder="..."></textarea>
+    </div>
+  </div>
+
+  <!-- STATEMENTS TAB -->
+  <div class="tab-content" id="statementsTab">
+    <div class="tab-header">
+      <h2>Statements</h2>
+    </div>
+    <div style="text-align: center; padding: 60px 20px; color: var(--text-muted); font-weight: 600; font-size: 15px;">
+      Statements tab is currently being updated.
+    </div>
+  </div>
 </div>
 
 <div class="toast" id="toast">
@@ -626,30 +670,29 @@
 
 <script>
   // ---------- Auto-Uppercase Force Listener ----------
-  // This physically alters the backend value of the text boxes to uppercase as you type or paste
   document.addEventListener('input', (e) => {
-    // Removed TEXTAREA from this condition so it only forces caps on standard input text fields
     if ((e.target.tagName === 'INPUT' && e.target.type === 'text')) {
       const start = e.target.selectionStart;
       const end = e.target.selectionEnd;
       const upper = e.target.value.toUpperCase();
       if (e.target.value !== upper) {
         e.target.value = upper;
-        try {
-          // Attempt to keep the user's cursor exactly where it was before the capitalization replacement
-          e.target.setSelectionRange(start, end);
-        } catch(err) {}
+        try { e.target.setSelectionRange(start, end); } catch(err) {}
       }
     }
+  });
+
+  // ---------- Perfect Copy Selection ----------
+  document.querySelectorAll('input[type="text"], input[type="tel"], input[type="number"]').forEach(input => {
+    input.addEventListener('focus', function() { this.select(); });
+    input.addEventListener('click', function() { this.select(); });
   });
 
   // ---------- Dark Mode Toggle ----------
   const themeToggle = document.getElementById('themeToggle');
   const themeIcon = document.getElementById('themeIcon');
-  
   themeToggle.addEventListener('click', () => {
     document.body.classList.toggle('dark-mode');
-    
     if (document.body.classList.contains('dark-mode')) {
       themeIcon.innerHTML = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
     } else {
@@ -674,6 +717,8 @@
   const monthsEl = document.getElementById('months');
   const monthlyEl = document.getElementById('monthly');
   const startDateEl = document.getElementById('startDate');
+  const callAgentNameEl = document.getElementById('callAgentName');
+  const callAgentCodeEl = document.getElementById('callAgentCode');
   const notesEl = document.getElementById('notes');
   const toastEl = document.getElementById('toast');
   const toastMsg = document.getElementById('toastMsg');
@@ -681,6 +726,10 @@
   const upFieldEl = document.getElementById('upField');
   const pidFieldEl = document.getElementById('pidField');
   const thNotesEl = document.getElementById('thNotes');
+  
+  // Template specific
+  const templateSelector = document.getElementById('templateSelector');
+  const savedEmailTemplateEl = document.getElementById('savedEmailTemplate');
   
   // Paid Tab specific fields
   const fromFieldEl = document.getElementById('fromField');
@@ -692,16 +741,12 @@
   // Ensure PID Field only accepts numbers AND shakes red when letters are typed/pasted
   pidFieldEl.addEventListener('input', () => {
     const original = pidFieldEl.value;
-    const cleaned = original.replace(/\D/g, ''); // Remove non-numeric characters
-    
+    const cleaned = original.replace(/\D/g, ''); 
     if (cleaned !== original) {
       pidFieldEl.value = cleaned;
-      
-      // Trigger the shake animation
       pidFieldEl.classList.remove('invalid');
-      void pidFieldEl.offsetWidth; // Force a reflow
+      void pidFieldEl.offsetWidth; 
       pidFieldEl.classList.add('invalid');
-      
       clearTimeout(pidFieldEl._invalidTimer);
       pidFieldEl._invalidTimer = setTimeout(() => {
         pidFieldEl.classList.remove('invalid');
@@ -709,7 +754,46 @@
     }
   });
 
-  // ---------- Start Date: always defaults to 10 days from today ----------
+  // ---------- Multi-Template Logic ----------
+  const baseDetails = "Agent Name: [NAME]\nCode: [CODE]\nPhone: [PHONE]\nDebt Amount: [BALANCE]\nMonthly Due: [AMOUNT]\nTerm: [MONTHS] Months\nStart Date: [DATE]\nStart Day: [DAY]";
+  
+  const DEFAULT_TEMPLATES = {
+      'VM': `Hello,\n\n[PILL]\n\nDetails of the proposed plan:\n${baseDetails}\n\nThank you,\n[INITIAL]`,
+      'No VM': `Hello,\n\n[PILL]\n\nDetails of the proposed plan:\n${baseDetails}\n\nThank you,\n[INITIAL]`,
+      'Agreed': `Hello,\n\n[PILL]\n\nDetails of your confirmed plan:\n${baseDetails}\n\nThank you,\n[INITIAL]`,
+      'Nil': `Hello,\n\n[PILL]\n\nAgent Name: [NAME]\nCode: [CODE]\nPhone: [PHONE]\n\nWe noted your decision regarding the proposed repayment plan.\n\nThank you,\n[INITIAL]`,
+      'Propose': `Hello,\n\n[PILL]\n\nWe would like to propose the following plan:\n${baseDetails}\n\nThank you,\n[INITIAL]`,
+      'Delay03': `Hello,\n\n[PILL]\n\nDetails of the plan:\n${baseDetails}\n\nThank you,\n[INITIAL]`
+  };
+
+  function loadTemplateForScenario(pillName) {
+      const saved = localStorage.getItem('emailTemplate_' + pillName);
+      savedEmailTemplateEl.value = saved || DEFAULT_TEMPLATES[pillName] || DEFAULT_TEMPLATES['VM'];
+  }
+
+  templateSelector.addEventListener('change', (e) => {
+      loadTemplateForScenario(e.target.value);
+  });
+
+  savedEmailTemplateEl.addEventListener('input', () => {
+      const currentScenario = templateSelector.value;
+      localStorage.setItem('emailTemplate_' + currentScenario, savedEmailTemplateEl.value);
+  });
+
+  document.getElementById('resetTemplateBtn').addEventListener('click', () => {
+      const currentScenario = templateSelector.value;
+      const scenarioText = templateSelector.options[templateSelector.selectedIndex].text;
+      
+      if (confirm(`Are you sure you want to reset the [${scenarioText}] template to its default layout?`)) {
+          savedEmailTemplateEl.value = DEFAULT_TEMPLATES[currentScenario];
+          localStorage.removeItem('emailTemplate_' + currentScenario);
+          showToast('Template Reset!');
+      }
+  });
+
+  loadTemplateForScenario(templateSelector.value);
+
+  // ---------- Start Date defaults ----------
   function formatDateInput(d) {
     const y = d.getFullYear();
     const m = String(d.getMonth() + 1).padStart(2, '0');
@@ -728,16 +812,13 @@
   }
   resetStartDate();
 
-  // ---------- Auto compute Monthly = Total Balance / Months ----------
+  // ---------- Auto compute Monthly ----------
   function computeMonthly() {
     const total = parseFloat(totalBalanceEl.value);
     const months = parseInt(monthsEl.value, 10);
     if (!isNaN(total) && !isNaN(months) && months > 0) {
       const rawMonthly = total / months;
-      
-      // Safely round UP to the nearest cent (2 decimal places)
       const roundedMonthly = Number(Math.ceil(rawMonthly + 'e2') + 'e-2');
-      
       monthlyEl.value = roundedMonthly.toFixed(2);
     } else {
       monthlyEl.value = '';
@@ -779,26 +860,52 @@
 
   // ---------- Formatted values for messages ----------
   function getMonthsVal() { return monthsEl.value || '[months]'; }
-  function getAmountVal() { return monthlyEl.value || '[amount]'; }
+  function getAmountVal() { return monthlyEl.value ? '$' + monthlyEl.value : '[amount]'; }
+  function getBalanceVal() { return totalBalanceEl.value ? '$' + totalBalanceEl.value : '[balance]'; }
+  
+  // Extracts a 10-digit number out of the Notes textbox automatically
+  function getPhoneVal() {
+      const match = notesEl.value.match(/\b(\d{3})[-.\s]?(\d{3})[-.\s]?(\d{4})\b/);
+      if (match) {
+          return `${match[1]}-${match[2]}-${match[3]}`;
+      }
+      return '[PHONE]';
+  }
+  
   function getDateVal() {
     if (!startDateEl.value) return '[start date]';
     const d = new Date(startDateEl.value + 'T00:00:00');
     return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
   }
 
+  function getOrdinalDayVal() {
+    const dStr = startDateEl.value;
+    if (!dStr) return '[day]';
+    const parts = dStr.split('-');
+    if (parts.length < 3) return '[day]';
+    
+    const day = parseInt(parts[2], 10);
+    if (isNaN(day)) return '[day]';
+    
+    const j = day % 10, k = day % 100;
+    if (j == 1 && k != 11) { return day + "st"; }
+    if (j == 2 && k != 12) { return day + "nd"; }
+    if (j == 3 && k != 13) { return day + "rd"; }
+    return day + "th";
+  }
+
   const TRAILING_SENTENCE = 'Please change to analyst repay once confirmation/payment has been received.';
 
-  // Modified to sentence case format: only first letters capitalized
   const pillMessages = {
-    'VM': () => `Unable to reach the agent. Left VM instead. Sent a payment plan proposal email for ${getMonthsVal()} months, amounting to $${getAmountVal()}, and starting on ${getDateVal()}. ${TRAILING_SENTENCE}`,
-    'No VM': () => `Unable to reach the agent. Sent a payment plan proposal email for ${getMonthsVal()} months, amounting to $${getAmountVal()}, and starting on ${getDateVal()}. ${TRAILING_SENTENCE}`,
-    'Agreed': () => `Reached an agreement of a repayment plan for ${getMonthsVal()} months, amounting to $${getAmountVal()}, and starting on ${getDateVal()}. Sent confirmation email.`,
+    'VM': () => `Unable to reach the agent. Left VM instead. Sent a payment plan proposal email for ${getMonthsVal()} months, amounting to ${getAmountVal()}, and starting on ${getDateVal()}. ${TRAILING_SENTENCE}`,
+    'No VM': () => `Unable to reach the agent. Sent a payment plan proposal email for ${getMonthsVal()} months, amounting to ${getAmountVal()}, and starting on ${getDateVal()}. ${TRAILING_SENTENCE}`,
+    'Agreed': () => `Reached an agreement of a repayment plan for ${getMonthsVal()} months, amounting to ${getAmountVal()}, and starting on ${getDateVal()}. Sent confirmation email.`,
     'Nil': () => `Repayment plan no longer needed for outstanding balance is nil.`,
-    'Delay03': () => `Still unable to reach agent after DEL3. Changed work item status to CALLCLOSED. Sent email follow-up to confirm repay plan for ${getMonthsVal()} months, amounting to $${getAmountVal()}, and starting on ${getDateVal()}. ${TRAILING_SENTENCE}`,
-    'Propose': () => `Sent a payment plan proposal email for ${getMonthsVal()} months, amounting to $${getAmountVal()}, and starting on ${getDateVal()}. ${TRAILING_SENTENCE}`
+    'Delay03': () => `Still unable to reach agent after DEL3. Changed work item status to CALLCLOSED. Sent email follow-up to confirm repay plan for ${getMonthsVal()} months, amounting to ${getAmountVal()}, and starting on ${getDateVal()}. ${TRAILING_SENTENCE}`,
+    'Propose': () => `Sent a payment plan proposal email for ${getMonthsVal()} months, amounting to ${getAmountVal()}, and starting on ${getDateVal()}. ${TRAILING_SENTENCE}`
   };
 
-  // ---------- Pills: single-select, click copies message ----------
+  // ---------- Pills ----------
   let selectedPill = null;
   const pillEls = document.querySelectorAll('.pill');
   pillEls.forEach(pill => {
@@ -825,23 +932,50 @@
     copyText(message);
   });
 
-  // ---------- Email button ----------
+  // ---------- Outlook Autofill Email Button ----------
   document.getElementById('emailBtn').addEventListener('click', () => {
-    const bal = totalBalanceEl.value ? '$' + totalBalanceEl.value : '[balance]';
-    const amount = monthlyEl.value ? '$' + monthlyEl.value : '[amount]';
-    // Kept standard casing here as well to match the new sentence structure preference
-    const date = getDateVal();
-    
-    const appendText = `Outstanding balance: ${bal}\nMonthly payment: ${amount}\nStart date: ${date}`;
-    
-    if (notesEl.value.trim() !== '') {
-      notesEl.value = notesEl.value.trim() + '\n\n' + appendText;
-    } else {
-      notesEl.value = appendText;
+    if (!selectedPill) {
+        showToast('Highlight a pill first!');
+        return;
     }
+
+    let templateText = localStorage.getItem('emailTemplate_' + selectedPill) || DEFAULT_TEMPLATES[selectedPill] || DEFAULT_TEMPLATES['VM'];
+
+    const aName = callAgentNameEl.value || '[Agent Name]';
+    const aCode = callAgentCodeEl.value || '[Code]';
+    const aPhone = getPhoneVal();
+    const bal = getBalanceVal();
+    const amount = getAmountVal();
+    const date = getDateVal();
+    const dayStr = getOrdinalDayVal();
+    const months = getMonthsVal();
+    const initials = pdInitialsEl.value.trim().toUpperCase() || '[INITIAL]';
     
-    showToast('Appended to Notes');
-    notesEl.scrollTop = notesEl.scrollHeight;
+    let pillMsg = pillMessages[selectedPill]();
+    pillMsg = pillMsg.replace(' ' + TRAILING_SENTENCE, '').replace(TRAILING_SENTENCE, '').trim();
+
+    // Override the [PILL] tag logic for Decline (Nil) to show the decline text in the email
+    if (selectedPill === 'Nil') {
+        pillMsg = `Agent declined the proposed repayment plan for ${months} months, amounting to ${amount}.`;
+    }
+
+    templateText = templateText.replace(/\[NAME\]/gi, aName);
+    templateText = templateText.replace(/\[CODE\]/gi, aCode);
+    templateText = templateText.replace(/\[PHONE\]/gi, aPhone);
+    templateText = templateText.replace(/\[BALANCE\]/gi, bal);
+    templateText = templateText.replace(/\[AMOUNT\]/gi, amount);
+    templateText = templateText.replace(/\[DATE\]/gi, date);
+    templateText = templateText.replace(/\[DAY\]/gi, dayStr);
+    templateText = templateText.replace(/\[MONTHS\]/gi, months);
+    templateText = templateText.replace(/\[PILL\]/gi, pillMsg);
+    templateText = templateText.replace(/\[INITIAL\]/gi, initials);
+
+    const emailSubject = encodeURIComponent(`Repayment Plan for ${aName} ${aCode}`);
+    const emailBody = encodeURIComponent(templateText);
+    
+    window.location.href = `mailto:?subject=${emailSubject}&body=${emailBody}`;
+    
+    showToast('Opening Outlook...');
   });
 
   // ---------- Clear button (Call Tab) ----------
@@ -851,6 +985,8 @@
     monthsEl.value = '';
     monthlyEl.value = '';
     resetStartDate();
+    callAgentNameEl.value = '';
+    callAgentCodeEl.value = '';
     notesEl.value = '';
     pillEls.forEach(p => p.classList.remove('selected'));
     selectedPill = null;
@@ -863,12 +999,10 @@
 
   function getPaymentAmount() {
     const match = paymentNotesEl.value.match(/AMOUNT\s*\$\s*([\d][\d,]*(?:\.\d{1,2})?)/i);
-    // Strips commas out of the matched amount so $1,000.00 becomes $1000.00
     if (match) lastKnownAmount = match[1].replace(/,/g, ''); 
     return lastKnownAmount || '[amount]';
   }
   function getApprovalCode() {
-    // Looks for exactly 6 alphanumeric characters (letters and/or numbers)
     const match = paymentNotesEl.value.match(/APPROVAL CODE[^a-zA-Z0-9]{0,15}([a-zA-Z0-9]{6})/i);
     if (match) lastKnownCode = match[1].toUpperCase();
     return lastKnownCode || '[approval code]';
@@ -878,23 +1012,19 @@
     return `${d.getMonth() + 1}/${d.getDate()}`;
   }
 
-  // Auto-strip commas physically from the text area when users paste values in the Paid tab notes
   paymentNotesEl.addEventListener('input', () => {
       const original = paymentNotesEl.value;
-      // Replaces occurrences of commas specifically trapped inside dollar amounts
       const cleaned = original.replace(/(AMOUNT\s*\$\s*\d+),(\d{3}(?:\.\d{1,2})?)/gi, '$1$2');
       if (original !== cleaned) {
           paymentNotesEl.value = cleaned;
       }
   });
 
-  // Click Norm
   document.getElementById('normBtn').addEventListener('click', () => {
     const message = `AWD took c card pmt $${getPaymentAmount()} auth ${getApprovalCode()} added ${getTodayMD()} MWF`;
     copyText(message);
   });
 
-  // Click Rec
   document.getElementById('recBtn').addEventListener('click', () => {
     const up = upFieldEl.value || '[UP]';
     const pid = pidFieldEl.value || '[PID]';
@@ -906,29 +1036,24 @@
   let paymentTrackerData = JSON.parse(localStorage.getItem('myPaymentTracker')) || [];
   
   function saveToPaymentTracker() {
-    // Format Date from Calendar Selection to M/D/YYYY
     let pDateStr = "";
     if (paymentDateBtnEl.value) {
-      const dParts = paymentDateBtnEl.value.split('-'); // Breaks YYYY-MM-DD
+      const dParts = paymentDateBtnEl.value.split('-'); 
       pDateStr = `${parseInt(dParts[1])}/${parseInt(dParts[2])}/${dParts[0]}`;
     }
     
-    // Extract SSN strictly from the Notes text box (9 digits)
     const ssnMatch = paymentNotesEl.value.match(/\b\d{9}\b/);
     const ssnValue = ssnMatch ? ssnMatch[0] : '';
     
-    // Extract PID from textbox, with fallback to 10 digits in Notes
     const pidFallback = paymentNotesEl.value.match(/\b\d{10}\b/);
     const pidValue = pidFieldEl.value || (pidFallback ? pidFallback[0] : '');
     
     const codeValue = codeFieldEl.value || '';
     const initialsVal = pdInitialsEl.value.trim().toUpperCase() || 'XXX';
 
-    // Comment logic: if UP field has text -> Recoup. If empty -> Credit Card.
     const hasUpData = upFieldEl.value.trim().length > 0;
     const commentsVal = hasUpData ? `CC Recoup ${codeValue}`.trim() : 'Credit Card';
 
-    // Create the Row
     const newRow = {
       "CC Conf #": getApprovalCode() === '[approval code]' ? '' : getApprovalCode(),
       "Amount": getPaymentAmount() === '[amount]' ? '' : getPaymentAmount(),
@@ -946,23 +1071,19 @@
     localStorage.setItem('myPaymentTracker', JSON.stringify(paymentTrackerData));
   }
 
-  // Click Save to Tracker
   document.getElementById('savePaymentTrackerBtn').addEventListener('click', () => {
     saveToPaymentTracker();
     
-    // CLEAR REQUESTED FIELDS AFTER SAVE
     fromFieldEl.value = '';
     agentFieldEl.value = '';
     codeFieldEl.value = '';
     pidFieldEl.value = '';
     
-    // Remove the 9-digit SSN directly from the notes textbox while preserving everything else
     paymentNotesEl.value = paymentNotesEl.value.replace(/\b\d{9}\b/g, '').trim();
 
     showToast('Saved to Tracker & Fields Cleared!');
   });
 
-  // Download Payment Excel
   document.getElementById('downloadPaymentExcelBtn').addEventListener('click', () => {
     if (paymentTrackerData.length === 0) {
       showToast('No data to download.');
@@ -971,25 +1092,22 @@
 
     const worksheet = XLSX.utils.json_to_sheet(paymentTrackerData);
     
-    // Calculate Column Widths (Auto-Fit)
     const colWidths = [];
     const keys = Object.keys(paymentTrackerData[0]);
     
     keys.forEach((key, colIndex) => {
-      let maxWidth = key.length; // Start with header length
+      let maxWidth = key.length; 
       paymentTrackerData.forEach(row => {
         const cellValue = row[key] ? String(row[key]) : "";
         if (cellValue.length > maxWidth) {
           maxWidth = cellValue.length;
         }
       });
-      // Add a little padding to the width
       colWidths[colIndex] = { wch: maxWidth + 2 }; 
     });
     
     worksheet['!cols'] = colWidths;
 
-    // Add styling (Left-Aligned and Header Color Fix)
     const range = XLSX.utils.decode_range(worksheet['!ref']);
     for (let R = range.s.r; R <= range.e.r; ++R) {
       for (let C = range.s.c; C <= range.e.c; ++C) {
@@ -1006,7 +1124,7 @@
           cellStyle.font = { bold: true };
           cellStyle.fill = {
             patternType: "solid",
-            fgColor: { rgb: "ADD8E6" } // Light blue for Header
+            fgColor: { rgb: "ADD8E6" } 
           };
         }
         
@@ -1017,52 +1135,39 @@
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "CC Payments");
 
-    // Format current date for file name: MM-DD-YYYY
     const d = new Date();
     const mm = String(d.getMonth() + 1).padStart(2, '0');
     const dd = String(d.getDate()).padStart(2, '0');
     const yyyy = d.getFullYear();
     const dateStr = `${mm}-${dd}-${yyyy}`;
     
-    // Grab initials, fallback to "XXX" if empty
     const initials = pdInitialsEl.value.trim().toUpperCase() || 'XXX';
 
     XLSX.writeFile(workbook, `${dateStr} CC PAYMENTS ${initials}.xlsx`);
   });
 
-  // Clear Payment Tracker
   document.getElementById('resetPaymentTrackerBtn').addEventListener('click', () => {
     if (confirm('Are you sure you want to delete all saved Payment tracking data? This cannot be undone.')) {
       paymentTrackerData = [];
       localStorage.removeItem('myPaymentTracker');
-      
-      // Payment date ONLY clears out when Reset is clicked 
       paymentDateBtnEl.value = '';
-      
       showToast('Payment Tracker Reset.');
     }
   });
 
-  // ---------- Clear button (Payment Tab) ----------
   document.getElementById('clearPaymentBtn').addEventListener('click', () => {
-    // Note: pdInitialsEl.value and paymentDateBtnEl.value are intentionally excluded here so they won't clear
     paymentNotesEl.value = '';
     upFieldEl.value = '';
     pidFieldEl.value = '';
     fromFieldEl.value = '';
     codeFieldEl.value = '';
     agentFieldEl.value = '';
-    
-    // reset animation classes if present
     pidFieldEl.classList.remove('invalid');
-    
     lastKnownAmount = '';
     lastKnownCode = '';
-    
     showToast('Data Cleared');
   });
 
-  // ---------- Clear button (T&H Tab) ----------
   document.getElementById('clearThBtn').addEventListener('click', () => {
     thNotesEl.value = '';
     showToast('Data Cleared');
