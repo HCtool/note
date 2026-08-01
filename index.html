@@ -357,7 +357,7 @@
     75% { transform: translateX(4px); }
   }
 
-  /* --- Expanding Textarea Logic --- */
+  /* --- Expanding Textarea & Rich Text Logic --- */
   .expand-field {
     flex: 1;
     display: flex;
@@ -375,6 +375,27 @@
 
   .expand-field textarea {
     flex: 1; 
+  }
+
+  /* Rich Text Editor for Signature */
+  #richSignature {
+    width: 100%;
+    flex: 1;
+    padding: 12px 14px;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    background: var(--fill-color);
+    color: var(--text-main);
+    font-family: inherit;
+    text-transform: none !important;
+    overflow-y: auto;
+    transition: all 0.2s ease;
+  }
+  #richSignature:focus {
+    outline: none;
+    background: var(--fill-color-hover);
+    box-shadow: 0 0 0 2px var(--accent);
   }
 
   /* --- Custom ST / SC Toggle Switch --- */
@@ -541,6 +562,67 @@
     transform: translateX(-50%) translateY(0) scale(1);
   }
 
+  /* --- Modal Styles --- */
+  .modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .modal-overlay.active {
+    display: flex;
+    opacity: 1;
+  }
+  .modal-content {
+    background: var(--glass-bg);
+    border: 0.5px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    width: 100%;
+    max-width: 400px;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: var(--glass-shadow);
+    color: var(--text-main);
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+  }
+  .modal-overlay.active .modal-content {
+    transform: translateY(0);
+  }
+  .modal-close-btn {
+    margin-top: 15px;
+    width: 100%;
+    padding: 12px;
+    border-radius: var(--radius-sm);
+    background: var(--fill-color);
+    color: var(--text-main);
+    border: 0.5px solid var(--glass-border);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .modal-close-btn:hover {
+    background: var(--fill-color-hover);
+  }
+  .tracker-item {
+    padding: 10px;
+    border-bottom: 0.5px solid var(--glass-border);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .tracker-item:last-child {
+    border-bottom: none;
+  }
+
   /* --- Desktop Specific Optimizations --- */
   @media (min-width: 768px) {
     .dropdown-container {
@@ -617,10 +699,10 @@
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
       </button>
       <button class="dropdown-item" data-tab="payment">Payments</button>
+      <button class="dropdown-item" data-tab="inquiryTab">Inquiry</button>
       <button class="dropdown-item" data-tab="th">T&amp;H Notes</button>
       <button class="dropdown-item" data-tab="emailTemplateTab">Email Template Editor</button>
       <button class="dropdown-item" data-tab="statementsTab">Statements</button>
-      <button class="dropdown-item" data-tab="inquiryTab">Inquiry</button>
     </div>
   </div>
 
@@ -798,10 +880,12 @@
       </div>
     </div>
 
-    <div class="pills" id="paymentBtnGroup" style="border-top:none; padding-top:0;">
-      <button class="pill payment-btn" id="normBtn" data-name="NORM">Copy Normal</button>
-      <button class="pill payment-btn" id="recBtn" data-name="REC">Copy Rec</button>
-      <button class="pill payment-btn" id="savePaymentTrackerBtn" style="background: linear-gradient(135deg, #34c759, #28a745); color: #fff; border: none; margin-left: auto;">Save to Tracker</button>
+    <!-- Strictly Flattened Payment Buttons Row -->
+    <div style="display: flex; flex-wrap: nowrap; gap: 6px; margin-bottom: 16px; width: 100%;">
+      <button class="pill payment-btn" id="normBtn" data-name="NORM" style="flex: 1; padding: 8px 0; font-size: 11px; text-align: center; white-space: nowrap;">Copy Normal</button>
+      <button class="pill payment-btn" id="recBtn" data-name="REC" style="flex: 1; padding: 8px 0; font-size: 11px; text-align: center; white-space: nowrap;">Copy Rec</button>
+      <button class="pill payment-btn" id="viewPaymentTrackerBtn" style="flex: 1; padding: 8px 0; font-size: 11px; text-align: center; white-space: nowrap; background: linear-gradient(135deg, #c471ed, #a044ff); color: #fff; border: none;">View Data</button>
+      <button class="pill payment-btn" id="savePaymentTrackerBtn" style="flex: 1; padding: 8px 0; font-size: 11px; text-align: center; white-space: nowrap; background: linear-gradient(135deg, #34c759, #28a745); color: #fff; border: none;">Save Tracker</button>
     </div>
     
     <div class="row" style="margin-top: 10px; margin-bottom: 0px; border-top: 0.5px solid var(--glass-border); padding-top: 16px;">
@@ -831,9 +915,9 @@
     </div>
     
     <div class="helper-text">
-      Select a scenario below to edit its specific email format. It saves automatically.<br><br>
+      Select a scenario below to edit its specific email format.<br><br>
       <strong>Available Tags:</strong><br>
-      <code>[NAME]</code> <code>[CODE]</code> <code>[PHONE]</code> <code>[BALANCE]</code><br>
+      <code>[NAME]</code> <code>[CODE]</code> <code>[PHONE]</code> <code>[BALANCE]</code>
       <code>[AMOUNT]</code> <code>[MONTHS]</code> <code>[DATE]</code> <code>[DAY]</code>
     </div>
     
@@ -844,15 +928,24 @@
         <option value="VM">Voicemail</option>
         <option value="No VM">No Voicemail</option>
         <option value="Agreed">Confirm</option>
-        <option value="Nil">Decline (Nil)</option>
+        <option value="Nil">Decline</option>
         <option value="Propose">Propose</option>
         <option value="Delay03">Delay 3</option>
+        <!-- Added Signature Rich Text Option -->
+        <option value="Signature">Signature</option>
       </select>
     </div>
     
-    <div class="field expand-field">
+    <!-- Standard Template Editor -->
+    <div class="field expand-field" id="templateEditorWrapper">
       <label for="savedEmailTemplate">Format</label>
       <textarea id="savedEmailTemplate" placeholder="..."></textarea>
+    </div>
+
+    <!-- Rich Text Signature Editor (Hidden by default) -->
+    <div class="field expand-field" id="signatureEditorWrapper" style="display: none;">
+      <label for="richSignature">Signature Setup (Paste formatting here)</label>
+      <div id="richSignature" contenteditable="true"></div>
     </div>
   </div>
 
@@ -870,6 +963,15 @@
 <div class="toast" id="toast">
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
   <span id="toastMsg"></span>
+</div>
+
+<!-- Modal for Viewing Saved Data -->
+<div class="modal-overlay" id="dataModal">
+  <div class="modal-content">
+    <h3 style="margin-bottom: 12px; font-size: 18px;">Saved Tracker Data</h3>
+    <div id="dataModalBody" style="background: var(--fill-color); border-radius: var(--radius-sm); padding: 5px;"></div>
+    <button class="modal-close-btn" id="closeDataModalBtn">Close</button>
+  </div>
 </div>
 
 <script>
@@ -925,7 +1027,7 @@
   // ---------- Auto-Uppercase Force Listener ----------
   document.addEventListener('input', (e) => {
     if (e.target.tagName === 'INPUT' && e.target.type === 'text') {
-      if (e.target.classList.contains('no-caps')) return; // Skip if no-caps class is present
+      if (e.target.classList.contains('no-caps')) return; 
       
       const start = e.target.selectionStart;
       const end = e.target.selectionEnd;
@@ -973,7 +1075,12 @@
   // Template specific
   const templateSelector = document.getElementById('templateSelector');
   const savedEmailTemplateEl = document.getElementById('savedEmailTemplate');
+  const templateEditorWrapper = document.getElementById('templateEditorWrapper');
   
+  // Rich text Signature specific
+  const signatureEditorWrapper = document.getElementById('signatureEditorWrapper');
+  const richSignature = document.getElementById('richSignature');
+
   // Paid Tab specific fields
   const fromFieldEl = document.getElementById('fromField');
   const codeFieldEl = document.getElementById('codeField');
@@ -1027,17 +1134,25 @@
   const baseDetails = "Agent Name: [NAME]\nCode: [CODE]\nPhone: [PHONE]\nDebt Amount: [BALANCE]\nMonthly Due: [AMOUNT]\nTerm: [MONTHS] Months\nStart Date: [DATE]\nStart Day: [DAY]";
   
   const DEFAULT_TEMPLATES = {
-      'VM': `Hello,\n\n[PILL]\n\nDetails of the proposed plan:\n${baseDetails}\n\nThank you,\n[INITIAL]`,
-      'No VM': `Hello,\n\n[PILL]\n\nDetails of the proposed plan:\n${baseDetails}\n\nThank you,\n[INITIAL]`,
-      'Agreed': `Hello,\n\n[PILL]\n\nDetails of your confirmed plan:\n${baseDetails}\n\nThank you,\n[INITIAL]`,
-      'Nil': `Hello,\n\n[PILL]\n\nAgent Name: [NAME]\nCode: [CODE]\nPhone: [PHONE]\n\nWe noted your decision regarding the proposed repayment plan.\n\nThank you,\n[INITIAL]`,
-      'Propose': `Hello,\n\n[PILL]\n\nWe would like to propose the following plan:\n${baseDetails}\n\nThank you,\n[INITIAL]`,
-      'Delay03': `Hello,\n\n[PILL]\n\nDetails of the plan:\n${baseDetails}\n\nThank you,\n[INITIAL]`
+      'VM': `Hello,\n\nDetails of the proposed plan:\n${baseDetails}\n\nThank you,`,
+      'No VM': `Hello,\n\nDetails of the proposed plan:\n${baseDetails}\n\nThank you,`,
+      'Agreed': `Hello,\n\nDetails of your confirmed plan:\n${baseDetails}\n\nThank you,`,
+      'Nil': `Hello,\n\nAgent Name: [NAME]\nCode: [CODE]\nPhone: [PHONE]\n\nWe noted your decision regarding the proposed repayment plan.\n\nThank you,`,
+      'Propose': `Hello,\n\nWe would like to propose the following plan:\n${baseDetails}\n\nThank you,`,
+      'Delay03': `Hello,\n\nDetails of the plan:\n${baseDetails}\n\nThank you,`
   };
 
-  function loadTemplateForScenario(pillName) {
-      const saved = localStorage.getItem('emailTemplate_' + pillName);
-      savedEmailTemplateEl.value = saved || DEFAULT_TEMPLATES[pillName] || DEFAULT_TEMPLATES['VM'];
+  function loadTemplateForScenario(scenarioName) {
+      if (scenarioName === 'Signature') {
+          templateEditorWrapper.style.display = 'none';
+          signatureEditorWrapper.style.display = 'flex';
+          richSignature.innerHTML = localStorage.getItem('emailSignature') || '';
+      } else {
+          templateEditorWrapper.style.display = 'flex';
+          signatureEditorWrapper.style.display = 'none';
+          const saved = localStorage.getItem('emailTemplate_' + scenarioName);
+          savedEmailTemplateEl.value = saved || DEFAULT_TEMPLATES[scenarioName] || DEFAULT_TEMPLATES['VM'];
+      }
   }
 
   templateSelector.addEventListener('change', (e) => {
@@ -1045,21 +1160,36 @@
   });
 
   savedEmailTemplateEl.addEventListener('input', () => {
-      const currentScenario = templateSelector.value;
-      localStorage.setItem('emailTemplate_' + currentScenario, savedEmailTemplateEl.value);
+      if(templateSelector.value !== 'Signature') {
+          localStorage.setItem('emailTemplate_' + templateSelector.value, savedEmailTemplateEl.value);
+      }
+  });
+
+  // Save Signature dynamically
+  richSignature.addEventListener('input', () => {
+      localStorage.setItem('emailSignature', richSignature.innerHTML);
   });
 
   document.getElementById('resetTemplateBtn').addEventListener('click', () => {
       const currentScenario = templateSelector.value;
       const scenarioText = templateSelector.options[templateSelector.selectedIndex].text;
       
-      if (confirm(`Are you sure you want to reset the [${scenarioText}] template to its default layout?`)) {
-          savedEmailTemplateEl.value = DEFAULT_TEMPLATES[currentScenario];
-          localStorage.removeItem('emailTemplate_' + currentScenario);
-          showToast('Template Reset!');
+      if (currentScenario === 'Signature') {
+          if (confirm('Are you sure you want to completely clear your saved Signature?')) {
+              richSignature.innerHTML = '';
+              localStorage.removeItem('emailSignature');
+              showToast('Signature Cleared!');
+          }
+      } else {
+          if (confirm(`Are you sure you want to reset the [${scenarioText}] template to its default layout?`)) {
+              savedEmailTemplateEl.value = DEFAULT_TEMPLATES[currentScenario];
+              localStorage.removeItem('emailTemplate_' + currentScenario);
+              showToast('Template Reset!');
+          }
       }
   });
 
+  // Initialize correct view on load
   loadTemplateForScenario(templateSelector.value);
 
   // ---------- Start Date defaults ----------
@@ -1125,6 +1255,46 @@
     }).catch(() => {
       showToast('Could not copy — copy manually');
     });
+  }
+
+  // --- Dynamic Clipboard HTML Function ---
+  // If signatureOnly = true, it copies JUST the signature.
+  // If signatureOnly = false AND includeSignature = true, it copies text + signature.
+  function copyToClipboardHtml(plainText, includeSignature = false, signatureOnly = false) {
+      const signatureHtml = localStorage.getItem('emailSignature') || '';
+      let fullHtml = '';
+      
+      if (signatureOnly) {
+          fullHtml = signatureHtml;
+      } else if (includeSignature) {
+          fullHtml = `<div style="white-space: pre-wrap; font-family: inherit;">${plainText}</div><br>${signatureHtml}`;
+      } else {
+          fullHtml = `<div style="white-space: pre-wrap; font-family: inherit;">${plainText}</div>`;
+      }
+
+      if (!fullHtml) return;
+
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = fullHtml;
+      tempDiv.style.position = 'fixed';
+      tempDiv.style.left = '-9999px';
+      tempDiv.style.top = '0';
+      document.body.appendChild(tempDiv);
+
+      const selection = window.getSelection();
+      const range = document.createRange();
+      range.selectNodeContents(tempDiv);
+      selection.removeAllRanges();
+      selection.addRange(range);
+
+      try {
+          document.execCommand('copy');
+      } catch (err) {
+          console.error('Could not copy rich text to clipboard');
+      }
+
+      selection.removeAllRanges();
+      document.body.removeChild(tempDiv);
   }
 
   // ---------- Formatted values for messages ----------
@@ -1204,6 +1374,7 @@
     copyText(message);
   });
 
+  // Call Tab Email Button
   document.getElementById('emailBtn').addEventListener('click', () => {
     if (!selectedPill) {
         showToast('Highlight a pill first!');
@@ -1240,13 +1411,18 @@
     templateText = templateText.replace(/\[PILL\]/gi, pillMsg);
     templateText = templateText.replace(/\[INITIAL\]/gi, initials);
 
+    // Copy ONLY the rich text signature to clipboard 
+    copyToClipboardHtml('', false, true);
+
     const emailSubject = encodeURIComponent(`Repayment Plan for ${aName} ${aCode}`);
     const emailBody = encodeURIComponent(templateText);
     const recipientEmail = getEmailVal(); 
     
-    window.location.href = `mailto:${recipientEmail}?subject=${emailSubject}&body=${emailBody}`;
+    setTimeout(() => {
+        window.location.href = `mailto:${recipientEmail}?subject=${emailSubject}&body=${emailBody}`;
+    }, 150);
     
-    showToast('Opening Outlook...');
+    showToast('Outlook Opened & Sig Copied!');
   });
 
   document.getElementById('clearBtn').addEventListener('click', () => {
@@ -1265,7 +1441,15 @@
 
   // ---------- INQUIRY TAB LOGIC ----------
   
-  // Update toggle UI state
+  const savedInqNotes = localStorage.getItem('inqNotesMemo');
+  if (savedInqNotes !== null) {
+    inqNotesEl.value = savedInqNotes;
+  }
+
+  inqNotesEl.addEventListener('input', () => {
+    localStorage.setItem('inqNotesMemo', inqNotesEl.value);
+  });
+
   inqTypeToggle.addEventListener('change', function() {
     if(this.checked) {
       scLabel.classList.add('active');
@@ -1276,7 +1460,6 @@
     }
   });
 
-  // Replaces tags in the extracted notes text with a $ explicitly injected for [AMOUNT]
   function replaceInquiryTags(text) {
     if (!text) return '';
     const amtVal = inqAmountEl.value ? '$' + inqAmountEl.value : '[AMOUNT]';
@@ -1288,7 +1471,6 @@
       .replace(/\[REQ\]/gi, inqRequestorEl.value || '[REQ]');
   }
 
-  // Extract a specific line from Notes up to the first newline
   function extractInquiryLine(marker) {
     const notesText = inqNotesEl.value;
     const regex = new RegExp(`${marker}:\\s*(.*)`, 'i');
@@ -1296,31 +1478,28 @@
     return match ? match[1].trim() : '';
   }
 
+  // Inquiry Tab Email Button
   document.getElementById('inqEmailBtn').addEventListener('click', () => {
     const isSC = inqTypeToggle.checked;
     const typeStr = isSC ? 'SC' : 'ST';
     
-    // Extracts text from the corresponding ST: or SC: marker
     const lineContent = extractInquiryLine(typeStr);
 
-    // Grab everything typed in the notes BEFORE the ST/SC/CB markers
     let generalNotes = "";
     const prefixMatch = inqNotesEl.value.match(/^([\s\S]*?)(?:ST:|SC:|CB:|$)/i);
     if (prefixMatch && prefixMatch[1]) {
       generalNotes = prefixMatch[1];
     }
 
-    // Combine the top general notes and the specific ST/SC line selection
     let emailStr = generalNotes + lineContent;
-
-    // Process all the variable tags
     emailStr = replaceInquiryTags(emailStr);
 
-    copyText(emailStr.trim());
+    // Copy Inquiry Text + Signature to clipboard
+    copyToClipboardHtml(emailStr.trim(), true, false);
+    showToast('Email Notes & Sig Copied!');
   });
 
   document.getElementById('inqNotesBtn').addEventListener('click', () => {
-    // Extracts ONLY the text immediately following CB: up to a newline
     const cbLine = extractInquiryLine('CB');
     const processedLine = replaceInquiryTags(cbLine);
     
@@ -1337,13 +1516,8 @@
     inqStartDateEl.value = '';
     inqEndDateEl.value = '';
     inqRequestorEl.value = '';
-    inqNotesEl.value = '';
-    inqTypeToggle.checked = false; 
-    stLabel.classList.add('active');
-    scLabel.classList.remove('active');
     showToast('Inquiry Cleared');
   });
-
 
   // ---------- Payment tab: NORM / REC ----------
   let lastKnownAmount = '';
@@ -1387,7 +1561,27 @@
   // ---------- PAYMENT TRACKER EXCEL LOGIC ----------
   let paymentTrackerData = JSON.parse(localStorage.getItem('myPaymentTracker')) || [];
   
-  function saveToPaymentTracker() {
+  // Re-usable function to update tracker UI inside the modal
+  function renderTrackerModal() {
+    const display = document.getElementById('dataModalBody');
+    if (paymentTrackerData.length === 0) {
+      display.innerHTML = '<div style="padding: 15px; text-align: center; color: var(--text-muted);">No data saved yet.</div>';
+    } else {
+      display.innerHTML = paymentTrackerData.map((row, index) => {
+        return `<div class="tracker-item" data-index="${index}">
+          <strong>#${index + 1} | Date:</strong> ${row["Payment Date"] || 'N/A'}<br>
+          <strong>Amount:</strong> $${row["Amount"] || '0.00'} | <strong>Conf:</strong> ${row["CC Conf #"] || 'N/A'}<br>
+          <strong>PID:</strong> ${row["Primary ID"] || 'N/A'} | <strong>Code:</strong> ${row["Agent #"] || 'N/A'}
+          <div style="margin-top: 10px; display: flex; gap: 8px;">
+            <button class="pill payment-btn edit-tracker-btn" style="padding: 4px 12px; font-size: 11px;">Edit</button>
+            <button class="pill delete-tracker-btn" style="padding: 4px 12px; font-size: 11px; background: var(--danger); color: white;">Delete</button>
+          </div>
+        </div>`;
+      }).join('');
+    }
+  }
+
+  document.getElementById('savePaymentTrackerBtn').addEventListener('click', () => {
     let pDateStr = "";
     if (paymentDateBtnEl.value) {
       const dParts = paymentDateBtnEl.value.split('-'); 
@@ -1419,12 +1613,15 @@
       "Processor": initialsVal 
     };
 
+    // Duplicate Check
+    const isDuplicate = paymentTrackerData.some(row => JSON.stringify(row) === JSON.stringify(newRow));
+    if (isDuplicate) {
+      showToast('Duplicate Data - Not Saved');
+      return; 
+    }
+
     paymentTrackerData.push(newRow);
     localStorage.setItem('myPaymentTracker', JSON.stringify(paymentTrackerData));
-  }
-
-  document.getElementById('savePaymentTrackerBtn').addEventListener('click', () => {
-    saveToPaymentTracker();
     
     fromFieldEl.value = '';
     agentFieldEl.value = '';
@@ -1436,6 +1633,73 @@
     showToast('Saved to Tracker & Fields Cleared!');
   });
 
+  // ---------- VIEW TRACKER MODAL LOGIC ----------
+  document.getElementById('viewPaymentTrackerBtn').addEventListener('click', () => {
+    renderTrackerModal();
+    document.getElementById('dataModal').classList.add('active');
+  });
+
+  // Event Delegation for Edit & Delete within Modal
+  document.getElementById('dataModalBody').addEventListener('click', (e) => {
+    if (e.target.classList.contains('delete-tracker-btn')) {
+      const item = e.target.closest('.tracker-item');
+      const index = parseInt(item.dataset.index, 10);
+      paymentTrackerData.splice(index, 1);
+      localStorage.setItem('myPaymentTracker', JSON.stringify(paymentTrackerData));
+      renderTrackerModal();
+      showToast('Line deleted.');
+      
+    } else if (e.target.classList.contains('edit-tracker-btn')) {
+      const item = e.target.closest('.tracker-item');
+      const index = parseInt(item.dataset.index, 10);
+      const row = paymentTrackerData[index];
+      
+      // Populate textboxes
+      fromFieldEl.value = row['From'] || '';
+      agentFieldEl.value = row['Agent'] || '';
+      codeFieldEl.value = row['Agent #'] || '';
+      pidFieldEl.value = row['Primary ID'] || '';
+      pdInitialsEl.value = row['Processor'] || '';
+
+      if (row['Payment Date']) {
+        const parts = row['Payment Date'].split('/');
+        if (parts.length === 3) {
+          const m = parts[0].padStart(2, '0');
+          const d = parts[1].padStart(2, '0');
+          const y = parts[2];
+          paymentDateBtnEl.value = `${y}-${m}-${d}`;
+        }
+      } else {
+          paymentDateBtnEl.value = '';
+      }
+
+      // Reconstruct Notes string
+      let mockNote = '';
+      if (row['Amount']) mockNote += `AMOUNT $${row['Amount']} `;
+      if (row['CC Conf #']) mockNote += `APPROVAL CODE ${row['CC Conf #']} `;
+      if (row['SSN']) mockNote += `${row['SSN']}`;
+      paymentNotesEl.value = mockNote.trim();
+
+      if (row['Comments'] && row['Comments'].includes('CC Recoup')) {
+         upFieldEl.value = '[FILL IN UP]';
+      } else {
+         upFieldEl.value = '';
+      }
+
+      // Remove from tracker 
+      paymentTrackerData.splice(index, 1);
+      localStorage.setItem('myPaymentTracker', JSON.stringify(paymentTrackerData));
+      
+      document.getElementById('dataModal').classList.remove('active');
+      showToast('Moved to form for editing.');
+    }
+  });
+
+  document.getElementById('closeDataModalBtn').addEventListener('click', () => {
+    document.getElementById('dataModal').classList.remove('active');
+  });
+
+  // ---------- DOWNLOAD TRACKER LOGIC ----------
   document.getElementById('downloadPaymentExcelBtn').addEventListener('click', () => {
     if (paymentTrackerData.length === 0) {
       showToast('No data to download.');
