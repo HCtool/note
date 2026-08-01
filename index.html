@@ -25,11 +25,9 @@
     --fill-color: rgba(118, 118, 128, 0.12); 
     --fill-color-hover: rgba(118, 118, 128, 0.2); 
     
-    /* Segmented Control (Tabs) */
-    --tab-bg: rgba(118, 118, 128, 0.12);
-    --tab-active-bg: #ffffff;
-    --tab-active-shadow: 0 3px 8px rgba(0,0,0,0.12), 0 3px 1px rgba(0,0,0,0.04);
-    --tab-text: #000000;
+    /* Dropdown UI Colors */
+    --dropdown-bg: rgba(255, 255, 255, 0.9);
+    --dropdown-active-bg: rgba(0, 122, 255, 0.1);
 
     /* Light Image Background */
     --bg-color: #f2f2f7;
@@ -57,11 +55,9 @@
     --fill-color: rgba(118, 118, 128, 0.24); 
     --fill-color-hover: rgba(118, 118, 128, 0.35); 
 
-    /* Segmented Control (Tabs) */
-    --tab-bg: rgba(118, 118, 128, 0.24);
-    --tab-active-bg: #636366;
-    --tab-active-shadow: 0 3px 8px rgba(0,0,0,0.3), 0 3px 1px rgba(0,0,0,0.15);
-    --tab-text: #ffffff;
+    /* Dropdown UI Colors */
+    --dropdown-bg: rgba(44, 44, 46, 0.9);
+    --dropdown-active-bg: rgba(10, 132, 255, 0.15);
 
     /* Dark Image Background */
     --bg-color: #000000;
@@ -86,7 +82,7 @@
     justify-content: center;
     align-items: stretch; 
     min-height: 100vh;
-    padding: clamp(20px, 4vw, 40px) 16px; 
+    padding: clamp(10px, 2vw, 20px) 16px; 
     transition: background-image 0.5s ease, background-color 0.5s ease, color 0.3s ease;
   }
 
@@ -121,6 +117,8 @@
   .card {
     width: 100%;
     max-width: 460px; 
+    height: calc(100vh - 40px);
+    max-height: 900px;
     display: flex;
     flex-direction: column; 
     background: var(--glass-bg);
@@ -128,50 +126,110 @@
     -webkit-backdrop-filter: blur(25px) saturate(200%);
     border: 0.5px solid var(--glass-border);
     border-radius: var(--radius-lg);
-    overflow: hidden;
+    overflow: visible; 
     box-shadow: var(--glass-shadow);
     position: relative;
-    max-height: 900px; 
     transition: all 0.3s ease;
   }
 
-  /* --- iOS Segmented Control (Tabs) --- */
-  .tabs-wrapper {
+  /* --- iOS Glass Dropdown Header --- */
+  .dropdown-container {
     padding: 16px 16px 0 16px;
-    flex-shrink: 0;
+    position: relative;
+    z-index: 50; 
   }
 
-  .tabs {
+  .dropdown-trigger {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 12px;
+    background: var(--fill-color);
+    border: 0.5px solid var(--glass-border);
+    color: var(--text-main);
+    font-size: 16px;
+    font-weight: 600;
     display: flex;
-    background: var(--tab-bg);
-    padding: 3px;
-    border-radius: 9px;
-    gap: 2px;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
   }
 
-  .tab-btn {
-    flex: 1;
-    padding: 6px 8px; 
-    text-align: center;
+  .dropdown-trigger:active {
+    background: var(--fill-color-hover);
+    transform: scale(0.98);
+  }
+
+  .dropdown-trigger svg {
+    transition: transform 0.3s ease;
+  }
+
+  .dropdown-trigger.open svg {
+    transform: rotate(180deg);
+  }
+
+  .dropdown-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 16px;
+    right: 16px;
+    background: var(--dropdown-bg);
+    backdrop-filter: blur(35px) saturate(200%);
+    -webkit-backdrop-filter: blur(35px) saturate(200%);
+    border: 0.5px solid var(--glass-border);
+    border-radius: 14px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-10px) scale(0.98);
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  body.dark-mode .dropdown-menu {
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+  }
+
+  .dropdown-menu.open {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+
+  .dropdown-item {
+    padding: 14px 20px;
     background: transparent;
     border: none;
-    font-size: 12.5px; 
-    font-weight: 600;
+    border-bottom: 0.5px solid var(--glass-border);
     color: var(--text-main);
+    font-size: 15px;
+    font-weight: 500;
+    text-align: left;
     cursor: pointer;
-    border-radius: 7px;
-    transition: all 0.2s ease;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 6px;
+    justify-content: space-between;
+    min-height: 48px; 
+    transition: background 0.2s ease, padding-left 0.2s ease;
   }
 
-  .tab-btn.active {
-    background: var(--tab-active-bg);
-    color: var(--tab-text);
-    box-shadow: var(--tab-active-shadow);
+  .dropdown-item:last-child {
+    border-bottom: none;
+  }
+
+  .dropdown-item:hover, .dropdown-item:active {
+    background: var(--fill-color);
+  }
+
+  .dropdown-item.active {
+    background: var(--dropdown-active-bg);
+    color: var(--accent);
     font-weight: 600;
+    padding-left: 24px;
   }
 
   /* --- Tab Content --- */
@@ -252,7 +310,7 @@
   .row .field { margin-bottom: 0; flex: 1; }
   .row .side-field { flex: 0 0 110px; } 
 
-  /* --- iOS Inputs --- */
+  /* --- Inputs --- */
   input[type="text"],
   input[type="tel"],
   input[type="number"],
@@ -287,6 +345,11 @@
     box-shadow: 0 0 0 2px var(--danger) !important;
     animation: shake 0.4s ease-in-out;
   }
+  
+  /* Disable Auto-Caps lock utility */
+  .no-caps {
+    text-transform: none !important;
+  }
 
   @keyframes shake {
     0%, 100% { transform: translateX(0); }
@@ -312,6 +375,49 @@
 
   .expand-field textarea {
     flex: 1; 
+  }
+
+  /* --- Custom ST / SC Toggle Switch --- */
+  .stsc-switch-container {
+    display: flex;
+    align-items: center;
+    background: var(--fill-color);
+    border-radius: 20px;
+    padding: 3px;
+    position: relative;
+    width: 110px;
+    height: 38px;
+    cursor: pointer;
+    border: 0.5px solid var(--glass-border);
+  }
+  .stsc-option {
+    flex: 1;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-muted);
+    z-index: 1;
+    transition: color 0.3s;
+  }
+  .stsc-option.active {
+    color: var(--text-main);
+  }
+  .stsc-slider {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: calc(50% - 3px);
+    height: calc(100% - 6px);
+    background: var(--glass-bg);
+    border-radius: 18px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  body.dark-mode .stsc-slider {
+    background: #636366;
+  }
+  #inqTypeToggle:checked + .stsc-switch-container .stsc-slider {
+    transform: translateX(100%);
   }
 
   /* --- Pills --- */
@@ -401,7 +507,7 @@
     opacity: 0.9;
   }
 
-  /* --- iOS Style Toast Notification --- */
+  /* --- Notification Toast --- */
   .toast {
     position: fixed;
     bottom: 40px;
@@ -435,6 +541,35 @@
     transform: translateX(-50%) translateY(0) scale(1);
   }
 
+  /* --- Desktop Specific Optimizations --- */
+  @media (min-width: 768px) {
+    .dropdown-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center; 
+    }
+
+    .dropdown-trigger {
+      width: 320px; 
+      padding: 10px 16px;
+      font-size: 14.5px;
+    }
+
+    .dropdown-menu {
+      width: 320px;
+      left: 50%;
+      right: auto;
+      margin-left: -160px;
+    }
+
+    .dropdown-item {
+      min-height: 38px; 
+      padding: 10px 16px;
+      font-size: 14px;
+    }
+  }
+
+  /* --- Mobile Fallbacks --- */
   @media (max-width: 480px) {
     .row {
       flex-direction: column;
@@ -447,8 +582,8 @@
     .tab-content {
       padding: 20px 16px;
     }
-    .tab-btn {
-      font-size: 11.5px;
+    .dropdown-trigger {
+      font-size: 15px;
     }
   }
   
@@ -469,14 +604,23 @@
 </button>
 
 <div class="card">
-  <!-- iOS Segmented Control Tab Wrapper -->
-  <div class="tabs-wrapper">
-    <div class="tabs">
-      <button class="tab-btn active" data-tab="call">Call</button>
-      <button class="tab-btn" data-tab="payment">Paid</button>
-      <button class="tab-btn" data-tab="th">T&amp;H</button>
-      <button class="tab-btn" data-tab="emailTemplateTab">Template</button>
-      <button class="tab-btn" data-tab="statementsTab">Stmts</button>
+  <!-- Desktop & Mobile Responsive Glass Dropdown Header -->
+  <div class="dropdown-container">
+    <button class="dropdown-trigger" id="viewSelector">
+      Call Notes 
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
+    </button>
+    <div class="dropdown-menu" id="dropdownMenu">
+      <button class="dropdown-item active" data-tab="call">Call Notes
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </button>
+      <button class="dropdown-item" data-tab="payment">Payments</button>
+      <button class="dropdown-item" data-tab="th">T&amp;H Notes</button>
+      <button class="dropdown-item" data-tab="emailTemplateTab">Email Template Editor</button>
+      <button class="dropdown-item" data-tab="statementsTab">Statements</button>
+      <button class="dropdown-item" data-tab="inquiryTab">Inquiry</button>
     </div>
   </div>
 
@@ -543,6 +687,66 @@
     <div class="field expand-field">
       <label for="notes">Notes</label>
       <textarea id="notes" placeholder="..."></textarea>
+    </div>
+  </div>
+
+  <!-- INQUIRY TAB -->
+  <div class="tab-content" id="inquiryTab">
+    <div class="tab-header">
+      <h2>Inquiry</h2>
+      <button class="clear-btn" id="clearInquiryBtn">Clear</button>
+    </div>
+    
+    <div class="helper-text">
+      <strong>Available Tags:</strong> <code>[NAME]</code> <code>[START]</code> <code>[END]</code> <code>[AMOUNT]</code> <code>[REQ]</code>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label for="inqName">Name</label>
+        <input type="text" id="inqName" placeholder="...">
+      </div>
+      <div class="field">
+        <label for="inqAmount">Amount</label>
+        <input type="text" id="inqAmount" inputmode="decimal" placeholder="0.00">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label for="inqStartDate">Start Date</label>
+        <input type="text" id="inqStartDate" placeholder="MM-DD-YYYY">
+      </div>
+      <div class="field">
+        <label for="inqEndDate">End Date</label>
+        <input type="text" id="inqEndDate" placeholder="MM-DD-YYYY">
+      </div>
+    </div>
+
+    <div class="row" style="align-items: flex-end;">
+      <div class="field" style="flex: 1;">
+        <label for="inqRequestor">Requestor</label>
+        <input type="text" id="inqRequestor" class="no-caps" placeholder="...">
+      </div>
+      <div class="side-field" style="flex: 0 0 110px;">
+        <label for="inqTypeToggle" style="text-align: center;">Type</label>
+        <input type="checkbox" id="inqTypeToggle" style="display:none;">
+        <label class="stsc-switch-container" for="inqTypeToggle">
+          <div class="stsc-slider"></div>
+          <div class="stsc-option active" id="stLabel">ST</div>
+          <div class="stsc-option" id="scLabel">SC</div>
+        </label>
+      </div>
+    </div>
+
+    <div class="lrp-row" style="margin-bottom: 12px; padding-bottom: 16px;">
+      <button class="lrp-btn" id="inqEmailBtn">Email</button>
+      <button class="lrp-btn" id="inqNotesBtn">Notes</button>
+    </div>
+
+    <div class="field expand-field">
+      <label for="inqNotes">Notes</label>
+      <textarea id="inqNotes" placeholder="..."></textarea>
     </div>
   </div>
 
@@ -630,7 +834,7 @@
       Select a scenario below to edit its specific email format. It saves automatically.<br><br>
       <strong>Available Tags:</strong><br>
       <code>[NAME]</code> <code>[CODE]</code> <code>[PHONE]</code> <code>[BALANCE]</code><br>
-      <code>[AMOUNT]</code> <code>[MONTHS]</code> <code>[DATE]</code> <code>[DAY]</code> <code>[PILL]</code> <code>[INITIAL]</code>
+      <code>[AMOUNT]</code> <code>[MONTHS]</code> <code>[DATE]</code> <code>[DAY]</code>
     </div>
     
     <!-- Template Scenario Selector -->
@@ -669,9 +873,60 @@
 </div>
 
 <script>
+  // ---------- Dropdown View Selector Logic ----------
+  const viewSelector = document.getElementById('viewSelector');
+  const dropdownMenu = document.getElementById('dropdownMenu');
+  const dropdownItems = document.querySelectorAll('.dropdown-item');
+  const tabContents = document.querySelectorAll('.tab-content');
+
+  const checkIconHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+  const chevronIconHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>`;
+
+  viewSelector.addEventListener('click', (e) => {
+    e.stopPropagation(); 
+    const isOpen = dropdownMenu.classList.contains('open');
+    if (isOpen) {
+      dropdownMenu.classList.remove('open');
+      viewSelector.classList.remove('open');
+    } else {
+      dropdownMenu.classList.add('open');
+      viewSelector.classList.add('open');
+    }
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!dropdownMenu.contains(e.target) && e.target !== viewSelector) {
+      dropdownMenu.classList.remove('open');
+      viewSelector.classList.remove('open');
+    }
+  });
+
+  dropdownItems.forEach(item => {
+    item.addEventListener('click', () => {
+      dropdownItems.forEach(i => {
+        i.classList.remove('active');
+        if(i.querySelector('svg')) { i.querySelector('svg').remove(); }
+      });
+      
+      item.classList.add('active');
+      item.innerHTML = item.textContent + checkIconHTML;
+
+      const cleanText = item.textContent.trim();
+      viewSelector.innerHTML = `${cleanText} ${chevronIconHTML}`;
+
+      tabContents.forEach(c => c.classList.remove('active'));
+      document.getElementById(item.dataset.tab).classList.add('active');
+
+      dropdownMenu.classList.remove('open');
+      viewSelector.classList.remove('open');
+    });
+  });
+
   // ---------- Auto-Uppercase Force Listener ----------
   document.addEventListener('input', (e) => {
-    if ((e.target.tagName === 'INPUT' && e.target.type === 'text')) {
+    if (e.target.tagName === 'INPUT' && e.target.type === 'text') {
+      if (e.target.classList.contains('no-caps')) return; // Skip if no-caps class is present
+      
       const start = e.target.selectionStart;
       const end = e.target.selectionEnd;
       const upper = e.target.value.toUpperCase();
@@ -700,18 +955,6 @@
     }
   });
 
-  // ---------- Tab switching ----------
-  const tabBtns = document.querySelectorAll('.tab-btn');
-  const tabContents = document.querySelectorAll('.tab-content');
-  tabBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      tabBtns.forEach(b => b.classList.remove('active'));
-      tabContents.forEach(c => c.classList.remove('active'));
-      btn.classList.add('active');
-      document.getElementById(btn.dataset.tab).classList.add('active');
-    });
-  });
-
   // ---------- Field refs ----------
   const totalBalanceEl = document.getElementById('totalBalance');
   const monthsEl = document.getElementById('months');
@@ -738,7 +981,17 @@
   const paymentDateBtnEl = document.getElementById('paymentDateBtn');
   const pdInitialsEl = document.getElementById('pdInitials');
 
-  // Ensure PID Field only accepts numbers AND shakes red when letters are typed/pasted
+  // Inquiry Tab Fields
+  const inqNameEl = document.getElementById('inqName');
+  const inqAmountEl = document.getElementById('inqAmount');
+  const inqStartDateEl = document.getElementById('inqStartDate');
+  const inqEndDateEl = document.getElementById('inqEndDate');
+  const inqRequestorEl = document.getElementById('inqRequestor');
+  const inqNotesEl = document.getElementById('inqNotes');
+  const inqTypeToggle = document.getElementById('inqTypeToggle');
+  const stLabel = document.getElementById('stLabel');
+  const scLabel = document.getElementById('scLabel');
+
   pidFieldEl.addEventListener('input', () => {
     const original = pidFieldEl.value;
     const cleaned = original.replace(/\D/g, ''); 
@@ -750,6 +1003,22 @@
       clearTimeout(pidFieldEl._invalidTimer);
       pidFieldEl._invalidTimer = setTimeout(() => {
         pidFieldEl.classList.remove('invalid');
+      }, 700);
+    }
+  });
+
+  // Numeric and Decimal only for Inquiry Amount
+  inqAmountEl.addEventListener('input', () => {
+    const original = inqAmountEl.value;
+    const cleaned = original.replace(/[^0-9.]/g, ''); 
+    if (cleaned !== original) {
+      inqAmountEl.value = cleaned;
+      inqAmountEl.classList.remove('invalid');
+      void inqAmountEl.offsetWidth; 
+      inqAmountEl.classList.add('invalid');
+      clearTimeout(inqAmountEl._invalidTimer);
+      inqAmountEl._invalidTimer = setTimeout(() => {
+        inqAmountEl.classList.remove('invalid');
       }, 700);
     }
   });
@@ -863,7 +1132,6 @@
   function getAmountVal() { return monthlyEl.value ? '$' + monthlyEl.value : '[amount]'; }
   function getBalanceVal() { return totalBalanceEl.value ? '$' + totalBalanceEl.value : '[balance]'; }
   
-  // Extracts a 10-digit number out of the Notes textbox automatically
   function getPhoneVal() {
       const match = notesEl.value.match(/\b(\d{3})[-.\s]?(\d{3})[-.\s]?(\d{4})\b/);
       if (match) {
@@ -872,7 +1140,6 @@
       return '[PHONE]';
   }
 
-  // Extracts the Email address out of the Notes textbox, stripping the leading/trailing hyphens and spaces
   function getEmailVal() {
       const match = notesEl.value.match(/Email:[\s-]*([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/i);
       return match ? match[1] : '';
@@ -927,7 +1194,6 @@
     }
   });
 
-  // ---------- LRP button ----------
   document.getElementById('lrpBtn').addEventListener('click', () => {
     if (!selectedPill) {
       showToast('Select a pill first');
@@ -938,7 +1204,6 @@
     copyText(message);
   });
 
-  // ---------- Outlook Autofill Email Button ----------
   document.getElementById('emailBtn').addEventListener('click', () => {
     if (!selectedPill) {
         showToast('Highlight a pill first!');
@@ -960,7 +1225,6 @@
     let pillMsg = pillMessages[selectedPill]();
     pillMsg = pillMsg.replace(' ' + TRAILING_SENTENCE, '').replace(TRAILING_SENTENCE, '').trim();
 
-    // Override the [PILL] tag logic for Decline (Nil) to show the decline text in the email
     if (selectedPill === 'Nil') {
         pillMsg = `Agent declined the proposed repayment plan for ${months} months, amounting to ${amount}.`;
     }
@@ -978,15 +1242,13 @@
 
     const emailSubject = encodeURIComponent(`Repayment Plan for ${aName} ${aCode}`);
     const emailBody = encodeURIComponent(templateText);
-    const recipientEmail = getEmailVal(); // Extracts clean email if it exists
+    const recipientEmail = getEmailVal(); 
     
-    // Injects the extracted email into the mailto link's 'to' section
     window.location.href = `mailto:${recipientEmail}?subject=${emailSubject}&body=${emailBody}`;
     
     showToast('Opening Outlook...');
   });
 
-  // ---------- Clear button (Call Tab) ----------
   document.getElementById('clearBtn').addEventListener('click', () => {
     totalBalanceEl.value = '';
     totalBalanceEl.classList.remove('invalid');
@@ -1000,6 +1262,88 @@
     selectedPill = null;
     showToast('Data Cleared');
   });
+
+  // ---------- INQUIRY TAB LOGIC ----------
+  
+  // Update toggle UI state
+  inqTypeToggle.addEventListener('change', function() {
+    if(this.checked) {
+      scLabel.classList.add('active');
+      stLabel.classList.remove('active');
+    } else {
+      stLabel.classList.add('active');
+      scLabel.classList.remove('active');
+    }
+  });
+
+  // Replaces tags in the extracted notes text with a $ explicitly injected for [AMOUNT]
+  function replaceInquiryTags(text) {
+    if (!text) return '';
+    const amtVal = inqAmountEl.value ? '$' + inqAmountEl.value : '[AMOUNT]';
+    return text
+      .replace(/\[NAME\]/gi, inqNameEl.value || '[NAME]')
+      .replace(/\[START\]/gi, inqStartDateEl.value || '[START]')
+      .replace(/\[END\]/gi, inqEndDateEl.value || '[END]')
+      .replace(/\[AMOUNT\]/gi, amtVal)
+      .replace(/\[REQ\]/gi, inqRequestorEl.value || '[REQ]');
+  }
+
+  // Extract a specific line from Notes up to the first newline
+  function extractInquiryLine(marker) {
+    const notesText = inqNotesEl.value;
+    const regex = new RegExp(`${marker}:\\s*(.*)`, 'i');
+    const match = notesText.match(regex);
+    return match ? match[1].trim() : '';
+  }
+
+  document.getElementById('inqEmailBtn').addEventListener('click', () => {
+    const isSC = inqTypeToggle.checked;
+    const typeStr = isSC ? 'SC' : 'ST';
+    
+    // Extracts text from the corresponding ST: or SC: marker
+    const lineContent = extractInquiryLine(typeStr);
+
+    // Grab everything typed in the notes BEFORE the ST/SC/CB markers
+    let generalNotes = "";
+    const prefixMatch = inqNotesEl.value.match(/^([\s\S]*?)(?:ST:|SC:|CB:|$)/i);
+    if (prefixMatch && prefixMatch[1]) {
+      generalNotes = prefixMatch[1];
+    }
+
+    // Combine the top general notes and the specific ST/SC line selection
+    let emailStr = generalNotes + lineContent;
+
+    // Process all the variable tags
+    emailStr = replaceInquiryTags(emailStr);
+
+    copyText(emailStr.trim());
+  });
+
+  document.getElementById('inqNotesBtn').addEventListener('click', () => {
+    // Extracts ONLY the text immediately following CB: up to a newline
+    const cbLine = extractInquiryLine('CB');
+    const processedLine = replaceInquiryTags(cbLine);
+    
+    if (processedLine) {
+      copyText(processedLine);
+    } else {
+      showToast('No CB: line found in notes');
+    }
+  });
+
+  document.getElementById('clearInquiryBtn').addEventListener('click', () => {
+    inqNameEl.value = '';
+    inqAmountEl.value = '';
+    inqStartDateEl.value = '';
+    inqEndDateEl.value = '';
+    inqRequestorEl.value = '';
+    inqNotesEl.value = '';
+    inqTypeToggle.checked = false; 
+    stLabel.classList.add('active');
+    scLabel.classList.remove('active');
+    showToast('Inquiry Cleared');
+  });
+
 
   // ---------- Payment tab: NORM / REC ----------
   let lastKnownAmount = '';
