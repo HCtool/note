@@ -7,63 +7,182 @@
 <!-- Upgraded SheetJS Library that supports Excel Cell Styling -->
 <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
 <style>
+  /* --- THEME VARIABLES --- */
   :root {
-    /* --- iOS Light Mode Variables --- */
+    /* Base default variables (Fallback to iOS Light) */
     --text-main: #000000;
     --text-muted: #8e8e93;
-    
-    /* Apple Core Colors */
-    --accent: #007aff; 
+    --accent: #007aff;
+    --accent-transparent: rgba(0, 122, 255, 0.15);
     --danger: #ff3b30;
     
-    /* True iOS Glass */
     --glass-bg: rgba(255, 255, 255, 0.65);
     --glass-border: rgba(255, 255, 255, 0.4);
-    --glass-shadow: 0 10px 40px rgba(0, 0, 0, 0.1); 
+    --glass-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
     
-    /* iOS standard translucent fill for inputs/pills */
-    --fill-color: rgba(118, 118, 128, 0.12); 
-    --fill-color-hover: rgba(118, 118, 128, 0.2); 
+    --fill-color: rgba(118, 118, 128, 0.12);
+    --fill-color-hover: rgba(118, 118, 128, 0.2);
     
-    /* Dropdown UI Colors */
     --dropdown-bg: rgba(255, 255, 255, 0.9);
     --dropdown-active-bg: rgba(0, 122, 255, 0.1);
 
-    /* Light Image Background */
     --bg-color: #f2f2f7;
     --bg-image: url('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
 
     --radius-sm: 10px;
     --radius-md: 14px;
     --radius-lg: 24px;
+    --border-width: 0.5px;
+    
+    --btn-payment-text: #ffffff;
+    --btn-rec-bg: linear-gradient(135deg, #ff7eb3, #ff4d79);
+    --btn-rec-text: #ffffff;
+    --btn-view-bg: linear-gradient(135deg, #c471ed, #a044ff);
+    --btn-view-text: #ffffff;
+    --btn-save-bg: linear-gradient(135deg, #34c759, #28a745);
+    --btn-save-text: #ffffff;
+
+    --stsc-slider-bg: var(--glass-bg);
+    --toast-bg: rgba(30, 30, 30, 0.75);
+    --toast-text: #ffffff;
   }
 
-  body.dark-mode {
-    /* --- iOS Dark Mode Variables --- */
+  /* 1. iOS Light */
+  body[data-theme="ios-light"] {
+    --text-main: #000000;
+    --text-muted: #8e8e93;
+    --accent: #007aff;
+    --accent-transparent: rgba(0, 122, 255, 0.15);
+    --danger: #ff3b30;
+    --glass-bg: rgba(255, 255, 255, 0.65);
+    --glass-border: rgba(255, 255, 255, 0.4);
+    --glass-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    --fill-color: rgba(118, 118, 128, 0.12);
+    --fill-color-hover: rgba(118, 118, 128, 0.2);
+    --dropdown-bg: rgba(255, 255, 255, 0.9);
+    --dropdown-active-bg: rgba(0, 122, 255, 0.1);
+    --bg-color: #f2f2f7;
+    --bg-image: url('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+    --radius-sm: 10px;
+    --radius-md: 14px;
+    --radius-lg: 24px;
+    --border-width: 0.5px;
+
+    --btn-payment-text: #ffffff;
+    --btn-rec-bg: linear-gradient(135deg, #ff7eb3, #ff4d79);
+    --btn-rec-text: #ffffff;
+    --btn-view-bg: linear-gradient(135deg, #c471ed, #a044ff);
+    --btn-view-text: #ffffff;
+    --btn-save-bg: linear-gradient(135deg, #34c759, #28a745);
+    --btn-save-text: #ffffff;
+
+    --stsc-slider-bg: var(--glass-bg);
+    --toast-bg: rgba(30, 30, 30, 0.75);
+    --toast-text: #ffffff;
+  }
+
+  /* 2. iOS Dark */
+  body[data-theme="ios-dark"] {
     --text-main: #ffffff;
     --text-muted: #ebebf5;
-    
-    /* Apple Core Colors (Dark mode variants) */
-    --accent: #0a84ff; 
+    --accent: #0a84ff;
+    --accent-transparent: rgba(10, 132, 255, 0.2);
     --danger: #ff453a;
-    
-    /* True iOS Dark Glass */
     --glass-bg: rgba(30, 30, 30, 0.65);
     --glass-border: rgba(255, 255, 255, 0.15);
     --glass-shadow: 0 10px 50px rgba(0, 0, 0, 0.6);
-    
-    --fill-color: rgba(118, 118, 128, 0.24); 
-    --fill-color-hover: rgba(118, 118, 128, 0.35); 
-
-    /* Dropdown UI Colors */
+    --fill-color: rgba(118, 118, 128, 0.24);
+    --fill-color-hover: rgba(118, 118, 128, 0.35);
     --dropdown-bg: rgba(44, 44, 46, 0.9);
     --dropdown-active-bg: rgba(10, 132, 255, 0.15);
-
-    /* Dark Image Background */
     --bg-color: #000000;
     --bg-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+    --radius-sm: 10px;
+    --radius-md: 14px;
+    --radius-lg: 24px;
+    --border-width: 0.5px;
+    
+    --btn-payment-text: #ffffff;
+    --btn-rec-bg: linear-gradient(135deg, #ff7eb3, #ff4d79);
+    --btn-rec-text: #ffffff;
+    --btn-view-bg: linear-gradient(135deg, #c471ed, #a044ff);
+    --btn-view-text: #ffffff;
+    --btn-save-bg: linear-gradient(135deg, #34c759, #28a745);
+    --btn-save-text: #ffffff;
+
+    --stsc-slider-bg: #636366;
+    --toast-bg: rgba(220, 220, 220, 0.85);
+    --toast-text: #000000;
   }
-  
+
+  /* 3. Catppuccin Latte (Light) */
+  body[data-theme="catppuccin-light"] {
+    --text-main: #4c4f69;
+    --text-muted: #8c8fa1;
+    --accent: #1e66f5;
+    --accent-transparent: rgba(30, 102, 245, 0.1);
+    --danger: #d20f39;
+    --glass-bg: #ffffff;
+    --glass-border: #ccd0da;
+    --glass-shadow: 0 8px 24px rgba(76, 79, 105, 0.08);
+    --fill-color: #e6e9ef;
+    --fill-color-hover: #dce0e8;
+    --dropdown-bg: #ffffff;
+    --dropdown-active-bg: #e6e9ef;
+    --bg-color: #eff1f5;
+    --bg-image: none;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+    --border-width: 1px;
+
+    --btn-payment-text: #ffffff;
+    --btn-rec-bg: linear-gradient(135deg, #ea76cb, #d20f39);
+    --btn-rec-text: #ffffff;
+    --btn-view-bg: var(--accent);
+    --btn-view-text: #ffffff;
+    --btn-save-bg: #a6e3a1;
+    --btn-save-text: #11111b;
+
+    --stsc-slider-bg: var(--glass-bg);
+    --toast-bg: #4c4f69;
+    --toast-text: #eff1f5;
+  }
+
+  /* 4. Catppuccin Mocha (Dark) */
+  body[data-theme="catppuccin-dark"] {
+    --text-main: #cdd6f4;
+    --text-muted: #a6adc8;
+    --accent: #89b4fa;
+    --accent-transparent: rgba(137, 180, 250, 0.15);
+    --danger: #f38ba8;
+    --glass-bg: #1e1e2e;
+    --glass-border: #313244;
+    --glass-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    --fill-color: #313244;
+    --fill-color-hover: #45475a;
+    --dropdown-bg: #181825;
+    --dropdown-active-bg: #313244;
+    --bg-color: #11111b;
+    --bg-image: none;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+    --border-width: 1px;
+
+    --btn-payment-text: #11111b;
+    --btn-rec-bg: linear-gradient(135deg, #f5c2e7, #f38ba8);
+    --btn-rec-text: #11111b;
+    --btn-view-bg: var(--accent);
+    --btn-view-text: #11111b;
+    --btn-save-bg: #a6e3a1;
+    --btn-save-text: #11111b;
+
+    --stsc-slider-bg: #45475a;
+    --toast-bg: #cdd6f4;
+    --toast-text: #11111b;
+  }
+
   * { 
     box-sizing: border-box; 
     margin: 0;
@@ -86,8 +205,8 @@
     transition: background-image 0.5s ease, background-color 0.5s ease, color 0.3s ease;
   }
 
-  /* --- Theme Toggle Button --- */
-  .theme-toggle {
+  /* --- Theme Roller Button --- */
+  .theme-roller {
     position: fixed;
     top: clamp(10px, 3vw, 20px);
     right: clamp(10px, 3vw, 24px);
@@ -95,7 +214,7 @@
     height: 44px;
     border-radius: 50%;
     background: var(--glass-bg);
-    border: 0.5px solid var(--glass-border);
+    border: var(--border-width) solid var(--glass-border);
     backdrop-filter: blur(25px) saturate(200%);
     -webkit-backdrop-filter: blur(25px) saturate(200%);
     color: var(--text-main);
@@ -104,16 +223,20 @@
     justify-content: center;
     cursor: pointer;
     box-shadow: var(--glass-shadow);
-    transition: all 0.3s ease;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     z-index: 1000;
   }
 
-  .theme-toggle:hover {
-    transform: scale(1.05);
+  .theme-roller:hover {
     background: var(--fill-color);
+    transform: scale(1.05);
   }
 
-  /* --- Main Card (iOS Glass) --- */
+  .theme-roller:active {
+    transform: scale(0.95) rotate(-15deg);
+  }
+
+  /* --- Main Card (Glass) --- */
   .card {
     width: 100%;
     max-width: 460px; 
@@ -124,7 +247,7 @@
     background: var(--glass-bg);
     backdrop-filter: blur(25px) saturate(200%);
     -webkit-backdrop-filter: blur(25px) saturate(200%);
-    border: 0.5px solid var(--glass-border);
+    border: var(--border-width) solid var(--glass-border);
     border-radius: var(--radius-lg);
     overflow: visible; 
     box-shadow: var(--glass-shadow);
@@ -132,7 +255,7 @@
     transition: all 0.3s ease;
   }
 
-  /* --- iOS Glass Dropdown Header --- */
+  /* --- Glass Dropdown Header --- */
   .dropdown-container {
     padding: 16px 16px 0 16px;
     position: relative;
@@ -144,7 +267,7 @@
     padding: 12px 16px;
     border-radius: 12px;
     background: var(--fill-color);
-    border: 0.5px solid var(--glass-border);
+    border: var(--border-width) solid var(--glass-border);
     color: var(--text-main);
     font-size: 16px;
     font-weight: 600;
@@ -178,9 +301,9 @@
     background: var(--dropdown-bg);
     backdrop-filter: blur(35px) saturate(200%);
     -webkit-backdrop-filter: blur(35px) saturate(200%);
-    border: 0.5px solid var(--glass-border);
+    border: var(--border-width) solid var(--glass-border);
     border-radius: 14px;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--glass-shadow);
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -188,10 +311,6 @@
     transform: translateY(-10px) scale(0.98);
     pointer-events: none;
     transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-  }
-
-  body.dark-mode .dropdown-menu {
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
   }
 
   .dropdown-menu.open {
@@ -204,7 +323,7 @@
     padding: 14px 20px;
     background: transparent;
     border: none;
-    border-bottom: 0.5px solid var(--glass-border);
+    border-bottom: var(--border-width) solid var(--glass-border);
     color: var(--text-main);
     font-size: 15px;
     font-weight: 500;
@@ -409,7 +528,7 @@
     width: 110px;
     height: 38px;
     cursor: pointer;
-    border: 0.5px solid var(--glass-border);
+    border: var(--border-width) solid var(--glass-border);
   }
   .stsc-option {
     flex: 1;
@@ -429,14 +548,12 @@
     left: 3px;
     width: calc(50% - 3px);
     height: calc(100% - 6px);
-    background: var(--glass-bg);
+    background: var(--stsc-slider-bg);
     border-radius: 18px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.15);
     transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
   }
-  body.dark-mode .stsc-slider {
-    background: #636366;
-  }
+
   #inqTypeToggle:checked + .stsc-switch-container .stsc-slider {
     transform: translateX(100%);
   }
@@ -449,7 +566,7 @@
     gap: 8px; 
     margin: 10px 0 16px;
     padding: 16px 0 0;
-    border-top: 0.5px solid var(--glass-border);
+    border-top: var(--border-width) solid var(--glass-border);
   }
 
   .pill {
@@ -484,7 +601,7 @@
     flex-shrink: 0;
     gap: 12px;
     padding: 0 0 20px;
-    border-bottom: 0.5px solid var(--glass-border);
+    border-bottom: var(--border-width) solid var(--glass-border);
     margin-bottom: 20px;
   }
 
@@ -493,7 +610,7 @@
     padding: 8px; 
     border-radius: var(--radius-sm);
     border: none;
-    background: rgba(0, 122, 255, 0.15); 
+    background: var(--accent-transparent); 
     color: var(--accent);
     font-size: 12.5px; 
     font-weight: 600;
@@ -501,30 +618,26 @@
     transition: all 0.2s ease;
   }
 
-  body.dark-mode .lrp-btn {
-    background: rgba(10, 132, 255, 0.2);
-  }
-
   .lrp-btn:hover {
     background: var(--accent);
     color: #fff;
   }
 
+  /* Payment Specific UI Elements */
   .payment-btn {
     background: var(--accent);
-    color: #fff;
+    color: var(--btn-payment-text);
   }
   .payment-btn:hover { 
     opacity: 0.85;
   }
   
   .payment-btn#recBtn {
-    background: linear-gradient(135deg, #ff7eb3, #ff4d79);
-    color: #fff;
+    background: var(--btn-rec-bg);
+    color: var(--btn-rec-text);
     border: none;
   }
   .payment-btn#recBtn:hover {
-    background: linear-gradient(135deg, #ff4d79, #ff7eb3);
     opacity: 0.9;
   }
 
@@ -534,10 +647,10 @@
     bottom: 40px;
     left: 50%;
     transform: translateX(-50%) translateY(20px) scale(0.9);
-    background: rgba(30, 30, 30, 0.75);
+    background: var(--toast-bg);
     backdrop-filter: blur(20px) saturate(200%);
     -webkit-backdrop-filter: blur(20px) saturate(200%);
-    color: #fff;
+    color: var(--toast-text);
     padding: 12px 24px;
     border-radius: 999px;
     font-size: 14px; 
@@ -550,11 +663,6 @@
     display: flex;
     align-items: center;
     gap: 8px;
-  }
-
-  body.dark-mode .toast {
-    background: rgba(220, 220, 220, 0.85);
-    color: #000;
   }
 
   .toast.show {
@@ -583,7 +691,7 @@
   }
   .modal-content {
     background: var(--glass-bg);
-    border: 0.5px solid var(--glass-border);
+    border: var(--border-width) solid var(--glass-border);
     border-radius: var(--radius-md);
     padding: 20px;
     width: 100%;
@@ -605,7 +713,7 @@
     border-radius: var(--radius-sm);
     background: var(--fill-color);
     color: var(--text-main);
-    border: 0.5px solid var(--glass-border);
+    border: var(--border-width) solid var(--glass-border);
     font-weight: 600;
     cursor: pointer;
     transition: background 0.2s;
@@ -615,7 +723,7 @@
   }
   .tracker-item {
     padding: 10px;
-    border-bottom: 0.5px solid var(--glass-border);
+    border-bottom: var(--border-width) solid var(--glass-border);
     font-size: 13px;
     line-height: 1.5;
   }
@@ -679,9 +787,10 @@
 </head>
 <body>
 
-<button class="theme-toggle" id="themeToggle" aria-label="Toggle Dark Mode">
-  <svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+<!-- THEME ROLLER BUTTON (Logo Only) -->
+<button class="theme-roller" id="themeRoller" aria-label="Cycle Theme">
+  <svg id="themeIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Icon injected via JS -->
   </svg>
 </button>
 
@@ -880,15 +989,15 @@
       </div>
     </div>
 
-    <!-- Strictly Flattened Payment Buttons Row -->
+    <!-- Strictly Flattened Payment Buttons Row with Dynamic CSS Variables -->
     <div style="display: flex; flex-wrap: nowrap; gap: 6px; margin-bottom: 16px; width: 100%;">
       <button class="pill payment-btn" id="normBtn" data-name="NORM" style="flex: 1; padding: 8px 0; font-size: 11px; text-align: center; white-space: nowrap;">Copy Normal</button>
       <button class="pill payment-btn" id="recBtn" data-name="REC" style="flex: 1; padding: 8px 0; font-size: 11px; text-align: center; white-space: nowrap;">Copy Rec</button>
-      <button class="pill payment-btn" id="viewPaymentTrackerBtn" style="flex: 1; padding: 8px 0; font-size: 11px; text-align: center; white-space: nowrap; background: linear-gradient(135deg, #c471ed, #a044ff); color: #fff; border: none;">View Data</button>
-      <button class="pill payment-btn" id="savePaymentTrackerBtn" style="flex: 1; padding: 8px 0; font-size: 11px; text-align: center; white-space: nowrap; background: linear-gradient(135deg, #34c759, #28a745); color: #fff; border: none;">Save Tracker</button>
+      <button class="pill payment-btn" id="viewPaymentTrackerBtn" style="flex: 1; padding: 8px 0; font-size: 11px; text-align: center; white-space: nowrap; background: var(--btn-view-bg); color: var(--btn-view-text); border: none;">View Data</button>
+      <button class="pill payment-btn" id="savePaymentTrackerBtn" style="flex: 1; padding: 8px 0; font-size: 11px; text-align: center; white-space: nowrap; background: var(--btn-save-bg); color: var(--btn-save-text); border: none;">Save Tracker</button>
     </div>
     
-    <div class="row" style="margin-top: 10px; margin-bottom: 0px; border-top: 0.5px solid var(--glass-border); padding-top: 16px;">
+    <div class="row" style="margin-top: 10px; margin-bottom: 0px; border-top: var(--border-width) solid var(--glass-border); padding-top: 16px;">
       <button class="pill payment-btn" id="downloadPaymentExcelBtn" style="flex: 1; text-align: center;">📊 Download Excel</button>
       <button class="clear-btn" id="resetPaymentTrackerBtn" style="background: var(--danger); color: white; padding: 6px 12px; font-size: 13px;">Reset Data</button>
     </div>
@@ -1045,16 +1154,51 @@
     input.addEventListener('click', function() { this.select(); });
   });
 
-  // ---------- Dark Mode Toggle ----------
-  const themeToggle = document.getElementById('themeToggle');
+  // ---------- Toast Logic ----------
+  let toastTimer;
+  const toastEl = document.getElementById('toast');
+  const toastMsg = document.getElementById('toastMsg');
+  
+  function showToast(msg) {
+    clearTimeout(toastTimer);
+    toastMsg.textContent = msg;
+    toastEl.classList.add('show');
+    toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2000);
+  }
+
+  // ---------- Theme Roller Cycle Logic ----------
+  const themeRoller = document.getElementById('themeRoller');
   const themeIcon = document.getElementById('themeIcon');
-  themeToggle.addEventListener('click', () => {
-    document.body.classList.toggle('dark-mode');
-    if (document.body.classList.contains('dark-mode')) {
-      themeIcon.innerHTML = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
-    } else {
-      themeIcon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+  
+  // Define themes and their SVG icons
+  const themes = [
+    { id: 'ios-light', name: 'iOS Light', icon: '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>' },
+    { id: 'ios-dark', name: 'iOS Dark', icon: '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>' },
+    { id: 'catppuccin-light', name: 'Catppuccin Latte', icon: '<path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line>' },
+    { id: 'catppuccin-dark', name: 'Catppuccin Mocha', icon: '<polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline>' }
+  ];
+
+  let currentThemeIndex = themes.findIndex(t => t.id === (localStorage.getItem('appTheme') || 'ios-light'));
+  if (currentThemeIndex === -1) currentThemeIndex = 0;
+
+  function applyTheme(index, notify = false) {
+    const theme = themes[index];
+    document.body.setAttribute('data-theme', theme.id);
+    localStorage.setItem('appTheme', theme.id);
+    themeIcon.innerHTML = theme.icon;
+
+    if (notify) {
+      showToast(`Theme: ${theme.name}`);
     }
+  }
+
+  // Initial load
+  applyTheme(currentThemeIndex);
+
+  themeRoller.addEventListener('click', () => {
+    // Cycle to next theme
+    currentThemeIndex = (currentThemeIndex + 1) % themes.length;
+    applyTheme(currentThemeIndex, true);
   });
 
   // ---------- Field refs ----------
@@ -1065,8 +1209,6 @@
   const callAgentNameEl = document.getElementById('callAgentName');
   const callAgentCodeEl = document.getElementById('callAgentCode');
   const notesEl = document.getElementById('notes');
-  const toastEl = document.getElementById('toast');
-  const toastMsg = document.getElementById('toastMsg');
   const paymentNotesEl = document.getElementById('paymentNotes');
   const upFieldEl = document.getElementById('upField');
   const pidFieldEl = document.getElementById('pidField');
@@ -1240,15 +1382,6 @@
   });
   monthsEl.addEventListener('change', computeMonthly);
 
-  // ---------- Toast ----------
-  let toastTimer;
-  function showToast(msg) {
-    clearTimeout(toastTimer);
-    toastMsg.textContent = msg;
-    toastEl.classList.add('show');
-    toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2000);
-  }
-
   function copyText(text) {
     navigator.clipboard.writeText(text).then(() => {
       showToast('Copied to clipboard');
@@ -1258,8 +1391,6 @@
   }
 
   // --- Dynamic Clipboard HTML Function ---
-  // If signatureOnly = true, it copies JUST the signature.
-  // If signatureOnly = false AND includeSignature = true, it copies text + signature.
   function copyToClipboardHtml(plainText, includeSignature = false, signatureOnly = false) {
       const signatureHtml = localStorage.getItem('emailSignature') || '';
       let fullHtml = '';
@@ -1494,8 +1625,12 @@
     let emailStr = generalNotes + lineContent;
     emailStr = replaceInquiryTags(emailStr);
 
+    // FIX: Convert newline characters (\n) to HTML line breaks (<br>)
+    // This forces Outlook to respect line breaks when pasting rich text.
+    let formattedHtmlStr = emailStr.trim().replace(/\n/g, '<br>');
+
     // Copy Inquiry Text + Signature to clipboard
-    copyToClipboardHtml(emailStr.trim(), true, false);
+    copyToClipboardHtml(formattedHtmlStr, true, false);
     showToast('Email Notes & Sig Copied!');
   });
 
