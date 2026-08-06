@@ -9,178 +9,87 @@
 <style>
   /* --- THEME VARIABLES --- */
   :root {
-    /* Base default variables (Fallback to iOS Light) */
-    --text-main: #000000;
-    --text-muted: #8e8e93;
-    --accent: #007aff;
-    --accent-transparent: rgba(0, 122, 255, 0.15);
-    --danger: #ff3b30;
-    
-    --glass-bg: rgba(255, 255, 255, 0.65);
-    --glass-border: rgba(255, 255, 255, 0.4);
-    --glass-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-    
-    --fill-color: rgba(118, 118, 128, 0.12);
-    --fill-color-hover: rgba(118, 118, 128, 0.2);
-    
-    --dropdown-bg: rgba(255, 255, 255, 0.9);
-    --dropdown-active-bg: rgba(0, 122, 255, 0.1);
-
-    --bg-color: #f2f2f7;
-    --bg-image: url('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
-
-    --radius-sm: 10px;
-    --radius-md: 14px;
-    --radius-lg: 24px;
-    --border-width: 0.5px;
-    
-    --btn-payment-text: #ffffff;
-    --btn-rec-bg: linear-gradient(135deg, #ff7eb3, #ff4d79);
-    --btn-rec-text: #ffffff;
-    --btn-view-bg: linear-gradient(135deg, #c471ed, #a044ff);
-    --btn-view-text: #ffffff;
-    --btn-save-bg: linear-gradient(135deg, #34c759, #28a745);
-    --btn-save-text: #ffffff;
-
-    --stsc-slider-bg: var(--glass-bg);
-    --toast-bg: rgba(30, 30, 30, 0.75);
-    --toast-text: #ffffff;
-  }
-
-  /* 1. iOS Light */
-  body[data-theme="ios-light"] {
-    --text-main: #000000;
-    --text-muted: #8e8e93;
-    --accent: #007aff;
-    --accent-transparent: rgba(0, 122, 255, 0.15);
-    --danger: #ff3b30;
-    --glass-bg: rgba(255, 255, 255, 0.65);
-    --glass-border: rgba(255, 255, 255, 0.4);
-    --glass-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-    --fill-color: rgba(118, 118, 128, 0.12);
-    --fill-color-hover: rgba(118, 118, 128, 0.2);
-    --dropdown-bg: rgba(255, 255, 255, 0.9);
-    --dropdown-active-bg: rgba(0, 122, 255, 0.1);
-    --bg-color: #f2f2f7;
-    --bg-image: url('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
-    --radius-sm: 10px;
-    --radius-md: 14px;
-    --radius-lg: 24px;
-    --border-width: 0.5px;
-
-    --btn-payment-text: #ffffff;
-    --btn-rec-bg: linear-gradient(135deg, #ff7eb3, #ff4d79);
-    --btn-rec-text: #ffffff;
-    --btn-view-bg: linear-gradient(135deg, #c471ed, #a044ff);
-    --btn-view-text: #ffffff;
-    --btn-save-bg: linear-gradient(135deg, #34c759, #28a745);
-    --btn-save-text: #ffffff;
-
-    --stsc-slider-bg: var(--glass-bg);
-    --toast-bg: rgba(30, 30, 30, 0.75);
-    --toast-text: #ffffff;
-  }
-
-  /* 2. iOS Dark */
-  body[data-theme="ios-dark"] {
-    --text-main: #ffffff;
-    --text-muted: #ebebf5;
-    --accent: #0a84ff;
-    --accent-transparent: rgba(10, 132, 255, 0.2);
-    --danger: #ff453a;
-    --glass-bg: rgba(30, 30, 30, 0.65);
-    --glass-border: rgba(255, 255, 255, 0.15);
-    --glass-shadow: 0 10px 50px rgba(0, 0, 0, 0.6);
-    --fill-color: rgba(118, 118, 128, 0.24);
-    --fill-color-hover: rgba(118, 118, 128, 0.35);
-    --dropdown-bg: rgba(44, 44, 46, 0.9);
-    --dropdown-active-bg: rgba(10, 132, 255, 0.15);
-    --bg-color: #000000;
-    --bg-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
-    --radius-sm: 10px;
-    --radius-md: 14px;
-    --radius-lg: 24px;
-    --border-width: 0.5px;
-    
-    --btn-payment-text: #ffffff;
-    --btn-rec-bg: linear-gradient(135deg, #ff7eb3, #ff4d79);
-    --btn-rec-text: #ffffff;
-    --btn-view-bg: linear-gradient(135deg, #c471ed, #a044ff);
-    --btn-view-text: #ffffff;
-    --btn-save-bg: linear-gradient(135deg, #34c759, #28a745);
-    --btn-save-text: #ffffff;
-
-    --stsc-slider-bg: #636366;
-    --toast-bg: rgba(220, 220, 220, 0.85);
-    --toast-text: #000000;
-  }
-
-  /* 3. Catppuccin Latte (Light) */
-  body[data-theme="catppuccin-light"] {
+    /* 1. Simple Light Mode (Default) */
     --text-main: #4c4f69;
     --text-muted: #8c8fa1;
     --accent: #1e66f5;
     --accent-transparent: rgba(30, 102, 245, 0.1);
     --danger: #d20f39;
+    
     --glass-bg: #ffffff;
     --glass-border: #ccd0da;
     --glass-shadow: 0 8px 24px rgba(76, 79, 105, 0.08);
+    
     --fill-color: #e6e9ef;
     --fill-color-hover: #dce0e8;
+    
     --dropdown-bg: #ffffff;
     --dropdown-active-bg: #e6e9ef;
+
     --bg-color: #eff1f5;
     --bg-image: none;
-    --radius-sm: 8px;
-    --radius-md: 12px;
-    --radius-lg: 20px;
-    --border-width: 1px;
 
+    --radius-sm: 6px; 
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --border-width: 1px;
+    
+    /* Light Mode Button Colors */
     --btn-payment-text: #ffffff;
-    --btn-rec-bg: linear-gradient(135deg, #ea76cb, #d20f39);
-    --btn-rec-text: #ffffff;
-    --btn-view-bg: var(--accent);
+    --btn-view-bg: #ea580c; 
     --btn-view-text: #ffffff;
-    --btn-save-bg: #a6e3a1;
-    --btn-save-text: #11111b;
+    --btn-save-bg: #16a34a; 
+    --btn-save-text: #ffffff;
+
+    /* A B C D Colors Light */
+    --btn-a-bg: rgba(59, 130, 246, 0.15); --btn-a-text: #2563eb;
+    --btn-b-bg: rgba(244, 63, 94, 0.15);  --btn-b-text: #e11d48;
+    --btn-c-bg: rgba(245, 158, 11, 0.15); --btn-c-text: #d97706;
+    --btn-d-bg: rgba(16, 185, 129, 0.15); --btn-d-text: #059669;
 
     --stsc-slider-bg: var(--glass-bg);
     --toast-bg: #4c4f69;
     --toast-text: #eff1f5;
   }
 
-  /* 4. Catppuccin Mocha (Dark) */
-  body[data-theme="catppuccin-dark"] {
-    --text-main: #cdd6f4;
-    --text-muted: #a6adc8;
-    --accent: #89b4fa;
-    --accent-transparent: rgba(137, 180, 250, 0.15);
-    --danger: #f38ba8;
-    --glass-bg: #1e1e2e;
-    --glass-border: #313244;
-    --glass-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-    --fill-color: #313244;
-    --fill-color-hover: #45475a;
-    --dropdown-bg: #181825;
-    --dropdown-active-bg: #313244;
-    --bg-color: #11111b;
+  /* 2. Simple Dark Mode (Eye-Friendly for long hours) */
+  body[data-theme="simple-dark"] {
+    --text-main: #e4e4e7;
+    --text-muted: #a1a1aa;
+    
+    --accent: #60a5fa;
+    --accent-transparent: rgba(96, 165, 250, 0.15);
+    --danger: #f87171;
+    
+    --glass-bg: #27272a;
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    
+    --fill-color: rgba(255, 255, 255, 0.05);
+    --fill-color-hover: rgba(255, 255, 255, 0.1);
+    
+    --dropdown-bg: #1f1f22;
+    --dropdown-active-bg: rgba(255, 255, 255, 0.08);
+    
+    --bg-color: #18181b;
     --bg-image: none;
-    --radius-sm: 8px;
-    --radius-md: 12px;
-    --radius-lg: 20px;
-    --border-width: 1px;
+    
+    /* Dark Mode Button Colors */
+    --btn-payment-text: #000000;
+    --btn-view-bg: #fb923c; 
+    --btn-view-text: #000000;
+    --btn-save-bg: #86efac;
+    --btn-save-text: #000000;
 
-    --btn-payment-text: #11111b;
-    --btn-rec-bg: linear-gradient(135deg, #f5c2e7, #f38ba8);
-    --btn-rec-text: #11111b;
-    --btn-view-bg: var(--accent);
-    --btn-view-text: #11111b;
-    --btn-save-bg: #a6e3a1;
-    --btn-save-text: #11111b;
+    /* A B C D Colors Dark */
+    --btn-a-bg: rgba(96, 165, 250, 0.15);  --btn-a-text: #93c5fd;
+    --btn-b-bg: rgba(251, 113, 133, 0.15); --btn-b-text: #fda4af;
+    --btn-c-bg: rgba(251, 191, 36, 0.15);  --btn-c-text: #fcd34d;
+    --btn-d-bg: rgba(52, 211, 153, 0.15);  --btn-d-text: #6ee7b7;
 
-    --stsc-slider-bg: #45475a;
-    --toast-bg: #cdd6f4;
-    --toast-text: #11111b;
+    --stsc-slider-bg: #3f3f46;
+    --toast-bg: #e4e4e7;
+    --toast-text: #18181b;
   }
 
   * { 
@@ -212,7 +121,7 @@
     right: clamp(10px, 3vw, 24px);
     width: 44px;
     height: 44px;
-    border-radius: 50%;
+    border-radius: 8px; 
     background: var(--glass-bg);
     border: var(--border-width) solid var(--glass-border);
     backdrop-filter: blur(25px) saturate(200%);
@@ -222,18 +131,19 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    box-shadow: var(--glass-shadow);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     z-index: 1000;
   }
 
   .theme-roller:hover {
     background: var(--fill-color);
-    transform: scale(1.05);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
   }
 
   .theme-roller:active {
-    transform: scale(0.95) rotate(-15deg);
+    transform: scale(0.95);
   }
 
   /* --- Main Card (Glass) --- */
@@ -265,7 +175,7 @@
   .dropdown-trigger {
     width: 100%;
     padding: 12px 16px;
-    border-radius: 12px;
+    border-radius: var(--radius-sm);
     background: var(--fill-color);
     border: var(--border-width) solid var(--glass-border);
     color: var(--text-main);
@@ -302,7 +212,7 @@
     backdrop-filter: blur(35px) saturate(200%);
     -webkit-backdrop-filter: blur(35px) saturate(200%);
     border: var(--border-width) solid var(--glass-border);
-    border-radius: 14px;
+    border-radius: var(--radius-md);
     box-shadow: var(--glass-shadow);
     display: flex;
     flex-direction: column;
@@ -395,11 +305,19 @@
     letter-spacing: -0.2px;
     cursor: pointer;
     transition: all 0.2s ease;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
   }
 
   .clear-btn:hover {
     background: var(--danger);
     color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+
+  .clear-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
   }
 
   label {
@@ -411,6 +329,7 @@
     margin-left: 4px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    line-height: 1.4;
   }
 
   .field { 
@@ -422,22 +341,23 @@
     display: flex;
     flex-shrink: 0;
     gap: 12px;
-    align-items: flex-start;
+    align-items: flex-end; /* Ensures smaller inputs bottom-align with tall labels correctly */
     margin-bottom: 16px;
   }
 
-  .row .field { margin-bottom: 0; flex: 1; }
+  .row .field, .row .side-field { margin-bottom: 0; }
+  .row .field { flex: 1; }
   .row .side-field { flex: 0 0 110px; } 
 
-  /* --- Inputs --- */
+  /* --- Inputs (Reduced Padding, Fixed Aligned Height) --- */
   input[type="text"],
   input[type="tel"],
   input[type="number"],
   input[type="date"],
-  select,
-  textarea {
+  select {
     width: 100%;
-    padding: 12px 14px; 
+    height: 36px;
+    padding: 0 12px; 
     border: none;
     border-radius: var(--radius-sm);
     font-size: 13px; 
@@ -446,6 +366,23 @@
     color: var(--text-main);
     font-family: inherit;
     text-transform: uppercase;
+    transition: all 0.2s ease;
+  }
+
+  /* Retain Textarea Size */
+  textarea {
+    width: 100%;
+    padding: 10px 12px; 
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 13px; 
+    font-weight: 400;
+    background: var(--fill-color);
+    color: var(--text-main);
+    font-family: inherit;
+    line-height: 1.5;
+    resize: none; 
+    text-transform: none; 
     transition: all 0.2s ease;
   }
 
@@ -459,10 +396,26 @@
     opacity: 0.7;
     font-weight: 600;
   }
+  
+  /* Make the term custom input look like a select dropdown visually */
+  #months {
+    cursor: pointer;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="%238c8fa1" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 32px;
+  }
 
   input.invalid {
     box-shadow: 0 0 0 2px var(--danger) !important;
     animation: shake 0.4s ease-in-out;
+  }
+
+  /* Specific rule for Template Editor Dropdown in Dark Mode */
+  body[data-theme="simple-dark"] #templateSelector,
+  body[data-theme="simple-dark"] #templateSelector option {
+    color: #000000;
+    background-color: #e4e4e7; 
   }
   
   /* Disable Auto-Caps lock utility */
@@ -485,13 +438,6 @@
     min-height: 0; 
   }
 
-  textarea {
-    font-size: 13px; 
-    line-height: 1.5;
-    resize: none; 
-    text-transform: none; 
-  }
-
   .expand-field textarea {
     flex: 1; 
   }
@@ -500,7 +446,7 @@
   #richSignature {
     width: 100%;
     flex: 1;
-    padding: 12px 14px;
+    padding: 10px 12px;
     border: none;
     border-radius: var(--radius-sm);
     font-size: 14px;
@@ -517,18 +463,20 @@
     box-shadow: 0 0 0 2px var(--accent);
   }
 
-  /* --- Custom ST / SC Toggle Switch --- */
+  /* --- Custom ST / SC & Norm / Rec Toggle Switch (Matches Height exactly) --- */
   .stsc-switch-container {
     display: flex;
     align-items: center;
     background: var(--fill-color);
-    border-radius: 20px;
+    border-radius: var(--radius-sm); 
     padding: 3px;
     position: relative;
     width: 110px;
-    height: 38px;
+    height: 36px; /* Reduced to match smaller inputs */
     cursor: pointer;
     border: var(--border-width) solid var(--glass-border);
+    /* Removes label margins to align perfectly with adjacent textboxes */
+    margin: 0 !important; 
   }
   .stsc-option {
     flex: 1;
@@ -549,16 +497,17 @@
     width: calc(50% - 3px);
     height: calc(100% - 6px);
     background: var(--stsc-slider-bg);
-    border-radius: 18px;
+    border-radius: calc(var(--radius-sm) - 2px);
     box-shadow: 0 2px 6px rgba(0,0,0,0.15);
     transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
   }
 
-  #inqTypeToggle:checked + .stsc-switch-container .stsc-slider {
+  #inqTypeToggle:checked + .stsc-switch-container .stsc-slider,
+  #normRecToggle:checked + .stsc-switch-container .stsc-slider {
     transform: translateX(100%);
   }
 
-  /* --- Pills --- */
+  /* --- Pills & Buttons --- */
   .pills {
     display: flex;
     flex-shrink: 0;
@@ -570,19 +519,27 @@
   }
 
   .pill {
-    padding: 6px 14px;
-    border-radius: 16px;
+    padding: 8px 14px;
+    border-radius: var(--radius-sm); 
     border: none;
     background: var(--fill-color);
     color: var(--text-main);
     font-size: 12.5px; 
     font-weight: 600;
     cursor: pointer;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
     transition: all 0.2s ease;
   }
 
   .pill:hover { 
     background: var(--fill-color-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+
+  .pill:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
   }
 
   .pill.selected {
@@ -602,43 +559,101 @@
     gap: 12px;
     padding: 0 0 20px;
     border-bottom: var(--border-width) solid var(--glass-border);
-    margin-bottom: 20px;
+    margin-bottom: 16px;
   }
 
   .lrp-btn {
     flex: 1;
-    padding: 8px; 
+    padding: 10px 8px; 
     border-radius: var(--radius-sm);
     border: none;
     background: var(--accent-transparent); 
     color: var(--accent);
-    font-size: 12.5px; 
+    font-size: 13px; 
     font-weight: 600;
     cursor: pointer;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.02);
     transition: all 0.2s ease;
   }
 
   .lrp-btn:hover {
     background: var(--accent);
     color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
   }
+  
+  .lrp-btn:active {
+    transform: translateY(0);
+  }
+
+  /* --- Custom A B C D Buttons for Inquiry --- */
+  .btn-a { background: var(--btn-a-bg); color: var(--btn-a-text); }
+  .btn-b { background: var(--btn-b-bg); color: var(--btn-b-text); }
+  .btn-c { background: var(--btn-c-bg); color: var(--btn-c-text); }
+  .btn-d { background: var(--btn-d-bg); color: var(--btn-d-text); }
+  
+  .btn-a:hover { background: var(--btn-a-text); color: #fff; }
+  .btn-b:hover { background: var(--btn-b-text); color: #fff; }
+  .btn-c:hover { background: var(--btn-c-text); color: #fff; }
+  .btn-d:hover { background: var(--btn-d-text); color: #fff; }
 
   /* Payment Specific UI Elements */
   .payment-btn {
-    background: var(--accent);
-    color: var(--btn-payment-text);
-  }
-  .payment-btn:hover { 
-    opacity: 0.85;
+    /* Background handled primarily by inline styles to prevent pill:hover override */
   }
   
-  .payment-btn#recBtn {
-    background: var(--btn-rec-bg);
-    color: var(--btn-rec-text);
-    border: none;
+  .payment-btn:hover { 
+    filter: brightness(1.1);
   }
-  .payment-btn#recBtn:hover {
-    opacity: 0.9;
+
+  /* --- Custom Term Calendar Picker --- */
+  .term-picker-popup {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    background: var(--dropdown-bg);
+    backdrop-filter: blur(35px) saturate(200%);
+    -webkit-backdrop-filter: blur(35px) saturate(200%);
+    border: var(--border-width) solid var(--glass-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--glass-shadow);
+    padding: 12px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    opacity: 0;
+    transform: translateY(-10px) scale(0.98);
+    pointer-events: none;
+    transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+    z-index: 200;
+  }
+  
+  .term-picker-popup.open {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+  
+  .term-cell {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-main);
+    background: var(--fill-color);
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+  }
+  
+  .term-cell:hover {
+    background: var(--accent);
+    color: #fff;
+    transform: scale(1.05);
   }
 
   /* --- Notification Toast --- */
@@ -706,6 +721,31 @@
   .modal-overlay.active .modal-content {
     transform: translateY(0);
   }
+  
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  .modal-header h3 {
+    margin: 0;
+    font-size: 18px;
+  }
+  .modal-close-icon {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 26px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0 4px;
+    transition: color 0.2s;
+  }
+  .modal-close-icon:hover {
+    color: var(--danger);
+  }
+
   .modal-close-btn {
     margin-top: 15px;
     width: 100%;
@@ -785,7 +825,7 @@
   }
 </style>
 </head>
-<body>
+<body data-theme="simple-light">
 
 <!-- THEME ROLLER BUTTON (Logo Only) -->
 <button class="theme-roller" id="themeRoller" aria-label="Cycle Theme">
@@ -810,7 +850,7 @@
       <button class="dropdown-item" data-tab="payment">Payments</button>
       <button class="dropdown-item" data-tab="inquiryTab">Inquiry</button>
       <button class="dropdown-item" data-tab="th">T&amp;H Notes</button>
-      <button class="dropdown-item" data-tab="emailTemplateTab">Email Template Editor</button>
+      <button class="dropdown-item" data-tab="emailTemplateTab">Template Editor</button>
       <button class="dropdown-item" data-tab="statementsTab">Statements</button>
     </div>
   </div>
@@ -829,12 +869,12 @@
       </div>
       <div class="side-field">
         <label for="months">Term (Mo)</label>
-        <select id="months">
-          <option value="">--</option>
-          <option>1</option><option>2</option><option>3</option><option>4</option>
-          <option>5</option><option>6</option><option>7</option><option>8</option>
-          <option>9</option><option>10</option><option>11</option><option>12</option>
-        </select>
+        <div style="position: relative; width: 100%;">
+          <input type="text" id="months" placeholder="--" readonly>
+          <div id="termPicker" class="term-picker-popup">
+            <!-- Dynamically populated via JS -->
+          </div>
+        </div>
       </div>
     </div>
 
@@ -854,7 +894,6 @@
       <button class="pill" data-name="No VM">No VM</button>
       <button class="pill" data-name="Agreed">Confirm</button>
       <button class="pill" data-name="Delay03">Del 3</button>
-      <!-- Merged Decline/Nil -->
       <button class="pill" data-name="Nil">Decline (Nil)</button>
       <button class="pill" data-name="Propose">Propose</button>
     </div>
@@ -883,13 +922,9 @@
 
   <!-- INQUIRY TAB -->
   <div class="tab-content" id="inquiryTab">
-    <div class="tab-header">
+    <div class="tab-header" style="margin-bottom: 14px;">
       <h2>Inquiry</h2>
       <button class="clear-btn" id="clearInquiryBtn">Clear</button>
-    </div>
-    
-    <div class="helper-text">
-      <strong>Available Tags:</strong> <code>[NAME]</code> <code>[START]</code> <code>[END]</code> <code>[AMOUNT]</code> <code>[REQ]</code>
     </div>
 
     <div class="row">
@@ -914,7 +949,7 @@
       </div>
     </div>
 
-    <div class="row" style="align-items: flex-end;">
+    <div class="row">
       <div class="field" style="flex: 1;">
         <label for="inqRequestor">Requestor</label>
         <input type="text" id="inqRequestor" class="no-caps" placeholder="...">
@@ -930,9 +965,17 @@
       </div>
     </div>
 
-    <div class="lrp-row" style="margin-bottom: 12px; padding-bottom: 16px;">
+    <div class="lrp-row" style="margin-bottom: 12px; padding-bottom: 12px;">
       <button class="lrp-btn" id="inqEmailBtn">Email</button>
       <button class="lrp-btn" id="inqNotesBtn">Notes</button>
+    </div>
+    
+    <!-- New A B C D Buttons for Inquiry Templates -->
+    <div style="display: flex; flex-wrap: nowrap; gap: 6px; margin-bottom: 16px; width: 100%;">
+      <button class="pill lrp-btn btn-a" id="inqBtnA" style="flex: 1; text-align: center; margin: 0;">A</button>
+      <button class="pill lrp-btn btn-b" id="inqBtnB" style="flex: 1; text-align: center; margin: 0;">B</button>
+      <button class="pill lrp-btn btn-c" id="inqBtnC" style="flex: 1; text-align: center; margin: 0;">C</button>
+      <button class="pill lrp-btn btn-d" id="inqBtnD" style="flex: 1; text-align: center; margin: 0;">D</button>
     </div>
 
     <div class="field expand-field">
@@ -952,7 +995,7 @@
     </div>
 
     <div class="field expand-field" style="margin-bottom: 16px;">
-      <label for="paymentNotes">Notes</label>
+      <label for="paymentNotes">Notes (Amount & Code)</label>
       <textarea id="paymentNotes" placeholder="..."></textarea>
     </div>
 
@@ -972,11 +1015,16 @@
     </div>
 
     <div class="row">
-      <div class="field">
-        <label for="upField">UP (Name)</label>
-        <input type="text" id="upField" placeholder="...">
+      <div class="side-field" style="flex: 0 0 110px;">
+        <label for="normRecToggle" style="text-align: center;">Type</label>
+        <input type="checkbox" id="normRecToggle" style="display:none;">
+        <label class="stsc-switch-container" for="normRecToggle">
+          <div class="stsc-slider"></div>
+          <div class="stsc-option active" id="normLabel">Norm</div>
+          <div class="stsc-option" id="recLabel">Rec</div>
+        </label>
       </div>
-      <div class="field">
+      <div class="field" style="flex: 1;">
         <label for="pidField">PID Code (10-Digit Primary ID)</label>
         <input type="text" id="pidField" placeholder="Code" inputmode="numeric">
       </div>
@@ -989,17 +1037,16 @@
       </div>
     </div>
 
-    <!-- Strictly Flattened Payment Buttons Row with Dynamic CSS Variables -->
+    <!-- Flattened Payment Buttons Row -->
     <div style="display: flex; flex-wrap: nowrap; gap: 6px; margin-bottom: 16px; width: 100%;">
-      <button class="pill payment-btn" id="normBtn" data-name="NORM" style="flex: 1; padding: 8px 0; font-size: 11px; text-align: center; white-space: nowrap;">Copy Normal</button>
-      <button class="pill payment-btn" id="recBtn" data-name="REC" style="flex: 1; padding: 8px 0; font-size: 11px; text-align: center; white-space: nowrap;">Copy Rec</button>
-      <button class="pill payment-btn" id="viewPaymentTrackerBtn" style="flex: 1; padding: 8px 0; font-size: 11px; text-align: center; white-space: nowrap; background: var(--btn-view-bg); color: var(--btn-view-text); border: none;">View Data</button>
-      <button class="pill payment-btn" id="savePaymentTrackerBtn" style="flex: 1; padding: 8px 0; font-size: 11px; text-align: center; white-space: nowrap; background: var(--btn-save-bg); color: var(--btn-save-text); border: none;">Save Tracker</button>
+      <button class="pill payment-btn" id="commentBtn" data-name="COMMENT" style="flex: 1; padding: 10px 0; font-size: 12px; text-align: center; white-space: nowrap; background: var(--accent); color: var(--btn-payment-text); border: none;">Comment</button>
+      <button class="pill payment-btn" id="viewPaymentTrackerBtn" style="flex: 1; padding: 10px 0; font-size: 12px; text-align: center; white-space: nowrap; background: var(--btn-view-bg); color: var(--btn-view-text); border: none;">View Data</button>
+      <button class="pill payment-btn" id="savePaymentTrackerBtn" style="flex: 1; padding: 10px 0; font-size: 12px; text-align: center; white-space: nowrap; background: var(--btn-save-bg); color: var(--btn-save-text); border: none;">Save Tracker</button>
     </div>
     
     <div class="row" style="margin-top: 10px; margin-bottom: 0px; border-top: var(--border-width) solid var(--glass-border); padding-top: 16px;">
-      <button class="pill payment-btn" id="downloadPaymentExcelBtn" style="flex: 1; text-align: center;">📊 Download Excel</button>
-      <button class="clear-btn" id="resetPaymentTrackerBtn" style="background: var(--danger); color: white; padding: 6px 12px; font-size: 13px;">Reset Data</button>
+      <button class="pill payment-btn" id="downloadPaymentExcelBtn" style="flex: 1; text-align: center; padding: 10px 0; font-size: 12px; background: var(--accent); color: var(--btn-payment-text); border: none;">📊 Download Excel</button>
+      <button class="clear-btn" id="resetPaymentTrackerBtn" style="background: var(--danger); color: var(--btn-payment-text); padding: 10px 12px; font-size: 13px; border: none;">Reset Data</button>
     </div>
   </div>
 
@@ -1019,15 +1066,17 @@
   <!-- EMAIL TEMPLATE TAB -->
   <div class="tab-content" id="emailTemplateTab">
     <div class="tab-header">
-      <h2>Email Setup</h2>
+      <h2>Template Editor</h2>
       <button class="clear-btn" id="resetTemplateBtn">Reset</button>
     </div>
     
     <div class="helper-text">
-      Select a scenario below to edit its specific email format.<br><br>
-      <strong>Available Tags:</strong><br>
+      Select a scenario below to edit its specific template format.<br><br>
+      <strong>Email Tags:</strong><br>
       <code>[NAME]</code> <code>[CODE]</code> <code>[PHONE]</code> <code>[BALANCE]</code>
-      <code>[AMOUNT]</code> <code>[MONTHS]</code> <code>[DATE]</code> <code>[DAY]</code>
+      <code>[AMOUNT]</code> <code>[MONTHS]</code> <code>[DATE]</code> <code>[DAY]</code><br><br>
+      <strong>Inquiry Tags:</strong><br>
+      <code>[Nm]</code> <code>[AM]</code> <code>[START]</code> <code>[END]</code> <code>[REQ]</code>
     </div>
     
     <!-- Template Scenario Selector -->
@@ -1040,6 +1089,8 @@
         <option value="Nil">Decline</option>
         <option value="Propose">Propose</option>
         <option value="Delay03">Delay 3</option>
+        <option value="Payment">Payment</option>
+        <option value="Inquiry">Inquiry</option>
         <!-- Added Signature Rich Text Option -->
         <option value="Signature">Signature</option>
       </select>
@@ -1077,7 +1128,10 @@
 <!-- Modal for Viewing Saved Data -->
 <div class="modal-overlay" id="dataModal">
   <div class="modal-content">
-    <h3 style="margin-bottom: 12px; font-size: 18px;">Saved Tracker Data</h3>
+    <div class="modal-header">
+      <h3>Saved Tracker Data</h3>
+      <button class="modal-close-icon" id="closeDataModalIcon">&times;</button>
+    </div>
     <div id="dataModalBody" style="background: var(--fill-color); border-radius: var(--radius-sm); padding: 5px;"></div>
     <button class="modal-close-btn" id="closeDataModalBtn">Close</button>
   </div>
@@ -1170,15 +1224,12 @@
   const themeRoller = document.getElementById('themeRoller');
   const themeIcon = document.getElementById('themeIcon');
   
-  // Define themes and their SVG icons
   const themes = [
-    { id: 'ios-light', name: 'Light mode', icon: '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>' },
-    { id: 'ios-dark', name: 'Dark mode', icon: '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>' },
-    { id: 'catppuccin-light', name: 'Simple Light mode', icon: '<path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line>' },
-    { id: 'catppuccin-dark', name: 'Simple Dark mode', icon: '<polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline>' }
+    { id: 'simple-light', name: 'Light mode', icon: '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>' },
+    { id: 'simple-dark', name: 'Dark mode', icon: '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>' }
   ];
 
-  let currentThemeIndex = themes.findIndex(t => t.id === (localStorage.getItem('appTheme') || 'ios-light'));
+  let currentThemeIndex = themes.findIndex(t => t.id === (localStorage.getItem('appTheme') || 'simple-light'));
   if (currentThemeIndex === -1) currentThemeIndex = 0;
 
   function applyTheme(index, notify = false) {
@@ -1196,7 +1247,6 @@
   applyTheme(currentThemeIndex);
 
   themeRoller.addEventListener('click', () => {
-    // Cycle to next theme
     currentThemeIndex = (currentThemeIndex + 1) % themes.length;
     applyTheme(currentThemeIndex, true);
   });
@@ -1204,13 +1254,13 @@
   // ---------- Field refs ----------
   const totalBalanceEl = document.getElementById('totalBalance');
   const monthsEl = document.getElementById('months');
+  const termPicker = document.getElementById('termPicker');
   const monthlyEl = document.getElementById('monthly');
   const startDateEl = document.getElementById('startDate');
   const callAgentNameEl = document.getElementById('callAgentName');
   const callAgentCodeEl = document.getElementById('callAgentCode');
   const notesEl = document.getElementById('notes');
   const paymentNotesEl = document.getElementById('paymentNotes');
-  const upFieldEl = document.getElementById('upField');
   const pidFieldEl = document.getElementById('pidField');
   const thNotesEl = document.getElementById('thNotes');
   
@@ -1230,6 +1280,11 @@
   const paymentDateBtnEl = document.getElementById('paymentDateBtn');
   const pdInitialsEl = document.getElementById('pdInitials');
 
+  // Norm / Rec toggle specific
+  const normRecToggle = document.getElementById('normRecToggle');
+  const normLabel = document.getElementById('normLabel');
+  const recLabel = document.getElementById('recLabel');
+
   // Inquiry Tab Fields
   const inqNameEl = document.getElementById('inqName');
   const inqAmountEl = document.getElementById('inqAmount');
@@ -1240,6 +1295,18 @@
   const inqTypeToggle = document.getElementById('inqTypeToggle');
   const stLabel = document.getElementById('stLabel');
   const scLabel = document.getElementById('scLabel');
+
+  // --- Auto-Trimming for From, Agent, Code, PID Code & Call Notes Agent/Code ---
+  [fromFieldEl, agentFieldEl, codeFieldEl, pidFieldEl, callAgentNameEl, callAgentCodeEl].forEach(el => {
+    el.addEventListener('input', function() {
+      if (this.value.startsWith(' ')) {
+        this.value = this.value.trimStart();
+      }
+    });
+    el.addEventListener('blur', function() {
+      this.value = this.value.trim();
+    });
+  });
 
   pidFieldEl.addEventListener('input', () => {
     const original = pidFieldEl.value;
@@ -1281,7 +1348,9 @@
       'Agreed': `Hello,\n\nDetails of your confirmed plan:\n${baseDetails}\n\nThank you,`,
       'Nil': `Hello,\n\nAgent Name: [NAME]\nCode: [CODE]\nPhone: [PHONE]\n\nWe noted your decision regarding the proposed repayment plan.\n\nThank you,`,
       'Propose': `Hello,\n\nWe would like to propose the following plan:\n${baseDetails}\n\nThank you,`,
-      'Delay03': `Hello,\n\nDetails of the plan:\n${baseDetails}\n\nThank you,`
+      'Delay03': `Hello,\n\nDetails of the plan:\n${baseDetails}\n\nThank you,`,
+      'Payment': ``,
+      'Inquiry': `Name: [Nm]\nAmount: [AM]\nStart: [START]\nEnd: [END]\nRequestor: [REQ]\n\nST: \nSC: \nCB: \nA: \nB: \nC: \nD: `
   };
 
   function loadTemplateForScenario(scenarioName) {
@@ -1293,7 +1362,7 @@
           templateEditorWrapper.style.display = 'flex';
           signatureEditorWrapper.style.display = 'none';
           const saved = localStorage.getItem('emailTemplate_' + scenarioName);
-          savedEmailTemplateEl.value = saved || DEFAULT_TEMPLATES[scenarioName] || DEFAULT_TEMPLATES['VM'];
+          savedEmailTemplateEl.value = saved !== null ? saved : (DEFAULT_TEMPLATES[scenarioName] || '');
       }
   }
 
@@ -1304,6 +1373,11 @@
   savedEmailTemplateEl.addEventListener('input', () => {
       if(templateSelector.value !== 'Signature') {
           localStorage.setItem('emailTemplate_' + templateSelector.value, savedEmailTemplateEl.value);
+          
+          // Live sync to payment notes if editing Payment template
+          if (templateSelector.value === 'Payment') {
+              paymentNotesEl.value = savedEmailTemplateEl.value;
+          }
       }
   });
 
@@ -1326,6 +1400,11 @@
           if (confirm(`Are you sure you want to reset the [${scenarioText}] template to its default layout?`)) {
               savedEmailTemplateEl.value = DEFAULT_TEMPLATES[currentScenario];
               localStorage.removeItem('emailTemplate_' + currentScenario);
+              
+              if (currentScenario === 'Payment') {
+                  paymentNotesEl.value = DEFAULT_TEMPLATES[currentScenario];
+              }
+              
               showToast('Template Reset!');
           }
       }
@@ -1333,6 +1412,28 @@
 
   // Initialize correct view on load
   loadTemplateForScenario(templateSelector.value);
+
+  // Set Payment Notes Default on Page Load
+  paymentNotesEl.value = localStorage.getItem('emailTemplate_Payment') !== null 
+      ? localStorage.getItem('emailTemplate_Payment') 
+      : (DEFAULT_TEMPLATES['Payment'] || '');
+
+  // ---------- Auto Format 9-10 Digits in Notes ----------
+  function autoFormatNotesDigits(el) {
+    const original = el.value;
+    // Matches 9 or 10 digits separated by dashes and instantly strips the dashes
+    const cleaned = original.replace(/(^|[^0-9-])((?:[0-9]-*){8,9}[0-9])(?=[^0-9-]|$)/g, (match, p1, p2) => {
+        return p1 + p2.replace(/-/g, '');
+    });
+    
+    if (cleaned !== original) {
+        const start = el.selectionStart;
+        const end = el.selectionEnd;
+        const diff = original.length - cleaned.length;
+        el.value = cleaned;
+        try { el.setSelectionRange(start - diff, end - diff); } catch(e) {}
+    }
+  }
 
   // ---------- Start Date defaults ----------
   function formatDateInput(d) {
@@ -1347,13 +1448,44 @@
     return d;
   }
   function resetStartDate() {
-    const plus10 = formatDateInput(getDatePlus10());
-    startDateEl.value = plus10;
-    startDateEl.min = plus10;
+    const todayStr = formatDateInput(new Date());
+    const plus10Str = formatDateInput(getDatePlus10());
+    startDateEl.value = plus10Str;
+    startDateEl.min = todayStr; // Fix: Minimum allowed is today's date
   }
   resetStartDate();
 
-  // ---------- Auto compute Monthly ----------
+  // ---------- Auto compute Monthly & Term Calendar Logic ----------
+  
+  // Populate the custom calendar picker for Terms
+  let termGridHTML = '';
+  for(let i=1; i<=24; i++) {
+    termGridHTML += `<div class="term-cell" data-val="${i}">${i}</div>`;
+  }
+  termPicker.innerHTML = termGridHTML;
+
+  // Open the picker
+  monthsEl.addEventListener('click', (e) => {
+    e.stopPropagation();
+    termPicker.classList.toggle('open');
+  });
+
+  // Select a value
+  termPicker.addEventListener('click', (e) => {
+    if (e.target.classList.contains('term-cell')) {
+      monthsEl.value = e.target.dataset.val;
+      computeMonthly();
+      termPicker.classList.remove('open');
+    }
+  });
+
+  // Close when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!termPicker.contains(e.target) && e.target !== monthsEl) {
+      termPicker.classList.remove('open');
+    }
+  });
+
   function computeMonthly() {
     const total = parseFloat(totalBalanceEl.value);
     const months = parseInt(monthsEl.value, 10);
@@ -1365,6 +1497,7 @@
       monthlyEl.value = '';
     }
   }
+  
   totalBalanceEl.addEventListener('input', () => {
     const original = totalBalanceEl.value;
     const cleaned = original.replace(/[^0-9.]/g, '');
@@ -1380,7 +1513,6 @@
     }
     computeMonthly();
   });
-  monthsEl.addEventListener('change', computeMonthly);
 
   function copyText(text) {
     navigator.clipboard.writeText(text).then(() => {
@@ -1483,7 +1615,7 @@
   let selectedPill = null;
   const pillEls = document.querySelectorAll('.pill');
   pillEls.forEach(pill => {
-    if(!pill.classList.contains('payment-btn')) {
+    if(!pill.classList.contains('payment-btn') && !pill.classList.contains('lrp-btn')) {
       pill.addEventListener('click', () => {
         const name = pill.dataset.name;
         pillEls.forEach(p => p.classList.remove('selected'));
@@ -1571,15 +1703,6 @@
   });
 
   // ---------- INQUIRY TAB LOGIC ----------
-  
-  const savedInqNotes = localStorage.getItem('inqNotesMemo');
-  if (savedInqNotes !== null) {
-    inqNotesEl.value = savedInqNotes;
-  }
-
-  inqNotesEl.addEventListener('input', () => {
-    localStorage.setItem('inqNotesMemo', inqNotesEl.value);
-  });
 
   inqTypeToggle.addEventListener('change', function() {
     if(this.checked) {
@@ -1591,21 +1714,47 @@
     }
   });
 
+  // Payment Tab: Norm / Rec Toggle behavior
+  normRecToggle.addEventListener('change', function() {
+    if(this.checked) {
+      recLabel.classList.add('active');
+      normLabel.classList.remove('active');
+    } else {
+      normLabel.classList.add('active');
+      recLabel.classList.remove('active');
+    }
+  });
+
   function replaceInquiryTags(text) {
     if (!text) return '';
-    const amtVal = inqAmountEl.value ? '$' + inqAmountEl.value : '[AMOUNT]';
+    const amtVal = inqAmountEl.value ? '$' + inqAmountEl.value : '[AM]';
     return text
-      .replace(/\[NAME\]/gi, inqNameEl.value || '[NAME]')
+      .replace(/\[Nm\]/gi, inqNameEl.value || '[Nm]')
       .replace(/\[START\]/gi, inqStartDateEl.value || '[START]')
       .replace(/\[END\]/gi, inqEndDateEl.value || '[END]')
-      .replace(/\[AMOUNT\]/gi, amtVal)
+      .replace(/\[AM\]/gi, amtVal)
       .replace(/\[REQ\]/gi, inqRequestorEl.value || '[REQ]');
   }
 
-  function extractInquiryLine(marker) {
-    const notesText = inqNotesEl.value;
-    const regex = new RegExp(`${marker}:\\s*(.*)`, 'i');
-    const match = notesText.match(regex);
+  function getInquiryTemplateText() {
+    return localStorage.getItem('emailTemplate_Inquiry') || DEFAULT_TEMPLATES['Inquiry'] || '';
+  }
+
+  // Grabs everything BEFORE the first recognized marker (ST:, SC:, CB:, A:, B:, C:, D:)
+  function getGeneralNotes() {
+    const text = getInquiryTemplateText();
+    const firstMarkerIndex = text.search(/^\s*(?:ST|SC|CB|A|B|C|D):/im);
+    if (firstMarkerIndex !== -1) {
+        return text.substring(0, firstMarkerIndex);
+    }
+    return text;
+  }
+
+  // Grabs the block of text strictly UNDER the requested marker until the next marker
+  function extractInquiryBlock(marker) {
+    const text = getInquiryTemplateText();
+    const regex = new RegExp('^\\s*' + marker + ':\\s*([\\s\\S]*?)(?=(?:^\\s*(?:ST|SC|CB|A|B|C|D):)|$)', 'im');
+    const match = text.match(regex);
     return match ? match[1].trim() : '';
   }
 
@@ -1614,47 +1763,68 @@
     const isSC = inqTypeToggle.checked;
     const typeStr = isSC ? 'SC' : 'ST';
     
-    const lineContent = extractInquiryLine(typeStr);
+    const generalNotes = getGeneralNotes();
+    const lineContent = extractInquiryBlock(typeStr);
 
-    let generalNotes = "";
-    const prefixMatch = inqNotesEl.value.match(/^([\s\S]*?)(?:ST:|SC:|CB:|$)/i);
-    if (prefixMatch && prefixMatch[1]) {
-      generalNotes = prefixMatch[1];
-    }
+    // Forces exactly ONE blank line spacing before appending the content without the marker
+    let emailStr = generalNotes.trimEnd() + '\n\n' + (lineContent ? lineContent : '');
+    
+    // Replace tags with inputted values
+    let plainTextStr = replaceInquiryTags(emailStr).trim();
+    // Convert newlines to HTML breaks strictly for the clipboard formatting
+    let formattedHtmlStr = plainTextStr.replace(/\n/g, '<br>');
 
-    let emailStr = generalNotes + lineContent;
-    emailStr = replaceInquiryTags(emailStr);
-
-    // FIX: Convert newline characters (\n) to HTML line breaks (<br>)
-    // This forces Outlook to respect line breaks when pasting rich text.
-    let formattedHtmlStr = emailStr.trim().replace(/\n/g, '<br>');
-
-    // Copy Inquiry Text + Signature to clipboard
     copyToClipboardHtml(formattedHtmlStr, true, false);
     showToast('Email Notes & Sig Copied!');
   });
 
   document.getElementById('inqNotesBtn').addEventListener('click', () => {
-    const cbLine = extractInquiryLine('CB');
-    const processedLine = replaceInquiryTags(cbLine);
+    const cbLine = extractInquiryBlock('CB');
     
-    if (processedLine) {
+    if (cbLine) {
+      const processedLine = replaceInquiryTags(cbLine);
       copyText(processedLine);
     } else {
-      showToast('No CB: line found in notes');
+      showToast('No CB: line found in template');
     }
   });
 
+  // A, B, C, D button listeners
+  ['A', 'B', 'C', 'D'].forEach(letter => {
+      document.getElementById('inqBtn' + letter).addEventListener('click', () => {
+          const lineContent = extractInquiryBlock(letter);
+          if (lineContent) {
+              const processedLine = replaceInquiryTags(lineContent);
+              copyText(processedLine);
+          } else {
+              showToast(`No ${letter}: line found in template`);
+          }
+      });
+  });
+
   document.getElementById('clearInquiryBtn').addEventListener('click', () => {
+    // Clear all inputs
     inqNameEl.value = '';
     inqAmountEl.value = '';
     inqStartDateEl.value = '';
     inqEndDateEl.value = '';
     inqRequestorEl.value = '';
+    inqNotesEl.value = '';
+    
+    // Reset toggle back to Default (ST)
+    inqTypeToggle.checked = false;
+    stLabel.classList.add('active');
+    scLabel.classList.remove('active');
+    
     showToast('Inquiry Cleared');
   });
+  
+  // Attach formatting to T&H Notes as well
+  thNotesEl.addEventListener('input', (e) => {
+      autoFormatNotesDigits(e.target);
+  });
 
-  // ---------- Payment tab: NORM / REC ----------
+  // ---------- Payment tab: NORM / REC Button Action ----------
   let lastKnownAmount = '';
   let lastKnownCode = '';
 
@@ -1681,35 +1851,37 @@
       }
   });
 
-  document.getElementById('normBtn').addEventListener('click', () => {
-    const message = `AWD took c card pmt $${getPaymentAmount()} auth ${getApprovalCode()} added ${getTodayMD()} MWF`;
-    copyText(message);
-  });
-
-  document.getElementById('recBtn').addEventListener('click', () => {
-    const up = upFieldEl.value || '[UP]';
+  document.getElementById('commentBtn').addEventListener('click', () => {
+    const isRec = normRecToggle.checked;
     const pid = pidFieldEl.value || '[PID]';
-    const message = `AWD took c card pmt $${getPaymentAmount()} auth ${getApprovalCode()} added ${getTodayMD()} MWF CC recouped to ${up} ${pid}`;
+    const agent = agentFieldEl.value || '[AGENT]';
+
+    let message = `AWD took c card pmt $${getPaymentAmount()} auth ${getApprovalCode()} added ${getTodayMD()} MWF`;
+    
+    if (isRec) {
+      message += ` CC recouped to ${agent} ${pid}`;
+    }
+    
     copyText(message);
   });
   
   // ---------- PAYMENT TRACKER EXCEL LOGIC ----------
   let paymentTrackerData = JSON.parse(localStorage.getItem('myPaymentTracker')) || [];
   
-  // Re-usable function to update tracker UI inside the modal
   function renderTrackerModal() {
     const display = document.getElementById('dataModalBody');
     if (paymentTrackerData.length === 0) {
       display.innerHTML = '<div style="padding: 15px; text-align: center; color: var(--text-muted);">No data saved yet.</div>';
     } else {
       display.innerHTML = paymentTrackerData.map((row, index) => {
+        // Updated Order: Date, Agent, Amount, Conf, Code, PID
         return `<div class="tracker-item" data-index="${index}">
-          <strong>#${index + 1} | Date:</strong> ${row["Payment Date"] || 'N/A'}<br>
+          <strong>#${index + 1} | Date:</strong> ${row["Payment Date"] || 'N/A'} | <strong>Agent:</strong> ${row["Agent"] || 'N/A'}<br>
           <strong>Amount:</strong> $${row["Amount"] || '0.00'} | <strong>Conf:</strong> ${row["CC Conf #"] || 'N/A'}<br>
-          <strong>PID:</strong> ${row["Primary ID"] || 'N/A'} | <strong>Code:</strong> ${row["Agent #"] || 'N/A'}
+          <strong>Code:</strong> ${row["Agent #"] || 'N/A'} | <strong>PID:</strong> ${row["Primary ID"] || 'N/A'}
           <div style="margin-top: 10px; display: flex; gap: 8px;">
-            <button class="pill payment-btn edit-tracker-btn" style="padding: 4px 12px; font-size: 11px;">Edit</button>
-            <button class="pill delete-tracker-btn" style="padding: 4px 12px; font-size: 11px; background: var(--danger); color: white;">Delete</button>
+            <button class="pill payment-btn edit-tracker-btn" style="padding: 4px 12px; font-size: 11px; background: var(--accent); color: var(--btn-payment-text); border: none;">Edit</button>
+            <button class="pill delete-tracker-btn" style="padding: 4px 12px; font-size: 11px; background: var(--danger); color: var(--btn-payment-text); border: none;">Delete</button>
           </div>
         </div>`;
       }).join('');
@@ -1730,10 +1902,25 @@
     const pidValue = pidFieldEl.value || (pidFallback ? pidFallback[0] : '');
     
     const codeValue = codeFieldEl.value || '';
+    const fromValue = fromFieldEl.value || '';
+    const agentValue = agentFieldEl.value || '';
+    const amountValue = getPaymentAmount();
+    const approvalCodeValue = getApprovalCode();
     const initialsVal = pdInitialsEl.value.trim().toUpperCase() || 'XXX';
 
-    const hasUpData = upFieldEl.value.trim().length > 0;
-    const commentsVal = hasUpData ? `CC Recoup ${codeValue}`.trim() : 'Credit Card';
+    // --- STRICT VALIDATION ---
+    if (!fromValue || !agentValue || !codeValue || !pidValue || 
+        !paymentDateBtnEl.value || 
+        amountValue === '[amount]' || !amountValue ||
+        approvalCodeValue === '[approval code]' || !approvalCodeValue ||
+        !ssnValue) {
+        
+        showToast('All fields (including SSN, Amount & App Code) are required.');
+        return; 
+    }
+
+    const isRec = normRecToggle.checked;
+    const commentsVal = isRec ? `CC Recoup ${codeValue}`.trim() : 'Credit Card';
 
     const newRow = {
       "CC Conf #": getApprovalCode() === '[approval code]' ? '' : getApprovalCode(),
@@ -1748,7 +1935,6 @@
       "Processor": initialsVal 
     };
 
-    // Duplicate Check
     const isDuplicate = paymentTrackerData.some(row => JSON.stringify(row) === JSON.stringify(newRow));
     if (isDuplicate) {
       showToast('Duplicate Data - Not Saved');
@@ -1758,23 +1944,47 @@
     paymentTrackerData.push(newRow);
     localStorage.setItem('myPaymentTracker', JSON.stringify(paymentTrackerData));
     
+    // Clear textual input fields
     fromFieldEl.value = '';
     agentFieldEl.value = '';
     codeFieldEl.value = '';
     pidFieldEl.value = '';
     
-    paymentNotesEl.value = paymentNotesEl.value.replace(/\b\d{9}\b/g, '').trim();
+    // Refresh notes from the Payment template 
+    paymentNotesEl.value = localStorage.getItem('emailTemplate_Payment') !== null 
+        ? localStorage.getItem('emailTemplate_Payment') 
+        : (DEFAULT_TEMPLATES['Payment'] || '');
+
+    // Reset Norm/Rec Switch to Norm Default
+    normRecToggle.checked = false;
+    normLabel.classList.add('active');
+    recLabel.classList.remove('active');
 
     showToast('Saved to Tracker & Fields Cleared!');
   });
 
   // ---------- VIEW TRACKER MODAL LOGIC ----------
+  
+  function closeDataModal() {
+    document.getElementById('dataModal').classList.remove('active');
+  }
+
   document.getElementById('viewPaymentTrackerBtn').addEventListener('click', () => {
     renderTrackerModal();
     document.getElementById('dataModal').classList.add('active');
   });
 
-  // Event Delegation for Edit & Delete within Modal
+  // Modal Close Buttons
+  document.getElementById('closeDataModalBtn').addEventListener('click', closeDataModal);
+  document.getElementById('closeDataModalIcon').addEventListener('click', closeDataModal);
+
+  // Click outside to close
+  document.getElementById('dataModal').addEventListener('click', (e) => {
+    if (e.target === document.getElementById('dataModal')) {
+      closeDataModal();
+    }
+  });
+
   document.getElementById('dataModalBody').addEventListener('click', (e) => {
     if (e.target.classList.contains('delete-tracker-btn')) {
       const item = e.target.closest('.tracker-item');
@@ -1789,7 +1999,6 @@
       const index = parseInt(item.dataset.index, 10);
       const row = paymentTrackerData[index];
       
-      // Populate textboxes
       fromFieldEl.value = row['From'] || '';
       agentFieldEl.value = row['Agent'] || '';
       codeFieldEl.value = row['Agent #'] || '';
@@ -1808,7 +2017,6 @@
           paymentDateBtnEl.value = '';
       }
 
-      // Reconstruct Notes string
       let mockNote = '';
       if (row['Amount']) mockNote += `AMOUNT $${row['Amount']} `;
       if (row['CC Conf #']) mockNote += `APPROVAL CODE ${row['CC Conf #']} `;
@@ -1816,22 +2024,21 @@
       paymentNotesEl.value = mockNote.trim();
 
       if (row['Comments'] && row['Comments'].includes('CC Recoup')) {
-         upFieldEl.value = '[FILL IN UP]';
+         normRecToggle.checked = true;
+         recLabel.classList.add('active');
+         normLabel.classList.remove('active');
       } else {
-         upFieldEl.value = '';
+         normRecToggle.checked = false;
+         normLabel.classList.add('active');
+         recLabel.classList.remove('active');
       }
 
-      // Remove from tracker 
       paymentTrackerData.splice(index, 1);
       localStorage.setItem('myPaymentTracker', JSON.stringify(paymentTrackerData));
       
-      document.getElementById('dataModal').classList.remove('active');
+      closeDataModal();
       showToast('Moved to form for editing.');
     }
-  });
-
-  document.getElementById('closeDataModalBtn').addEventListener('click', () => {
-    document.getElementById('dataModal').classList.remove('active');
   });
 
   // ---------- DOWNLOAD TRACKER LOGIC ----------
@@ -1901,14 +2108,14 @@
     if (confirm('Are you sure you want to delete all saved Payment tracking data? This cannot be undone.')) {
       paymentTrackerData = [];
       localStorage.removeItem('myPaymentTracker');
-      paymentDateBtnEl.value = '';
+      paymentDateBtnEl.value = localStorage.getItem('emailTemplate_Payment') !== null 
+        ? localStorage.getItem('emailTemplate_Payment') 
+        : (DEFAULT_TEMPLATES['Payment'] || '');
       showToast('Payment Tracker Reset.');
     }
   });
 
   document.getElementById('clearPaymentBtn').addEventListener('click', () => {
-    paymentNotesEl.value = '';
-    upFieldEl.value = '';
     pidFieldEl.value = '';
     fromFieldEl.value = '';
     codeFieldEl.value = '';
@@ -1916,6 +2123,17 @@
     pidFieldEl.classList.remove('invalid');
     lastKnownAmount = '';
     lastKnownCode = '';
+    
+    // Refresh notes from memory
+    paymentNotesEl.value = localStorage.getItem('emailTemplate_Payment') !== null 
+        ? localStorage.getItem('emailTemplate_Payment') 
+        : (DEFAULT_TEMPLATES['Payment'] || '');
+    
+    // Reset toggle to NORM
+    normRecToggle.checked = false;
+    normLabel.classList.add('active');
+    recLabel.classList.remove('active');
+
     showToast('Data Cleared');
   });
 
