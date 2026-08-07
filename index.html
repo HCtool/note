@@ -6,112 +6,243 @@
 <title>The Guide</title>
 <!-- Upgraded SheetJS Library that supports Excel Cell Styling -->
 <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   /* --- THEME VARIABLES --- */
   :root {
-    /* 1. Simple Light Mode (Default) */
+    color-scheme: light;
+    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    
+    /* 1. SIMPLE LIGHT (Default) */
     --text-main: #4c4f69;
     --text-muted: #8c8fa1;
     --accent: #1e66f5;
-    --accent-transparent: rgba(30, 102, 245, 0.1);
     --danger: #d20f39;
-    
-    --glass-bg: #ffffff;
-    --glass-border: #ccd0da;
-    --glass-shadow: 0 8px 24px rgba(76, 79, 105, 0.08);
-    
-    --fill-color: #e6e9ef;
-    --fill-color-hover: #dce0e8;
-    
-    --dropdown-bg: #ffffff;
-    --dropdown-active-bg: #e6e9ef;
+    --warning: #f59e0b;
+    --success: #10b981; 
 
     --bg-color: #eff1f5;
-    --bg-image: none;
+    
+    --glass-base: #ffffff;
+    --glass-blur: blur(25px);
+    --glass-border: #ccd0da;
+    --glass-shadow: 0 8px 24px rgba(76, 79, 105, 0.08);
+    --glass-inner-shadow: none;
+    
+    --panel-bg: #ffffff;
+    --dropdown-bg: #ffffff;
+    
+    --input-bg: #e6e9ef;
+    --input-border: transparent;
+    --input-shadow: none;
+    --input-focus-shadow: 0 0 0 2px rgba(30, 102, 245, 0.2);
+    
+    --btn-bg: #e6e9ef;
+    --btn-hover: #dce0e8;
+    --btn-border: #ccd0da;
+    --btn-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    --btn-inner-highlight: none;
 
     --radius-sm: 6px; 
     --radius-md: 12px;
     --radius-lg: 16px;
-    --border-width: 1px;
-    
-    /* Light Mode Button Colors */
-    --btn-payment-text: #ffffff;
-    --btn-view-bg: #ea580c; 
-    --btn-view-text: #ffffff;
-    --btn-save-bg: #16a34a; 
-    --btn-save-text: #ffffff;
 
     /* A B C D Colors Light */
-    --btn-a-bg: rgba(59, 130, 246, 0.15); --btn-a-text: #2563eb;
-    --btn-b-bg: rgba(244, 63, 94, 0.15);  --btn-b-text: #e11d48;
-    --btn-c-bg: rgba(245, 158, 11, 0.15); --btn-c-text: #d97706;
-    --btn-d-bg: rgba(16, 185, 129, 0.15); --btn-d-text: #059669;
-
-    --stsc-slider-bg: var(--glass-bg);
-    --toast-bg: #4c4f69;
-    --toast-text: #eff1f5;
+    --btn-a-text: #2563eb;
+    --btn-b-text: #e11d48;
+    --btn-c-text: #d97706;
+    --btn-d-text: #059669;
   }
 
-  /* 2. Simple Dark Mode (Eye-Friendly for long hours) */
   body[data-theme="simple-dark"] {
+    color-scheme: dark;
+    /* 2. SIMPLE DARK */
     --text-main: #e4e4e7;
     --text-muted: #a1a1aa;
-    
     --accent: #60a5fa;
-    --accent-transparent: rgba(96, 165, 250, 0.15);
     --danger: #f87171;
+    --warning: #fb923c;
+    --success: #34d399;
+
+    --bg-color: #18181b;
     
-    --glass-bg: #27272a;
+    --glass-base: #27272a;
+    --glass-blur: blur(25px);
     --glass-border: rgba(255, 255, 255, 0.08);
     --glass-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-    
-    --fill-color: rgba(255, 255, 255, 0.05);
-    --fill-color-hover: rgba(255, 255, 255, 0.1);
-    
-    --dropdown-bg: #1f1f22;
-    --dropdown-active-bg: rgba(255, 255, 255, 0.08);
-    
-    --bg-color: #18181b;
-    --bg-image: none;
-    
-    /* Dark Mode Button Colors */
-    --btn-payment-text: #000000;
-    --btn-view-bg: #fb923c; 
-    --btn-view-text: #000000;
-    --btn-save-bg: #86efac;
-    --btn-save-text: #000000;
+    --glass-inner-shadow: none;
+
+    --panel-bg: #27272a;
+    --dropdown-bg: #27272a;
+
+    --input-bg: rgba(255, 255, 255, 0.05);
+    --input-border: transparent;
+    --input-shadow: none;
+    --input-focus-shadow: 0 0 0 2px rgba(96, 165, 250, 0.3);
+
+    --btn-bg: rgba(255, 255, 255, 0.05);
+    --btn-hover: rgba(255, 255, 255, 0.1);
+    --btn-border: rgba(255, 255, 255, 0.08);
+    --btn-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    --btn-inner-highlight: none;
 
     /* A B C D Colors Dark */
-    --btn-a-bg: rgba(96, 165, 250, 0.15);  --btn-a-text: #93c5fd;
-    --btn-b-bg: rgba(251, 113, 133, 0.15); --btn-b-text: #fda4af;
-    --btn-c-bg: rgba(251, 191, 36, 0.15);  --btn-c-text: #fcd34d;
-    --btn-d-bg: rgba(52, 211, 153, 0.15);  --btn-d-text: #6ee7b7;
-
-    --stsc-slider-bg: #3f3f46;
-    --toast-bg: #e4e4e7;
-    --toast-text: #18181b;
+    --btn-a-text: #93c5fd;
+    --btn-b-text: #fda4af;
+    --btn-c-text: #fcd34d;
+    --btn-d-text: #6ee7b7;
   }
 
-  * { 
+  body[data-theme="liquid-light"] {
+    color-scheme: light;
+    /* 3. LIQUID LIGHT */
+    --text-main: #1e293b;
+    --text-muted: #475569;
+    --accent: #3b82f6;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+    --success: #10b981; 
+    
+    --bg-color: #eff1f5;
+
+    --glass-base: rgba(255, 255, 255, 0.25);
+    --glass-highlight: rgba(255, 255, 255, 0.9);
+    --glass-shadow: rgba(0, 0, 0, 0.12);
+    --glass-blur: blur(35px);
+    --glass-border: rgba(255, 255, 255, 0.7);
+    --glass-inner-shadow: inset 0 0 40px rgba(255, 255, 255, 0.1);
+    
+    --panel-bg: rgba(255, 255, 255, 0.35);
+    --dropdown-bg: rgba(255, 255, 255, 0.55);
+    
+    --input-bg: rgba(255, 255, 255, 0.45);
+    --input-border: rgba(255, 255, 255, 0.6);
+    --input-shadow: inset 0 2px 5px rgba(0,0,0,0.05), inset 0 0 0 1px rgba(255,255,255,0.6);
+    --input-focus-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+    
+    --btn-bg: rgba(255, 255, 255, 0.5);
+    --btn-hover: rgba(255, 255, 255, 0.7);
+    --btn-border: rgba(255, 255, 255, 0.8);
+    --btn-shadow: 0 2px 6px var(--glass-shadow);
+    --btn-inner-highlight: inset 0 1px 0 var(--glass-highlight);
+
+    --bg-1: #a5b4fc;
+    --bg-2: #c4b5fd;
+    --bg-3: #f9a8d4;
+    --bg-4: #93c5fd;
+
+    --radius-sm: 10px; 
+    --radius-md: 16px;
+    --radius-lg: 28px;
+
+    /* A B C D Colors Light */
+    --btn-a-text: #2563eb;
+    --btn-b-text: #e11d48;
+    --btn-c-text: #d97706;
+    --btn-d-text: #059669;
+  }
+
+  body[data-theme="liquid-dark"] {
+    color-scheme: dark;
+    /* 4. LIQUID DARK */
+    --text-main: #f8fafc;
+    --text-muted: #cbd5e1;
+    --accent: #60a5fa;
+    --danger: #fb7185;
+    --warning: #fb923c;
+    --success: #34d399;
+    
+    --bg-color: #0f172a;
+
+    --glass-base: rgba(15, 23, 42, 0.4);
+    --glass-highlight: rgba(255, 255, 255, 0.15);
+    --glass-shadow: rgba(0, 0, 0, 0.4);
+    --glass-blur: blur(35px);
+    --glass-border: rgba(255, 255, 255, 0.15);
+    --glass-inner-shadow: inset 0 0 40px rgba(0, 0, 0, 0.2);
+
+    --panel-bg: rgba(0, 0, 0, 0.25);
+    --dropdown-bg: rgba(15, 23, 42, 0.65);
+
+    --input-bg: rgba(0, 0, 0, 0.3);
+    --input-border: rgba(255, 255, 255, 0.15);
+    --input-shadow: inset 0 2px 10px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255,255,255,0.08);
+    --input-focus-shadow: 0 0 0 3px rgba(96, 165, 250, 0.3);
+
+    --btn-bg: rgba(255, 255, 255, 0.08);
+    --btn-hover: rgba(255, 255, 255, 0.15);
+    --btn-border: rgba(255, 255, 255, 0.15);
+    --btn-shadow: 0 2px 6px var(--glass-shadow);
+    --btn-inner-highlight: inset 0 1px 0 var(--glass-highlight);
+
+    --bg-1: #0f172a;
+    --bg-2: #312e81;
+    --bg-3: #4c1d95;
+    --bg-4: #020617;
+
+    --radius-sm: 10px; 
+    --radius-md: 16px;
+    --radius-lg: 28px;
+
+    /* A B C D Colors Dark */
+    --btn-a-text: #93c5fd;
+    --btn-b-text: #fda4af;
+    --btn-c-text: #fcd34d;
+    --btn-d-text: #6ee7b7;
+  }
+
+  /* --- LIQUID GLASS STRUCTURAL OVERRIDES --- */
+  body[data-theme^="liquid"] .card,
+  body[data-theme^="liquid"] .dropdown-menu,
+  body[data-theme^="liquid"] .term-picker-popup,
+  body[data-theme^="liquid"] .modal-content,
+  body[data-theme^="liquid"] .cal-popup {
+    border-top: 1px solid var(--glass-highlight);
+    border-left: 1px solid var(--glass-highlight);
+    border-right: 1px solid rgba(255,255,255,0.05);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  *, *::before, *::after { 
     box-sizing: border-box; 
-    margin: 0;
-    padding: 0;
+    margin: 0; 
+    padding: 0; 
   }
 
   body {
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background-color: var(--bg-color);
-    background-image: var(--bg-image);
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
+    font-family: var(--font-family);
     color: var(--text-main);
     display: flex;
     justify-content: center;
     align-items: stretch; 
     min-height: 100vh;
     padding: clamp(10px, 2vw, 20px) 16px; 
-    transition: background-image 0.5s ease, background-color 0.5s ease, color 0.3s ease;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    position: relative;
+    background-color: var(--bg-color);
+    transition: background-color 0.5s ease, color 0.3s ease;
+  }
+
+  /* --- THE ANIMATED FLUID BACKGROUND (Only active on Liquid Themes) --- */
+  body[data-theme^="liquid"]::before {
+    content: '';
+    position: fixed;
+    top: -50%; left: -50%; width: 200vw; height: 200vh;
+    background: radial-gradient(circle at 15% 50%, var(--bg-1), transparent 50%),
+                radial-gradient(circle at 85% 30%, var(--bg-2), transparent 50%),
+                radial-gradient(circle at 50% 80%, var(--bg-3), transparent 50%),
+                radial-gradient(circle at 50% 10%, var(--bg-4), transparent 50%);
+    z-index: -1;
+    animation: liquidFlow 25s ease-in-out infinite alternate;
+    transition: background 0.8s ease;
+  }
+
+  @keyframes liquidFlow {
+    0% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(15deg) scale(1.1); }
+    100% { transform: rotate(-5deg) scale(1.2); }
   }
 
   /* --- Theme Roller Button --- */
@@ -121,32 +252,32 @@
     right: clamp(10px, 3vw, 24px);
     width: 44px;
     height: 44px;
-    border-radius: 8px; 
-    background: var(--glass-bg);
-    border: var(--border-width) solid var(--glass-border);
-    backdrop-filter: blur(25px) saturate(200%);
-    -webkit-backdrop-filter: blur(25px) saturate(200%);
+    border-radius: 50%; 
+    background: var(--btn-bg);
+    border: 1px solid var(--btn-border);
+    backdrop-filter: var(--glass-blur) saturate(200%);
+    -webkit-backdrop-filter: var(--glass-blur) saturate(200%);
     color: var(--text-main);
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    box-shadow: var(--btn-shadow), var(--btn-inner-highlight);
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     z-index: 1000;
   }
 
   .theme-roller:hover {
-    background: var(--fill-color);
+    background: var(--btn-hover);
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 10px var(--glass-shadow), var(--btn-inner-highlight);
   }
 
   .theme-roller:active {
-    transform: scale(0.95);
+    transform: translateY(0) scale(0.92);
   }
 
-  /* --- Main Card (Glass) --- */
+  /* --- Main Card (Glass Base) --- */
   .card {
     width: 100%;
     max-width: 460px; 
@@ -154,15 +285,21 @@
     max-height: 900px;
     display: flex;
     flex-direction: column; 
-    background: var(--glass-bg);
-    backdrop-filter: blur(25px) saturate(200%);
-    -webkit-backdrop-filter: blur(25px) saturate(200%);
-    border: var(--border-width) solid var(--glass-border);
+    
+    background: var(--glass-base);
+    backdrop-filter: var(--glass-blur) saturate(160%);
+    -webkit-backdrop-filter: var(--glass-blur) saturate(160%);
+    
+    border: 1px solid var(--glass-border);
     border-radius: var(--radius-lg);
     overflow: visible; 
-    box-shadow: var(--glass-shadow);
+    
+    box-shadow: 
+      0 10px 40px var(--glass-shadow), 
+      var(--glass-inner-shadow);
+      
     position: relative;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
   }
 
   /* --- Glass Dropdown Header --- */
@@ -176,22 +313,30 @@
     width: 100%;
     padding: 12px 16px;
     border-radius: var(--radius-sm);
-    background: var(--fill-color);
-    border: var(--border-width) solid var(--glass-border);
+    
+    background: var(--btn-bg);
+    border: 1px solid var(--btn-border);
     color: var(--text-main);
-    font-size: 16px;
+    box-shadow: var(--btn-shadow), var(--btn-inner-highlight);
+    backdrop-filter: var(--glass-blur);
+    
+    font-size: 15px;
     font-weight: 600;
     display: flex;
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
-    transition: all 0.2s ease;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    font-family: inherit;
+  }
+
+  .dropdown-trigger:hover {
+    background: var(--btn-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px var(--glass-shadow), var(--btn-inner-highlight);
   }
 
   .dropdown-trigger:active {
-    background: var(--fill-color-hover);
     transform: scale(0.98);
   }
 
@@ -208,12 +353,14 @@
     top: calc(100% + 8px);
     left: 16px;
     right: 16px;
+    
     background: var(--dropdown-bg);
-    backdrop-filter: blur(35px) saturate(200%);
-    -webkit-backdrop-filter: blur(35px) saturate(200%);
-    border: var(--border-width) solid var(--glass-border);
+    backdrop-filter: var(--glass-blur) saturate(200%);
+    -webkit-backdrop-filter: var(--glass-blur) saturate(200%);
+    border: 1px solid var(--glass-border);
     border-radius: var(--radius-md);
-    box-shadow: var(--glass-shadow);
+    box-shadow: 0 20px 40px var(--glass-shadow);
+    
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -233,9 +380,9 @@
     padding: 14px 20px;
     background: transparent;
     border: none;
-    border-bottom: var(--border-width) solid var(--glass-border);
+    border-bottom: 1px solid rgba(150,150,150,0.1);
     color: var(--text-main);
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 500;
     text-align: left;
     cursor: pointer;
@@ -251,11 +398,11 @@
   }
 
   .dropdown-item:hover, .dropdown-item:active {
-    background: var(--fill-color);
+    background: var(--btn-hover);
   }
 
   .dropdown-item.active {
-    background: var(--dropdown-active-bg);
+    background: var(--btn-hover);
     color: var(--accent);
     font-weight: 600;
     padding-left: 24px;
@@ -286,7 +433,7 @@
   }
 
   .tab-header h2 {
-    font-size: 22px; 
+    font-size: 20px; 
     margin: 0;
     color: var(--text-main);
     font-weight: 700;
@@ -295,41 +442,44 @@
 
   /* --- Clear Button --- */
   .clear-btn {
-    padding: 8px 18px; 
+    padding: 6px 14px; 
     border-radius: var(--radius-sm);
-    border: none;
-    background: var(--fill-color);
+    
+    background: var(--btn-bg);
+    border: 1px solid var(--btn-border);
     color: var(--danger);
-    font-size: 14px; 
+    box-shadow: var(--btn-shadow), var(--btn-inner-highlight);
+    backdrop-filter: var(--glass-blur);
+    
+    font-size: 13px; 
     font-weight: 600;
-    letter-spacing: -0.2px;
     cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    font-family: inherit;
   }
 
   .clear-btn:hover {
     background: var(--danger);
     color: #fff;
+    border-color: var(--danger);
     transform: translateY(-1px);
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 10px var(--glass-shadow), var(--btn-inner-highlight);
   }
 
   .clear-btn:active {
     transform: translateY(0);
-    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
   }
 
   label {
     display: block;
-    font-size: 12px; 
-    font-weight: 600;
-    color: var(--text-muted);
+    font-size: 11px; 
+    font-weight: 700;
+    color: var(--text-main);
+    opacity: 0.8;
     margin-bottom: 6px;
     margin-left: 4px;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    line-height: 1.4;
+    letter-spacing: 0.1em;
   }
 
   .field { 
@@ -341,7 +491,7 @@
     display: flex;
     flex-shrink: 0;
     gap: 12px;
-    align-items: flex-end; /* Ensures smaller inputs bottom-align with tall labels correctly */
+    align-items: flex-end; 
     margin-bottom: 16px;
   }
 
@@ -349,47 +499,61 @@
   .row .field { flex: 1; }
   .row .side-field { flex: 0 0 110px; } 
 
-  /* --- Inputs (Reduced Padding, Fixed Aligned Height) --- */
+  /* --- Inputs --- */
   input[type="text"],
   input[type="tel"],
   input[type="number"],
-  input[type="date"],
   select {
     width: 100%;
-    height: 36px;
-    padding: 0 12px; 
-    border: none;
+    height: 38px;
+    
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
     border-radius: var(--radius-sm);
+    box-shadow: var(--input-shadow);
+    backdrop-filter: var(--glass-blur);
+    
+    padding: 0 12px; 
     font-size: 13px; 
-    font-weight: 400;
-    background: var(--fill-color);
+    font-weight: 500;
     color: var(--text-main);
     font-family: inherit;
     text-transform: uppercase;
     transition: all 0.2s ease;
+    outline: none;
+  }
+  
+  input::placeholder, textarea::placeholder { 
+    text-transform: none; 
+    color: var(--text-muted); 
+    opacity: 0.8; 
   }
 
-  /* Retain Textarea Size */
   textarea {
     width: 100%;
     padding: 10px 12px; 
-    border: none;
+    
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
     border-radius: var(--radius-sm);
+    box-shadow: var(--input-shadow);
+    backdrop-filter: var(--glass-blur);
+    
     font-size: 13px; 
-    font-weight: 400;
-    background: var(--fill-color);
+    font-weight: 500;
     color: var(--text-main);
     font-family: inherit;
     line-height: 1.5;
     resize: none; 
     text-transform: none; 
     transition: all 0.2s ease;
+    outline: none;
   }
 
   input:focus, select:focus, textarea:focus {
-    outline: none;
-    background: var(--fill-color-hover);
-    box-shadow: 0 0 0 2px var(--accent);
+    background: var(--btn-bg); 
+    border-color: var(--accent);
+    box-shadow: var(--input-focus-shadow), var(--input-shadow);
   }
 
   input[readonly] {
@@ -397,10 +561,17 @@
     font-weight: 600;
   }
   
-  /* Make the term custom input look like a select dropdown visually */
   #months {
     cursor: pointer;
     background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="%238c8fa1" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 32px;
+  }
+  
+  .custom-date {
+    cursor: text;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="%238c8fa1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>');
     background-repeat: no-repeat;
     background-position: right 10px center;
     padding-right: 32px;
@@ -411,14 +582,6 @@
     animation: shake 0.4s ease-in-out;
   }
 
-  /* Specific rule for Template Editor Dropdown in Dark Mode */
-  body[data-theme="simple-dark"] #templateSelector,
-  body[data-theme="simple-dark"] #templateSelector option {
-    color: #000000;
-    background-color: #e4e4e7; 
-  }
-  
-  /* Disable Auto-Caps lock utility */
   .no-caps {
     text-transform: none !important;
   }
@@ -447,41 +610,48 @@
     width: 100%;
     flex: 1;
     padding: 10px 12px;
-    border: none;
+    
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
     border-radius: var(--radius-sm);
+    box-shadow: var(--input-shadow);
+    backdrop-filter: var(--glass-blur);
+    
     font-size: 14px;
-    background: var(--fill-color);
     color: var(--text-main);
     font-family: inherit;
     text-transform: none !important;
     overflow-y: auto;
     transition: all 0.2s ease;
+    outline: none;
   }
   #richSignature:focus {
-    outline: none;
-    background: var(--fill-color-hover);
-    box-shadow: 0 0 0 2px var(--accent);
+    background: var(--btn-bg); 
+    border-color: var(--accent);
+    box-shadow: var(--input-focus-shadow), var(--input-shadow);
   }
 
-  /* --- Custom ST / SC & Norm / Rec Toggle Switch (Matches Height exactly) --- */
+  /* --- Custom Toggle Switch --- */
   .stsc-switch-container {
     display: flex;
     align-items: center;
-    background: var(--fill-color);
-    border-radius: var(--radius-sm); 
+    
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 20px; 
+    box-shadow: var(--input-shadow);
+    
     padding: 3px;
     position: relative;
     width: 110px;
-    height: 36px; /* Reduced to match smaller inputs */
+    height: 38px; 
     cursor: pointer;
-    border: var(--border-width) solid var(--glass-border);
-    /* Removes label margins to align perfectly with adjacent textboxes */
     margin: 0 !important; 
   }
   .stsc-option {
     flex: 1;
     text-align: center;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 700;
     color: var(--text-muted);
     z-index: 1;
@@ -496,10 +666,13 @@
     left: 3px;
     width: calc(50% - 3px);
     height: calc(100% - 6px);
-    background: var(--stsc-slider-bg);
-    border-radius: calc(var(--radius-sm) - 2px);
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    
+    background: var(--btn-bg);
+    border: 1px solid var(--btn-border);
+    border-radius: 16px;
+    box-shadow: 0 2px 6px var(--glass-shadow);
+    
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   #inqTypeToggle:checked + .stsc-switch-container .stsc-slider,
@@ -515,37 +688,41 @@
     gap: 8px; 
     margin: 10px 0 16px;
     padding: 16px 0 0;
-    border-top: var(--border-width) solid var(--glass-border);
+    border-top: 1px solid rgba(150,150,150,0.2);
   }
 
   .pill {
     padding: 8px 14px;
-    border-radius: var(--radius-sm); 
-    border: none;
-    background: var(--fill-color);
-    color: var(--text-main);
+    border-radius: 20px; 
+    
+    background: var(--btn-bg); 
+    border: 1px solid var(--btn-border);
+    color: var(--text-main); 
+    
     font-size: 12.5px; 
     font-weight: 600;
     cursor: pointer;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-    transition: all 0.2s ease;
+    box-shadow: var(--btn-shadow), var(--btn-inner-highlight);
+    backdrop-filter: var(--glass-blur);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); 
+    font-family: inherit;
+    white-space: nowrap;
   }
 
   .pill:hover { 
-    background: var(--fill-color-hover);
+    background: var(--btn-hover);
     transform: translateY(-1px);
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 10px var(--glass-shadow), var(--btn-inner-highlight);
   }
 
   .pill:active {
     transform: translateY(0);
-    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
   }
 
   .pill.selected {
     background: var(--accent);
     color: #fff;
-    box-shadow: none; 
+    border-color: transparent;
   }
 
   .pill.selected[data-name="Delay03"] {
@@ -558,7 +735,7 @@
     flex-shrink: 0;
     gap: 12px;
     padding: 0 0 20px;
-    border-bottom: var(--border-width) solid var(--glass-border);
+    border-bottom: 1px solid rgba(150,150,150,0.2);
     margin-bottom: 16px;
   }
 
@@ -566,66 +743,62 @@
     flex: 1;
     padding: 10px 8px; 
     border-radius: var(--radius-sm);
-    border: none;
-    background: var(--accent-transparent); 
-    color: var(--accent);
+    
+    background: var(--btn-bg); 
+    border: 1px solid var(--btn-border);
+    color: var(--accent); 
+    box-shadow: var(--btn-shadow), var(--btn-inner-highlight);
+    backdrop-filter: var(--glass-blur);
+    
     font-size: 13px; 
     font-weight: 600;
     cursor: pointer;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.02);
-    transition: all 0.2s ease;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    font-family: inherit;
   }
 
   .lrp-btn:hover {
     background: var(--accent);
     color: #fff;
+    border-color: transparent;
     transform: translateY(-1px);
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 10px var(--glass-shadow), var(--btn-inner-highlight);
   }
   
-  .lrp-btn:active {
-    transform: translateY(0);
-  }
+  .lrp-btn:active { transform: translateY(0); }
 
   /* --- Custom A B C D Buttons for Inquiry --- */
-  .btn-a { background: var(--btn-a-bg); color: var(--btn-a-text); }
-  .btn-b { background: var(--btn-b-bg); color: var(--btn-b-text); }
-  .btn-c { background: var(--btn-c-bg); color: var(--btn-c-text); }
-  .btn-d { background: var(--btn-d-bg); color: var(--btn-d-text); }
+  .btn-a { color: var(--btn-a-text); }
+  .btn-b { color: var(--btn-b-text); }
+  .btn-c { color: var(--btn-c-text); }
+  .btn-d { color: var(--btn-d-text); }
   
-  .btn-a:hover { background: var(--btn-a-text); color: #fff; }
-  .btn-b:hover { background: var(--btn-b-text); color: #fff; }
-  .btn-c:hover { background: var(--btn-c-text); color: #fff; }
-  .btn-d:hover { background: var(--btn-d-text); color: #fff; }
+  .btn-a:hover { background: var(--btn-a-text); color: #fff; border-color: transparent; }
+  .btn-b:hover { background: var(--btn-b-text); color: #fff; border-color: transparent; }
+  .btn-c:hover { background: var(--btn-c-text); color: #fff; border-color: transparent; }
+  .btn-d:hover { background: var(--btn-d-text); color: #fff; border-color: transparent; }
 
-  /* Payment Specific UI Elements */
-  .payment-btn {
-    /* Background handled primarily by inline styles to prevent pill:hover override */
-  }
-  
-  .payment-btn:hover { 
-    filter: brightness(1.1);
-  }
-
-  /* --- Custom Term Calendar Picker --- */
+  /* --- Custom Term Dropdown Picker --- */
   .term-picker-popup {
     position: absolute;
-    top: calc(100% + 6px);
+    top: calc(100% + 8px);
     right: 0;
+    
     background: var(--dropdown-bg);
-    backdrop-filter: blur(35px) saturate(200%);
-    -webkit-backdrop-filter: blur(35px) saturate(200%);
-    border: var(--border-width) solid var(--glass-border);
+    backdrop-filter: var(--glass-blur) saturate(200%);
+    -webkit-backdrop-filter: var(--glass-blur) saturate(200%);
+    border: 1px solid var(--glass-border);
     border-radius: var(--radius-md);
-    box-shadow: var(--glass-shadow);
-    padding: 12px;
+    box-shadow: 0 20px 40px var(--glass-shadow);
+    
+    padding: 16px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 6px;
+    gap: 8px;
     opacity: 0;
     transform: translateY(-10px) scale(0.98);
     pointer-events: none;
-    transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     z-index: 200;
   }
   
@@ -636,48 +809,169 @@
   }
   
   .term-cell {
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: var(--radius-sm);
+    border-radius: 50%;
     font-size: 13px;
     font-weight: 600;
     color: var(--text-main);
-    background: var(--fill-color);
+    
+    background: var(--btn-bg);
+    border: 1px solid var(--btn-border);
+    box-shadow: var(--btn-shadow);
+    
     cursor: pointer;
-    transition: background 0.2s, transform 0.1s;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   }
   
   .term-cell:hover {
     background: var(--accent);
     color: #fff;
-    transform: scale(1.05);
+    border-color: transparent;
+    transform: scale(1.1);
+  }
+
+  /* --- Universal Custom Calendar Popup --- */
+  .cal-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    z-index: 9999;
+    background: var(--glass-base);
+    backdrop-filter: var(--glass-blur) saturate(200%);
+    -webkit-backdrop-filter: var(--glass-blur) saturate(200%);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2), var(--glass-inner-shadow);
+    padding: 16px;
+    min-width: 280px;
+  }
+  
+  .cal-popup.open {
+    display: block;
+    animation: calCenter 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes calCenter {
+    from { opacity: 0; transform: translate(-50%, -40%) scale(0.95); }
+    to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  }
+
+  .cal-nav { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 12px; 
+  }
+
+  .cal-nav button { 
+    background: var(--btn-bg); 
+    border: 1px solid var(--btn-border); 
+    color: var(--text-main); 
+    width: 28px; 
+    height: 28px; 
+    border-radius: 50%; 
+    cursor: pointer; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    box-shadow: var(--btn-shadow);
+  }
+
+  .cal-nav button:hover {
+      background: var(--btn-hover);
+  }
+
+  .cal-month-label {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-main);
+  }
+
+  .cal-grid { 
+    display: grid; 
+    grid-template-columns: repeat(7, 1fr); 
+    gap: 4px; 
+  }
+  
+  .cal-dow { 
+    text-align: center; 
+    font-size: 11px; 
+    font-weight: 700; 
+    color: var(--text-main); 
+    opacity: 0.6; 
+    padding-bottom: 4px;
+  }
+
+  .cal-day { 
+    text-align: center; 
+    font-size: 13px; 
+    font-weight: 500; 
+    padding: 8px 4px; 
+    border-radius: 8px; 
+    cursor: pointer; 
+    transition: 0.2s; 
+    color: var(--text-main); 
+  }
+
+  .cal-day:hover { 
+    background: var(--btn-hover); 
+  }
+  .cal-day.today { 
+    font-weight: 700; 
+    color: var(--accent); 
+    border: 1px solid var(--accent); 
+  }
+  .cal-day.selected { 
+    background: var(--accent); 
+    color: #fff; 
+    border-color: var(--accent); 
+  }
+  .cal-day.empty { 
+    pointer-events: none; 
   }
 
   /* --- Notification Toast --- */
   .toast {
     position: fixed;
-    bottom: 40px;
+    bottom: 30px;
     left: 50%;
-    transform: translateX(-50%) translateY(20px) scale(0.9);
-    background: var(--toast-bg);
-    backdrop-filter: blur(20px) saturate(200%);
-    -webkit-backdrop-filter: blur(20px) saturate(200%);
-    color: var(--toast-text);
+    transform: translateX(-50%) translateY(20px) scale(0.95);
+    
+    background: var(--text-main);
+    color: var(--bg-color); 
+    
     padding: 12px 24px;
     border-radius: 999px;
-    font-size: 14px; 
+    font-size: 13px; 
     font-weight: 600;
     opacity: 0;
     pointer-events: none;
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    z-index: 100;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    z-index: 2000;
+    box-shadow: 0 10px 30px var(--glass-shadow);
+    
     display: flex;
     align-items: center;
     gap: 8px;
+  }
+
+  body[data-theme^="liquid"] .toast { 
+    background: rgba(15, 23, 42, 0.85); 
+    backdrop-filter: blur(20px) saturate(200%);
+    color: #fff; 
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+
+  body[data-theme="liquid-dark"] .toast { 
+    background: rgba(255,255,255,0.85); 
+    color: #000; 
   }
 
   .toast.show {
@@ -689,9 +983,9 @@
   .modal-overlay {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.5);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
+    background: rgba(0,0,0,0.3);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     display: none;
     justify-content: center;
     align-items: center;
@@ -704,16 +998,20 @@
     display: flex;
     opacity: 1;
   }
+  
   .modal-content {
-    background: var(--glass-bg);
-    border: var(--border-width) solid var(--glass-border);
-    border-radius: var(--radius-md);
+    background: var(--glass-base); 
+    backdrop-filter: var(--glass-blur) saturate(200%);
+    -webkit-backdrop-filter: var(--glass-blur) saturate(200%);
+    border: 1px solid var(--glass-border); 
+    border-radius: 20px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.2), var(--glass-inner-shadow);
+    
     padding: 20px;
     width: 100%;
     max-width: 400px;
     max-height: 80vh;
     overflow-y: auto;
-    box-shadow: var(--glass-shadow);
     color: var(--text-main);
     transform: translateY(20px);
     transition: transform 0.3s ease;
@@ -730,7 +1028,8 @@
   }
   .modal-header h3 {
     margin: 0;
-    font-size: 18px;
+    font-size: 16px;
+    font-weight: 700;
   }
   .modal-close-icon {
     background: transparent;
@@ -751,24 +1050,31 @@
     width: 100%;
     padding: 12px;
     border-radius: var(--radius-sm);
-    background: var(--fill-color);
+    
+    background: var(--btn-bg);
+    border: 1px solid var(--btn-border);
     color: var(--text-main);
-    border: var(--border-width) solid var(--glass-border);
+    box-shadow: var(--btn-shadow), var(--btn-inner-highlight);
+    backdrop-filter: blur(10px);
+    
     font-weight: 600;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: all 0.2s ease;
   }
   .modal-close-btn:hover {
-    background: var(--fill-color-hover);
+    background: var(--btn-hover);
+    transform: translateY(-1px);
   }
+  
   .tracker-item {
-    padding: 10px;
-    border-bottom: var(--border-width) solid var(--glass-border);
+    background: var(--input-bg); 
+    border: 1px solid var(--input-border); 
+    border-radius: 16px; 
+    padding: 12px; 
+    box-shadow: var(--input-shadow);
     font-size: 13px;
     line-height: 1.5;
-  }
-  .tracker-item:last-child {
-    border-bottom: none;
+    margin-bottom: 10px;
   }
 
   /* --- Desktop Specific Optimizations --- */
@@ -827,7 +1133,7 @@
 </head>
 <body data-theme="simple-light">
 
-<!-- THEME ROLLER BUTTON (Logo Only) -->
+<!-- THEME ROLLER BUTTON -->
 <button class="theme-roller" id="themeRoller" aria-label="Cycle Theme">
   <svg id="themeIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
     <!-- Icon injected via JS -->
@@ -885,7 +1191,7 @@
       </div>
       <div class="side-field">
         <label for="startDate">Start Date</label>
-        <input type="date" id="startDate">
+        <input type="text" class="custom-date" id="startDate" placeholder="MM/DD/YYYY">
       </div>
     </div>
 
@@ -941,11 +1247,11 @@
     <div class="row">
       <div class="field">
         <label for="inqStartDate">Start Date</label>
-        <input type="text" id="inqStartDate" placeholder="MM-DD-YYYY">
+        <input type="text" class="date-format-only" id="inqStartDate" placeholder="MM/DD/YYYY">
       </div>
       <div class="field">
         <label for="inqEndDate">End Date</label>
-        <input type="text" id="inqEndDate" placeholder="MM-DD-YYYY">
+        <input type="text" class="date-format-only" id="inqEndDate" placeholder="MM/DD/YYYY">
       </div>
     </div>
 
@@ -970,7 +1276,6 @@
       <button class="lrp-btn" id="inqNotesBtn">Notes</button>
     </div>
     
-    <!-- New A B C D Buttons for Inquiry Templates -->
     <div style="display: flex; flex-wrap: nowrap; gap: 6px; margin-bottom: 16px; width: 100%;">
       <button class="pill lrp-btn btn-a" id="inqBtnA" style="flex: 1; text-align: center; margin: 0;">A</button>
       <button class="pill lrp-btn btn-b" id="inqBtnB" style="flex: 1; text-align: center; margin: 0;">B</button>
@@ -1033,20 +1338,19 @@
     <div class="row">
       <div class="field">
         <label for="paymentDateBtn">Payment Date</label>
-        <input type="date" id="paymentDateBtn">
+        <input type="text" class="custom-date" id="paymentDateBtn" placeholder="MM/DD/YYYY">
       </div>
     </div>
 
-    <!-- Flattened Payment Buttons Row -->
     <div style="display: flex; flex-wrap: nowrap; gap: 6px; margin-bottom: 16px; width: 100%;">
-      <button class="pill payment-btn" id="commentBtn" data-name="COMMENT" style="flex: 1; padding: 10px 0; font-size: 12px; text-align: center; white-space: nowrap; background: var(--accent); color: var(--btn-payment-text); border: none;">Comment</button>
-      <button class="pill payment-btn" id="viewPaymentTrackerBtn" style="flex: 1; padding: 10px 0; font-size: 12px; text-align: center; white-space: nowrap; background: var(--btn-view-bg); color: var(--btn-view-text); border: none;">View Data</button>
-      <button class="pill payment-btn" id="savePaymentTrackerBtn" style="flex: 1; padding: 10px 0; font-size: 12px; text-align: center; white-space: nowrap; background: var(--btn-save-bg); color: var(--btn-save-text); border: none;">Save Tracker</button>
+      <button class="pill payment-btn" id="commentBtn" data-name="COMMENT" style="flex: 1; padding: 10px 0; font-size: 12px; text-align: center; white-space: nowrap; color: #fff; background: var(--accent); border-color: transparent;">Comment</button>
+      <button class="pill payment-btn" id="viewPaymentTrackerBtn" style="flex: 1; padding: 10px 0; font-size: 12px; text-align: center; white-space: nowrap; color: #fff; background: var(--warning); border-color: transparent;">View Data</button>
+      <button class="pill payment-btn" id="savePaymentTrackerBtn" style="flex: 1; padding: 10px 0; font-size: 12px; text-align: center; white-space: nowrap; color: #fff; background: var(--success); border-color: transparent;">Save Tracker</button>
     </div>
     
-    <div class="row" style="margin-top: 10px; margin-bottom: 0px; border-top: var(--border-width) solid var(--glass-border); padding-top: 16px;">
-      <button class="pill payment-btn" id="downloadPaymentExcelBtn" style="flex: 1; text-align: center; padding: 10px 0; font-size: 12px; background: var(--accent); color: var(--btn-payment-text); border: none;">📊 Download Excel</button>
-      <button class="clear-btn" id="resetPaymentTrackerBtn" style="background: var(--danger); color: var(--btn-payment-text); padding: 10px 12px; font-size: 13px; border: none;">Reset Data</button>
+    <div class="row" style="margin-top: 10px; margin-bottom: 0px; border-top: 1px solid rgba(150,150,150,0.2); padding-top: 16px;">
+      <button class="pill payment-btn" id="downloadPaymentExcelBtn" style="flex: 1; text-align: center; padding: 10px 0; font-size: 12px; color: #fff; background: var(--accent); border-color: transparent;">📊 Download Excel</button>
+      <button class="clear-btn" id="resetPaymentTrackerBtn" style="color: #fff; background: var(--danger); border-color: transparent; padding: 10px 12px; font-size: 13px;">Reset Data</button>
     </div>
   </div>
 
@@ -1079,7 +1383,6 @@
       <code>[Nm]</code> <code>[AM]</code> <code>[START]</code> <code>[END]</code> <code>[REQ]</code>
     </div>
     
-    <!-- Template Scenario Selector -->
     <div class="field">
       <label for="templateSelector">Select Scenario to Edit</label>
       <select id="templateSelector">
@@ -1091,18 +1394,15 @@
         <option value="Delay03">Delay 3</option>
         <option value="Payment">Payment</option>
         <option value="Inquiry">Inquiry</option>
-        <!-- Added Signature Rich Text Option -->
         <option value="Signature">Signature</option>
       </select>
     </div>
     
-    <!-- Standard Template Editor -->
     <div class="field expand-field" id="templateEditorWrapper">
       <label for="savedEmailTemplate">Format</label>
       <textarea id="savedEmailTemplate" placeholder="..."></textarea>
     </div>
 
-    <!-- Rich Text Signature Editor (Hidden by default) -->
     <div class="field expand-field" id="signatureEditorWrapper" style="display: none;">
       <label for="richSignature">Signature Setup (Paste formatting here)</label>
       <div id="richSignature" contenteditable="true"></div>
@@ -1120,6 +1420,16 @@
   </div>
 </div>
 
+<!-- Shared Custom Calendar Popup -->
+<div class="cal-popup" id="global-cal-popup">
+  <div class="cal-nav">
+    <button type="button" id="cal-prev">&#8249;</button>
+    <span class="cal-month-label" id="cal-month-label"></span>
+    <button type="button" id="cal-next">&#8250;</button>
+  </div>
+  <div class="cal-grid" id="cal-grid"></div>
+</div>
+
 <div class="toast" id="toast">
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
   <span id="toastMsg"></span>
@@ -1132,7 +1442,7 @@
       <h3>Saved Tracker Data</h3>
       <button class="modal-close-icon" id="closeDataModalIcon">&times;</button>
     </div>
-    <div id="dataModalBody" style="background: var(--fill-color); border-radius: var(--radius-sm); padding: 5px;"></div>
+    <div id="dataModalBody" style="display: flex; flex-direction: column; gap: 10px;"></div>
     <button class="modal-close-btn" id="closeDataModalBtn">Close</button>
   </div>
 </div>
@@ -1190,7 +1500,7 @@
   // ---------- Auto-Uppercase Force Listener ----------
   document.addEventListener('input', (e) => {
     if (e.target.tagName === 'INPUT' && e.target.type === 'text') {
-      if (e.target.classList.contains('no-caps')) return; 
+      if (e.target.classList.contains('no-caps') || e.target.classList.contains('custom-date') || e.target.classList.contains('date-format-only')) return; 
       
       const start = e.target.selectionStart;
       const end = e.target.selectionEnd;
@@ -1225,8 +1535,10 @@
   const themeIcon = document.getElementById('themeIcon');
   
   const themes = [
-    { id: 'simple-light', name: 'Light mode', icon: '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>' },
-    { id: 'simple-dark', name: 'Dark mode', icon: '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>' }
+    { id: 'simple-light', name: 'Simple Light', icon: '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>' },
+    { id: 'simple-dark', name: 'Simple Dark', icon: '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>' },
+    { id: 'liquid-light', name: 'Liquid Light', icon: '<path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>' },
+    { id: 'liquid-dark', name: 'Liquid Dark', icon: '<path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" fill="currentColor"></path>' }
   ];
 
   let currentThemeIndex = themes.findIndex(t => t.id === (localStorage.getItem('appTheme') || 'simple-light'));
@@ -1237,13 +1549,11 @@
     document.body.setAttribute('data-theme', theme.id);
     localStorage.setItem('appTheme', theme.id);
     themeIcon.innerHTML = theme.icon;
-
     if (notify) {
       showToast(`${theme.name}`);
     }
   }
 
-  // Initial load
   applyTheme(currentThemeIndex);
 
   themeRoller.addEventListener('click', () => {
@@ -1264,28 +1574,23 @@
   const pidFieldEl = document.getElementById('pidField');
   const thNotesEl = document.getElementById('thNotes');
   
-  // Template specific
   const templateSelector = document.getElementById('templateSelector');
   const savedEmailTemplateEl = document.getElementById('savedEmailTemplate');
   const templateEditorWrapper = document.getElementById('templateEditorWrapper');
   
-  // Rich text Signature specific
   const signatureEditorWrapper = document.getElementById('signatureEditorWrapper');
   const richSignature = document.getElementById('richSignature');
 
-  // Paid Tab specific fields
   const fromFieldEl = document.getElementById('fromField');
   const codeFieldEl = document.getElementById('codeField');
   const agentFieldEl = document.getElementById('agentField');
   const paymentDateBtnEl = document.getElementById('paymentDateBtn');
   const pdInitialsEl = document.getElementById('pdInitials');
 
-  // Norm / Rec toggle specific
   const normRecToggle = document.getElementById('normRecToggle');
   const normLabel = document.getElementById('normLabel');
   const recLabel = document.getElementById('recLabel');
 
-  // Inquiry Tab Fields
   const inqNameEl = document.getElementById('inqName');
   const inqAmountEl = document.getElementById('inqAmount');
   const inqStartDateEl = document.getElementById('inqStartDate');
@@ -1296,7 +1601,7 @@
   const stLabel = document.getElementById('stLabel');
   const scLabel = document.getElementById('scLabel');
 
-  // --- Auto-Trimming for From, Agent, Code, PID Code & Call Notes Agent/Code ---
+  // --- Auto-Trimming ---
   [fromFieldEl, agentFieldEl, codeFieldEl, pidFieldEl, callAgentNameEl, callAgentCodeEl].forEach(el => {
     el.addEventListener('input', function() {
       if (this.value.startsWith(' ')) {
@@ -1323,7 +1628,6 @@
     }
   });
 
-  // Numeric and Decimal only for Inquiry Amount
   inqAmountEl.addEventListener('input', () => {
     const original = inqAmountEl.value;
     const cleaned = original.replace(/[^0-9.]/g, ''); 
@@ -1374,14 +1678,12 @@
       if(templateSelector.value !== 'Signature') {
           localStorage.setItem('emailTemplate_' + templateSelector.value, savedEmailTemplateEl.value);
           
-          // Live sync to payment notes if editing Payment template
           if (templateSelector.value === 'Payment') {
               paymentNotesEl.value = savedEmailTemplateEl.value;
           }
       }
   });
 
-  // Save Signature dynamically
   richSignature.addEventListener('input', () => {
       localStorage.setItem('emailSignature', richSignature.innerHTML);
   });
@@ -1410,10 +1712,8 @@
       }
   });
 
-  // Initialize correct view on load
   loadTemplateForScenario(templateSelector.value);
 
-  // Set Payment Notes Default on Page Load
   paymentNotesEl.value = localStorage.getItem('emailTemplate_Payment') !== null 
       ? localStorage.getItem('emailTemplate_Payment') 
       : (DEFAULT_TEMPLATES['Payment'] || '');
@@ -1421,7 +1721,6 @@
   // ---------- Auto Format 9-10 Digits in Notes ----------
   function autoFormatNotesDigits(el) {
     const original = el.value;
-    // Matches 9 or 10 digits separated by dashes and instantly strips the dashes
     const cleaned = original.replace(/(^|[^0-9-])((?:[0-9]-*){8,9}[0-9])(?=[^0-9-]|$)/g, (match, p1, p2) => {
         return p1 + p2.replace(/-/g, '');
     });
@@ -1435,42 +1734,197 @@
     }
   }
 
-  // ---------- Start Date defaults ----------
+  // Bind formatting to Call Notes, T&H Notes, and Inquiry Notes
+  notesEl.addEventListener('input', (e) => autoFormatNotesDigits(e.target));
+  thNotesEl.addEventListener('input', (e) => autoFormatNotesDigits(e.target));
+  inqNotesEl.addEventListener('input', (e) => autoFormatNotesDigits(e.target));
+
+  // ---------- Date Formatting for Non-Calendar Inputs (Inquiry Tab) ----------
+  document.querySelectorAll('.date-format-only').forEach(input => {
+    input.addEventListener('input', function(e) {
+      let v = this.value.replace(/\D/g, '');
+      if (v.length >= 5) v = v.slice(0,2) + '/' + v.slice(2,4) + '/' + v.slice(4,8);
+      else if (v.length >= 3) v = v.slice(0,2) + '/' + v.slice(2);
+      this.value = v;
+    });
+  });
+
+  // ---------- Universal Custom Glass Calendar Logic ----------
+  const calPopup = document.getElementById('global-cal-popup');
+  const calGrid = document.getElementById('cal-grid');
+  const calMonthLabel = document.getElementById('cal-month-label');
+  
+  let currentCalInput = null;
+  let calY = new Date().getFullYear();
+  let calM = new Date().getMonth();
+
   function formatDateInput(d) {
     const y = d.getFullYear();
     const m = String(d.getMonth() + 1).padStart(2, '0');
     const day = String(d.getDate()).padStart(2, '0');
-    return `${y}-${m}-${day}`;
+    return `${m}/${day}/${y}`;
   }
+
   function getDatePlus10() {
     const d = new Date();
     d.setDate(d.getDate() + 10);
     return d;
   }
+
   function resetStartDate() {
-    const todayStr = formatDateInput(new Date());
     const plus10Str = formatDateInput(getDatePlus10());
     startDateEl.value = plus10Str;
-    startDateEl.min = todayStr; // Fix: Minimum allowed is today's date
   }
   resetStartDate();
 
-  // ---------- Auto compute Monthly & Term Calendar Logic ----------
+  // Escape key globally closes calendar
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && calPopup.classList.contains('open')) {
+      calPopup.classList.remove('open');
+    }
+  });
+
+  document.querySelectorAll('.custom-date').forEach(input => {
+    
+    input.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault(); 
+        if (calPopup.classList.contains('open')) {
+          calPopup.classList.remove('open');
+          this.dispatchEvent(new Event('change'));
+          this.blur();
+        }
+      }
+    });
+
+    input.addEventListener('input', function(e) {
+      let v = this.value.replace(/\D/g, '');
+      if (v.length >= 5) v = v.slice(0,2) + '/' + v.slice(2,4) + '/' + v.slice(4,8);
+      else if (v.length >= 3) v = v.slice(0,2) + '/' + v.slice(2);
+      this.value = v;
+
+      if (calPopup.classList.contains('open') && currentCalInput === this) {
+          const parts = v.split('/');
+          if(parts.length === 3 && parts[2].length === 4) {
+            calY = parseInt(parts[2]);
+            calM = parseInt(parts[0]) - 1;
+            renderCalendar();
+          }
+      }
+    });
+
+    input.addEventListener('click', (e) => {
+      e.stopPropagation();
+      
+      // If clicking the same open input, let them just type, don't close it immediately
+      if(currentCalInput === input && calPopup.classList.contains('open')) {
+        return;
+      }
+      
+      currentCalInput = input;
+      
+      const val = input.value;
+      if(val) {
+        const parts = val.split('/');
+        if(parts.length === 3 && parts[2].length === 4) {
+          calY = parseInt(parts[2]);
+          calM = parseInt(parts[0]) - 1;
+        }
+      } else {
+        calY = new Date().getFullYear();
+        calM = new Date().getMonth();
+      }
+      renderCalendar();
+      calPopup.classList.add('open');
+    });
+  });
+
+  document.addEventListener('click', (e) => {
+    if(!calPopup.contains(e.target) && (!e.target.classList || !e.target.classList.contains('custom-date'))) {
+      calPopup.classList.remove('open');
+    }
+  });
+
+  document.getElementById('cal-prev').addEventListener('click', () => { 
+      calM--; 
+      if(calM < 0) { calM = 11; calY--; } 
+      renderCalendar(); 
+  });
   
-  // Populate the custom calendar picker for Terms
+  document.getElementById('cal-next').addEventListener('click', () => { 
+      calM++; 
+      if(calM > 11) { calM = 0; calY++; } 
+      renderCalendar(); 
+  });
+
+  function renderCalendar() {
+    const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    calMonthLabel.textContent = months[calM] + ' ' + calY;
+    calGrid.innerHTML = '';
+    
+    ['Su','Mo','Tu','We','Th','Fr','Sa'].forEach(d => {
+      const el = document.createElement('div');
+      el.className = 'cal-dow'; 
+      el.textContent = d;
+      calGrid.appendChild(el);
+    });
+    
+    const firstDay = new Date(calY, calM, 1).getDay();
+    const daysInMonth = new Date(calY, calM + 1, 0).getDate();
+    const today = new Date();
+    
+    let selD = null, selM = null, selY = null;
+    if(currentCalInput && currentCalInput.value) {
+      const parts = currentCalInput.value.split('/');
+      if(parts.length === 3) {
+        selY = parseInt(parts[2]);
+        selM = parseInt(parts[0]) - 1;
+        selD = parseInt(parts[1]);
+      }
+    }
+
+    for (let i = 0; i < firstDay; i++) {
+      const el = document.createElement('div');
+      el.className = 'cal-day empty'; 
+      calGrid.appendChild(el);
+    }
+    
+    for (let d = 1; d <= daysInMonth; d++) {
+      const el = document.createElement('div');
+      el.className = 'cal-day';
+      el.textContent = d;
+      
+      const isToday = d === today.getDate() && calM === today.getMonth() && calY === today.getFullYear();
+      const isSel = selD === d && selM === calM && selY === calY;
+      
+      if(isSel) el.classList.add('selected');
+      else if(isToday) el.classList.add('today');
+      
+      el.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const mm = String(calM + 1).padStart(2, '0');
+        const dd = String(d).padStart(2, '0');
+        currentCalInput.value = `${mm}/${dd}/${calY}`;
+        calPopup.classList.remove('open');
+        
+        currentCalInput.dispatchEvent(new Event('input'));
+        currentCalInput.dispatchEvent(new Event('change'));
+      });
+      calGrid.appendChild(el);
+    }
+  }
+
   let termGridHTML = '';
   for(let i=1; i<=24; i++) {
     termGridHTML += `<div class="term-cell" data-val="${i}">${i}</div>`;
   }
   termPicker.innerHTML = termGridHTML;
 
-  // Open the picker
   monthsEl.addEventListener('click', (e) => {
     e.stopPropagation();
     termPicker.classList.toggle('open');
   });
 
-  // Select a value
   termPicker.addEventListener('click', (e) => {
     if (e.target.classList.contains('term-cell')) {
       monthsEl.value = e.target.dataset.val;
@@ -1479,7 +1933,6 @@
     }
   });
 
-  // Close when clicking outside
   document.addEventListener('click', (e) => {
     if (!termPicker.contains(e.target) && e.target !== monthsEl) {
       termPicker.classList.remove('open');
@@ -1522,7 +1975,6 @@
     });
   }
 
-  // --- Dynamic Clipboard HTML Function ---
   function copyToClipboardHtml(plainText, includeSignature = false, signatureOnly = false) {
       const signatureHtml = localStorage.getItem('emailSignature') || '';
       let fullHtml = '';
@@ -1560,7 +2012,6 @@
       document.body.removeChild(tempDiv);
   }
 
-  // ---------- Formatted values for messages ----------
   function getMonthsVal() { return monthsEl.value || '[months]'; }
   function getAmountVal() { return monthlyEl.value ? '$' + monthlyEl.value : '[amount]'; }
   function getBalanceVal() { return totalBalanceEl.value ? '$' + totalBalanceEl.value : '[balance]'; }
@@ -1580,17 +2031,19 @@
   
   function getDateVal() {
     if (!startDateEl.value) return '[start date]';
-    const d = new Date(startDateEl.value + 'T00:00:00');
+    const parts = startDateEl.value.split('/');
+    if(parts.length !== 3) return '[start date]';
+    const d = new Date(parts[2], parts[0]-1, parts[1]);
     return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
   }
 
   function getOrdinalDayVal() {
     const dStr = startDateEl.value;
     if (!dStr) return '[day]';
-    const parts = dStr.split('-');
+    const parts = dStr.split('/');
     if (parts.length < 3) return '[day]';
     
-    const day = parseInt(parts[2], 10);
+    const day = parseInt(parts[1], 10);
     if (isNaN(day)) return '[day]';
     
     const j = day % 10, k = day % 100;
@@ -1611,11 +2064,10 @@
     'Propose': () => `Sent a payment plan proposal email for ${getMonthsVal()} months, amounting to ${getAmountVal()}, and starting on ${getDateVal()}. ${TRAILING_SENTENCE}`
   };
 
-  // ---------- Pills ----------
   let selectedPill = null;
   const pillEls = document.querySelectorAll('.pill');
   pillEls.forEach(pill => {
-    if(!pill.classList.contains('payment-btn') && !pill.classList.contains('lrp-btn')) {
+    if(!pill.classList.contains('payment-btn') && !pill.classList.contains('lrp-btn') && !pill.classList.contains('btn-a') && !pill.classList.contains('btn-b') && !pill.classList.contains('btn-c') && !pill.classList.contains('btn-d')) {
       pill.addEventListener('click', () => {
         const name = pill.dataset.name;
         pillEls.forEach(p => p.classList.remove('selected'));
@@ -1637,7 +2089,6 @@
     copyText(message);
   });
 
-  // Call Tab Email Button
   document.getElementById('emailBtn').addEventListener('click', () => {
     if (!selectedPill) {
         showToast('Highlight a pill first!');
@@ -1674,7 +2125,6 @@
     templateText = templateText.replace(/\[PILL\]/gi, pillMsg);
     templateText = templateText.replace(/\[INITIAL\]/gi, initials);
 
-    // Copy ONLY the rich text signature to clipboard 
     copyToClipboardHtml('', false, true);
 
     const emailSubject = encodeURIComponent(`Repayment Plan for ${aName} ${aCode}`);
@@ -1702,8 +2152,6 @@
     showToast('Data Cleared');
   });
 
-  // ---------- INQUIRY TAB LOGIC ----------
-
   inqTypeToggle.addEventListener('change', function() {
     if(this.checked) {
       scLabel.classList.add('active');
@@ -1714,7 +2162,6 @@
     }
   });
 
-  // Payment Tab: Norm / Rec Toggle behavior
   normRecToggle.addEventListener('change', function() {
     if(this.checked) {
       recLabel.classList.add('active');
@@ -1740,7 +2187,6 @@
     return localStorage.getItem('emailTemplate_Inquiry') || DEFAULT_TEMPLATES['Inquiry'] || '';
   }
 
-  // Grabs everything BEFORE the first recognized marker (ST:, SC:, CB:, A:, B:, C:, D:)
   function getGeneralNotes() {
     const text = getInquiryTemplateText();
     const firstMarkerIndex = text.search(/^\s*(?:ST|SC|CB|A|B|C|D):/im);
@@ -1750,7 +2196,6 @@
     return text;
   }
 
-  // Grabs the block of text strictly UNDER the requested marker until the next marker
   function extractInquiryBlock(marker) {
     const text = getInquiryTemplateText();
     const regex = new RegExp('^\\s*' + marker + ':\\s*([\\s\\S]*?)(?=(?:^\\s*(?:ST|SC|CB|A|B|C|D):)|$)', 'im');
@@ -1758,7 +2203,6 @@
     return match ? match[1].trim() : '';
   }
 
-  // Inquiry Tab Email Button
   document.getElementById('inqEmailBtn').addEventListener('click', () => {
     const isSC = inqTypeToggle.checked;
     const typeStr = isSC ? 'SC' : 'ST';
@@ -1766,12 +2210,9 @@
     const generalNotes = getGeneralNotes();
     const lineContent = extractInquiryBlock(typeStr);
 
-    // Forces exactly ONE blank line spacing before appending the content without the marker
     let emailStr = generalNotes.trimEnd() + '\n\n' + (lineContent ? lineContent : '');
     
-    // Replace tags with inputted values
     let plainTextStr = replaceInquiryTags(emailStr).trim();
-    // Convert newlines to HTML breaks strictly for the clipboard formatting
     let formattedHtmlStr = plainTextStr.replace(/\n/g, '<br>');
 
     copyToClipboardHtml(formattedHtmlStr, true, false);
@@ -1789,7 +2230,6 @@
     }
   });
 
-  // A, B, C, D button listeners
   ['A', 'B', 'C', 'D'].forEach(letter => {
       document.getElementById('inqBtn' + letter).addEventListener('click', () => {
           const lineContent = extractInquiryBlock(letter);
@@ -1803,7 +2243,6 @@
   });
 
   document.getElementById('clearInquiryBtn').addEventListener('click', () => {
-    // Clear all inputs
     inqNameEl.value = '';
     inqAmountEl.value = '';
     inqStartDateEl.value = '';
@@ -1811,20 +2250,13 @@
     inqRequestorEl.value = '';
     inqNotesEl.value = '';
     
-    // Reset toggle back to Default (ST)
     inqTypeToggle.checked = false;
     stLabel.classList.add('active');
     scLabel.classList.remove('active');
     
     showToast('Inquiry Cleared');
   });
-  
-  // Attach formatting to T&H Notes as well
-  thNotesEl.addEventListener('input', (e) => {
-      autoFormatNotesDigits(e.target);
-  });
 
-  // ---------- Payment tab: NORM / REC Button Action ----------
   let lastKnownAmount = '';
   let lastKnownCode = '';
 
@@ -1865,7 +2297,6 @@
     copyText(message);
   });
   
-  // ---------- PAYMENT TRACKER EXCEL LOGIC ----------
   let paymentTrackerData = JSON.parse(localStorage.getItem('myPaymentTracker')) || [];
   
   function renderTrackerModal() {
@@ -1874,14 +2305,13 @@
       display.innerHTML = '<div style="padding: 15px; text-align: center; color: var(--text-muted);">No data saved yet.</div>';
     } else {
       display.innerHTML = paymentTrackerData.map((row, index) => {
-        // Updated Order: Date, Agent, Amount, Conf, Code, PID
         return `<div class="tracker-item" data-index="${index}">
           <strong>#${index + 1} | Date:</strong> ${row["Payment Date"] || 'N/A'} | <strong>Agent:</strong> ${row["Agent"] || 'N/A'}<br>
           <strong>Amount:</strong> $${row["Amount"] || '0.00'} | <strong>Conf:</strong> ${row["CC Conf #"] || 'N/A'}<br>
           <strong>Code:</strong> ${row["Agent #"] || 'N/A'} | <strong>PID:</strong> ${row["Primary ID"] || 'N/A'}
           <div style="margin-top: 10px; display: flex; gap: 8px;">
-            <button class="pill payment-btn edit-tracker-btn" style="padding: 4px 12px; font-size: 11px; background: var(--accent); color: var(--btn-payment-text); border: none;">Edit</button>
-            <button class="pill delete-tracker-btn" style="padding: 4px 12px; font-size: 11px; background: var(--danger); color: var(--btn-payment-text); border: none;">Delete</button>
+            <button class="pill payment-btn edit-tracker-btn" style="padding: 4px 12px; font-size: 11px; background: var(--btn-bg); color: var(--accent); box-shadow:none; border:1px solid var(--btn-border);">Edit</button>
+            <button class="pill delete-tracker-btn" style="padding: 4px 12px; font-size: 11px; background: var(--btn-bg); color: var(--danger); box-shadow:none; border:1px solid var(--danger);">Delete</button>
           </div>
         </div>`;
       }).join('');
@@ -1891,8 +2321,10 @@
   document.getElementById('savePaymentTrackerBtn').addEventListener('click', () => {
     let pDateStr = "";
     if (paymentDateBtnEl.value) {
-      const dParts = paymentDateBtnEl.value.split('-'); 
-      pDateStr = `${parseInt(dParts[1])}/${parseInt(dParts[2])}/${dParts[0]}`;
+      const dParts = paymentDateBtnEl.value.split('/'); 
+      if(dParts.length === 3) {
+        pDateStr = `${parseInt(dParts[0])}/${parseInt(dParts[1])}/${dParts[2]}`;
+      }
     }
     
     const ssnMatch = paymentNotesEl.value.match(/\b\d{9}\b/);
@@ -1908,7 +2340,6 @@
     const approvalCodeValue = getApprovalCode();
     const initialsVal = pdInitialsEl.value.trim().toUpperCase() || 'XXX';
 
-    // --- STRICT VALIDATION ---
     if (!fromValue || !agentValue || !codeValue || !pidValue || 
         !paymentDateBtnEl.value || 
         amountValue === '[amount]' || !amountValue ||
@@ -1944,18 +2375,15 @@
     paymentTrackerData.push(newRow);
     localStorage.setItem('myPaymentTracker', JSON.stringify(paymentTrackerData));
     
-    // Clear textual input fields
     fromFieldEl.value = '';
     agentFieldEl.value = '';
     codeFieldEl.value = '';
     pidFieldEl.value = '';
     
-    // Refresh notes from the Payment template 
     paymentNotesEl.value = localStorage.getItem('emailTemplate_Payment') !== null 
         ? localStorage.getItem('emailTemplate_Payment') 
         : (DEFAULT_TEMPLATES['Payment'] || '');
 
-    // Reset Norm/Rec Switch to Norm Default
     normRecToggle.checked = false;
     normLabel.classList.add('active');
     recLabel.classList.remove('active');
@@ -1963,8 +2391,6 @@
     showToast('Saved to Tracker & Fields Cleared!');
   });
 
-  // ---------- VIEW TRACKER MODAL LOGIC ----------
-  
   function closeDataModal() {
     document.getElementById('dataModal').classList.remove('active');
   }
@@ -1974,11 +2400,9 @@
     document.getElementById('dataModal').classList.add('active');
   });
 
-  // Modal Close Buttons
   document.getElementById('closeDataModalBtn').addEventListener('click', closeDataModal);
   document.getElementById('closeDataModalIcon').addEventListener('click', closeDataModal);
 
-  // Click outside to close
   document.getElementById('dataModal').addEventListener('click', (e) => {
     if (e.target === document.getElementById('dataModal')) {
       closeDataModal();
@@ -2011,7 +2435,7 @@
           const m = parts[0].padStart(2, '0');
           const d = parts[1].padStart(2, '0');
           const y = parts[2];
-          paymentDateBtnEl.value = `${y}-${m}-${d}`;
+          paymentDateBtnEl.value = `${m}/${d}/${y}`;
         }
       } else {
           paymentDateBtnEl.value = '';
@@ -2041,7 +2465,6 @@
     }
   });
 
-  // ---------- DOWNLOAD TRACKER LOGIC ----------
   document.getElementById('downloadPaymentExcelBtn').addEventListener('click', () => {
     if (paymentTrackerData.length === 0) {
       showToast('No data to download.');
@@ -2124,12 +2547,10 @@
     lastKnownAmount = '';
     lastKnownCode = '';
     
-    // Refresh notes from memory
     paymentNotesEl.value = localStorage.getItem('emailTemplate_Payment') !== null 
         ? localStorage.getItem('emailTemplate_Payment') 
         : (DEFAULT_TEMPLATES['Payment'] || '');
     
-    // Reset toggle to NORM
     normRecToggle.checked = false;
     normLabel.classList.add('active');
     recLabel.classList.remove('active');
