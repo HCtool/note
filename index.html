@@ -245,13 +245,11 @@
     100% { transform: rotate(-5deg) scale(1.2); }
   }
 
-  /* --- Theme Roller Button --- */
-  .theme-roller {
+  /* --- Floating Mini Buttons (Theme & Signature) --- */
+  .theme-roller, .sig-copy-btn {
     position: fixed;
-    top: clamp(10px, 3vw, 20px);
-    right: clamp(10px, 3vw, 24px);
-    width: 44px;
-    height: 44px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%; 
     background: var(--btn-bg);
     border: 1px solid var(--btn-border);
@@ -267,13 +265,24 @@
     z-index: 1000;
   }
 
-  .theme-roller:hover {
+  .theme-roller {
+    top: clamp(8px, 3vw, 16px);
+    right: clamp(8px, 3vw, 16px);
+  }
+
+  .sig-copy-btn {
+    bottom: clamp(8px, 3vw, 16px);
+    left: clamp(8px, 3vw, 16px);
+  }
+
+  .theme-roller:hover, .sig-copy-btn:hover {
     background: var(--btn-hover);
-    transform: translateY(-2px);
+    color: var(--accent);
+    transform: translateY(-2px) scale(1.05);
     box-shadow: 0 4px 10px var(--glass-shadow), var(--btn-inner-highlight);
   }
 
-  .theme-roller:active {
+  .theme-roller:active, .sig-copy-btn:active {
     transform: translateY(0) scale(0.92);
   }
 
@@ -302,16 +311,56 @@
     transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
   }
 
-  /* --- Glass Dropdown Header --- */
+  /* --- Custom Header / Navigation --- */
   .dropdown-container {
     padding: 16px 16px 0 16px;
     position: relative;
     z-index: 50; 
   }
 
+  .tab-nav-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    width: 100%;
+  }
+
+  /* Icon-Only Nav Arrow Buttons */
+  .nav-arrow-btn {
+    width: 36px;
+    height: 44px;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.2s ease;
+    flex-shrink: 0;
+    padding: 0;
+  }
+  
+  .nav-arrow-btn:hover {
+    color: var(--accent);
+    transform: scale(1.15);
+  }
+  
+  .nav-arrow-btn:active {
+    transform: scale(0.9);
+  }
+
+  .dropdown-wrapper {
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
   .dropdown-trigger {
     width: 100%;
-    padding: 12px 16px;
+    height: 44px; 
+    padding: 0 16px;
     border-radius: var(--radius-sm);
     
     background: var(--btn-bg);
@@ -351,8 +400,9 @@
   .dropdown-menu {
     position: absolute;
     top: calc(100% + 8px);
-    left: 16px;
-    right: 16px;
+    left: 0;
+    right: 0;
+    width: 100%;
     
     background: var(--dropdown-bg);
     backdrop-filter: var(--glass-blur) saturate(200%);
@@ -440,17 +490,15 @@
     letter-spacing: -0.5px;
   }
 
-  /* --- Clear Button --- */
+  /* --- Standard Text Reset Button --- */
   .clear-btn {
     padding: 6px 14px; 
     border-radius: var(--radius-sm);
-    
     background: var(--btn-bg);
     border: 1px solid var(--btn-border);
     color: var(--danger);
     box-shadow: var(--btn-shadow), var(--btn-inner-highlight);
     backdrop-filter: var(--glass-blur);
-    
     font-size: 13px; 
     font-weight: 600;
     cursor: pointer;
@@ -468,6 +516,61 @@
 
   .clear-btn:active {
     transform: translateY(0);
+  }
+
+  /* --- Clear Bin Animation Effects (For specific Tabs) --- */
+  .bin-btn {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--danger);
+    
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .bin-btn:hover {
+    background: rgba(210, 15, 57, 0.1);
+    border-color: rgba(210, 15, 57, 0.2);
+    transform: translateY(-1px) scale(1.05);
+  }
+
+  .bin-btn:active {
+    transform: translateY(0) scale(0.95);
+  }
+
+  @keyframes binCatch {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.25) rotate(-10deg); color: var(--danger); }
+    100% { transform: scale(1) rotate(0); }
+  }
+  .bin-catch {
+    animation: binCatch 0.4s ease;
+  }
+
+  .ghost-data {
+    position: fixed;
+    background: var(--glass-base);
+    border: 1px solid var(--danger);
+    color: var(--text-main);
+    padding: 10px 12px;
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: var(--radius-sm);
+    pointer-events: none;
+    z-index: 9999;
+    overflow: hidden;
+    white-space: pre-wrap;
+    box-shadow: 0 4px 12px rgba(210, 15, 57, 0.3);
+    transform-origin: center center;
+    transition: transform 0.4s cubic-bezier(0.5, 0, 0.2, 1), opacity 0.4s ease;
   }
 
   label {
@@ -499,7 +602,7 @@
   .row .field { flex: 1; }
   .row .side-field { flex: 0 0 110px; } 
 
-  /* --- Inputs --- */
+  /* --- Inputs & Custom Select Elements --- */
   input[type="text"],
   input[type="tel"],
   input[type="number"],
@@ -521,6 +624,27 @@
     text-transform: uppercase;
     transition: all 0.2s ease;
     outline: none;
+  }
+  
+  /* Select Dropdown Theme Fix */
+  select {
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="%238c8fa1" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 32px;
+  }
+
+  select option {
+    background-color: var(--panel-bg);
+    color: var(--text-main);
+    font-weight: 500;
+  }
+
+  #templateSelector {
+    text-transform: none;
   }
   
   input::placeholder, textarea::placeholder { 
@@ -559,14 +683,6 @@
   input[readonly] {
     opacity: 0.7;
     font-weight: 600;
-  }
-  
-  #months {
-    cursor: pointer;
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="%238c8fa1" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>');
-    background-repeat: no-repeat;
-    background-position: right 10px center;
-    padding-right: 32px;
   }
   
   .custom-date {
@@ -609,7 +725,7 @@
   #richSignature {
     width: 100%;
     flex: 1;
-    padding: 10px 12px;
+    padding: 10px 12px; 
     
     background: var(--input-bg);
     border: 1px solid var(--input-border);
@@ -728,6 +844,27 @@
   .pill.selected[data-name="Delay03"] {
     background: var(--danger);
   }
+
+  /* --- Dynamic E-Z Button Sizes --- */
+  .dyn-btn-small {
+    flex: 0 1 auto !important; 
+    padding: 6px 12px !important;
+    font-size: 11.5px !important;
+    margin: 0 !important;
+  }
+
+  /* --- Dynamic Theme-Aware Colors (0=Accent, 1=Danger, 2=Warning, 3=Success) --- */
+  .dyn-color-0 { color: var(--accent); border-color: var(--accent); }
+  .dyn-color-0:hover { background: var(--accent) !important; color: #fff !important; border-color: transparent !important; }
+
+  .dyn-color-1 { color: var(--danger); border-color: var(--danger); }
+  .dyn-color-1:hover { background: var(--danger) !important; color: #fff !important; border-color: transparent !important; }
+
+  .dyn-color-2 { color: var(--warning); border-color: var(--warning); }
+  .dyn-color-2:hover { background: var(--warning) !important; color: #fff !important; border-color: transparent !important; }
+
+  .dyn-color-3 { color: var(--success); border-color: var(--success); }
+  .dyn-color-3:hover { background: var(--success) !important; color: #fff !important; border-color: transparent !important; }
 
   /* --- LRP & Email Buttons --- */
   .lrp-row {
@@ -1084,20 +1221,22 @@
       flex-direction: column;
       align-items: center; 
     }
-
+    .tab-nav-wrapper {
+      justify-content: center;
+    }
+    .dropdown-wrapper {
+      flex: none;
+      width: 320px;
+    }
     .dropdown-trigger {
       width: 320px; 
-      padding: 10px 16px;
-      font-size: 14.5px;
     }
-
     .dropdown-menu {
-      width: 320px;
-      left: 50%;
-      right: auto;
-      margin-left: -160px;
+      width: 100%;
+      left: 0; 
+      right: 0; 
+      margin-left: 0;
     }
-
     .dropdown-item {
       min-height: 38px; 
       padding: 10px 16px;
@@ -1134,30 +1273,55 @@
 <body data-theme="simple-light">
 
 <!-- THEME ROLLER BUTTON -->
-<button class="theme-roller" id="themeRoller" aria-label="Cycle Theme">
-  <svg id="themeIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+<button class="theme-roller" id="themeRoller" title="Cycle Theme" aria-label="Cycle Theme">
+  <svg id="themeIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
     <!-- Icon injected via JS -->
   </svg>
 </button>
 
+<!-- SIGNATURE COPY BUTTON (Superman Shield 'S') -->
+<button class="sig-copy-btn" id="sigCopyBtn" title="Copy Signature" aria-label="Copy Signature">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+    <path d="M13.5 7.5c-1.5 0-2.5.5-2.5 1.5s1 1.5 2.5 1.5 2.5 1 2.5 2.5-1.5 2.5-3 2.5c-1.5 0-2.5-.5-2.5-1.5"></path>
+  </svg>
+</button>
+
 <div class="card">
-  <!-- Desktop & Mobile Responsive Glass Dropdown Header -->
+  <!-- Header / Nav Dropdown -->
   <div class="dropdown-container">
-    <button class="dropdown-trigger" id="viewSelector">
-      Call Notes 
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="6 9 12 15 18 9"></polyline>
-      </svg>
-    </button>
-    <div class="dropdown-menu" id="dropdownMenu">
-      <button class="dropdown-item active" data-tab="call">Call Notes
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+    <div class="tab-nav-wrapper">
+      
+      <!-- Left Arrow -->
+      <button class="nav-arrow-btn" id="prevTabBtn" aria-label="Previous Tab">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
       </button>
-      <button class="dropdown-item" data-tab="payment">Payments</button>
-      <button class="dropdown-item" data-tab="inquiryTab">Inquiry</button>
-      <button class="dropdown-item" data-tab="th">T&amp;H Notes</button>
-      <button class="dropdown-item" data-tab="emailTemplateTab">Template Editor</button>
-      <button class="dropdown-item" data-tab="statementsTab">Statements</button>
+      
+      <!-- Main Dropdown -->
+      <div class="dropdown-wrapper">
+        <button class="dropdown-trigger" id="viewSelector">
+          Call Notes 
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </button>
+        <div class="dropdown-menu" id="dropdownMenu">
+          <button class="dropdown-item active" data-tab="call">Call Notes
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          </button>
+          <button class="dropdown-item" data-tab="payment">Payments</button>
+          <button class="dropdown-item" data-tab="inquiryTab">Inquiry</button>
+          <button class="dropdown-item" data-tab="notesTab">Notes</button>
+          <button class="dropdown-item" data-tab="emailTemplateTab">Template Editor</button>
+          <button class="dropdown-item" data-tab="statementsTab">Statements</button>
+        </div>
+      </div>
+      
+      <!-- Right Arrow -->
+      <button class="nav-arrow-btn" id="nextTabBtn" aria-label="Next Tab">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+
     </div>
   </div>
 
@@ -1165,7 +1329,9 @@
   <div class="tab-content active" id="call">
     <div class="tab-header">
       <h2>My Notes</h2>
-      <button class="clear-btn" id="clearBtn">Clear</button>
+      <button class="bin-btn" id="clearBtn" title="Clear All">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+      </button>
     </div>
 
     <div class="row">
@@ -1200,6 +1366,7 @@
       <button class="pill" data-name="No VM">No VM</button>
       <button class="pill" data-name="Agreed">Confirm</button>
       <button class="pill" data-name="Delay03">Del 3</button>
+      <!-- Merged Decline/Nil -->
       <button class="pill" data-name="Nil">Decline (Nil)</button>
       <button class="pill" data-name="Propose">Propose</button>
     </div>
@@ -1230,7 +1397,9 @@
   <div class="tab-content" id="inquiryTab">
     <div class="tab-header" style="margin-bottom: 14px;">
       <h2>Inquiry</h2>
-      <button class="clear-btn" id="clearInquiryBtn">Clear</button>
+      <button class="bin-btn" id="clearInquiryBtn" title="Clear All">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+      </button>
     </div>
 
     <div class="row">
@@ -1276,11 +1445,12 @@
       <button class="lrp-btn" id="inqNotesBtn">Notes</button>
     </div>
     
-    <div style="display: flex; flex-wrap: nowrap; gap: 6px; margin-bottom: 16px; width: 100%;">
-      <button class="pill lrp-btn btn-a" id="inqBtnA" style="flex: 1; text-align: center; margin: 0;">A</button>
-      <button class="pill lrp-btn btn-b" id="inqBtnB" style="flex: 1; text-align: center; margin: 0;">B</button>
-      <button class="pill lrp-btn btn-c" id="inqBtnC" style="flex: 1; text-align: center; margin: 0;">C</button>
-      <button class="pill lrp-btn btn-d" id="inqBtnD" style="flex: 1; text-align: center; margin: 0;">D</button>
+    <!-- Dynamic A-D Buttons pull text from Notes Template -->
+    <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; width: 100%;" id="inqDynamicContainer">
+      <button class="pill lrp-btn btn-a" id="inqBtnA" style="flex: 1; text-align: center; margin: 0; display: none;"></button>
+      <button class="pill lrp-btn btn-b" id="inqBtnB" style="flex: 1; text-align: center; margin: 0; display: none;"></button>
+      <button class="pill lrp-btn btn-c" id="inqBtnC" style="flex: 1; text-align: center; margin: 0; display: none;"></button>
+      <button class="pill lrp-btn btn-d" id="inqBtnD" style="flex: 1; text-align: center; margin: 0; display: none;"></button>
     </div>
 
     <div class="field expand-field">
@@ -1296,7 +1466,9 @@
         <h2>PD</h2>
         <input type="text" id="pdInitials" maxlength="5" placeholder="Initials" style="width: 80px; padding: 6px; font-size: 14px; text-transform: uppercase;">
       </div>
-      <button class="clear-btn" id="clearPaymentBtn">Clear</button>
+      <button class="bin-btn" id="clearPaymentBtn" title="Clear All">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+      </button>
     </div>
 
     <div class="field expand-field" style="margin-bottom: 16px;">
@@ -1354,17 +1526,22 @@
     </div>
   </div>
 
-  <!-- T&H TAB -->
-  <div class="tab-content" id="th">
+  <!-- NOTES TAB -->
+  <div class="tab-content" id="notesTab">
     <div class="tab-header">
-      <h2>T&amp;H</h2>
-      <button class="clear-btn" id="clearThBtn">Clear</button>
+      <h2>Notes</h2>
+      <button class="bin-btn" id="clearNotesBtn" title="Clear All">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+      </button>
     </div>
     
     <div class="field expand-field">
-      <label for="thNotes">Notes</label>
-      <textarea id="thNotes" placeholder="..."></textarea>
+      <label for="notesTabInput">Notes</label>
+      <textarea id="notesTabInput" placeholder="..."></textarea>
     </div>
+
+    <!-- Dynamic buttons from the Notes Template (E to Z) go under the text area -->
+    <div class="pills" id="notesDynamicButtons" style="margin-top: 12px; margin-bottom: 0; border-top: none; padding-top: 0;"></div>
   </div>
 
   <!-- EMAIL TEMPLATE TAB -->
@@ -1379,8 +1556,9 @@
       <strong>Email Tags:</strong><br>
       <code>[NAME]</code> <code>[CODE]</code> <code>[PHONE]</code> <code>[BALANCE]</code>
       <code>[AMOUNT]</code> <code>[MONTHS]</code> <code>[DATE]</code> <code>[DAY]</code><br><br>
-      <strong>Inquiry Tags:</strong><br>
-      <code>[Nm]</code> <code>[AM]</code> <code>[START]</code> <code>[END]</code> <code>[REQ]</code>
+      <strong>Inquiry / Notes Tags:</strong><br>
+      <code>[Nm]</code> <code>[AM]</code> <code>[START]</code> <code>[END]</code> <code>[REQ]</code><br>
+      <em>Type <code>//</code> to insert a double line break when copying.</em>
     </div>
     
     <div class="field">
@@ -1394,6 +1572,7 @@
         <option value="Delay03">Delay 3</option>
         <option value="Payment">Payment</option>
         <option value="Inquiry">Inquiry</option>
+        <option value="Notes">Notes</option>
         <option value="Signature">Signature</option>
       </select>
     </div>
@@ -1448,6 +1627,54 @@
 </div>
 
 <script>
+  // ---------- Animation Logic: Suck To Bin ----------
+  function suckToBin(btnEl, tabId) {
+    const tab = document.getElementById(tabId);
+    if(!tab) return;
+    const inputs = tab.querySelectorAll('input:not([type="checkbox"]), textarea, select');
+    const btnRect = btnEl.getBoundingClientRect();
+    const btnCenter = { x: btnRect.left + btnRect.width/2, y: btnRect.top + btnRect.height/2 };
+    
+    let hasData = false;
+
+    inputs.forEach(input => {
+      let val = input.value;
+      if (input.tagName === 'SELECT') {
+          val = input.options[input.selectedIndex].text;
+      }
+      
+      if (val && val.trim() !== '' && val !== '--') {
+        hasData = true;
+        const rect = input.getBoundingClientRect();
+        const ghost = document.createElement('div');
+        ghost.className = 'ghost-data';
+        ghost.textContent = val;
+        ghost.style.left = rect.left + 'px';
+        ghost.style.top = rect.top + 'px';
+        ghost.style.width = rect.width + 'px';
+        ghost.style.height = rect.height + 'px';
+        document.body.appendChild(ghost);
+
+        // Trigger reflow
+        void ghost.offsetWidth;
+
+        // Calculate translation relative to start
+        const targetX = btnCenter.x - (rect.left + rect.width/2);
+        const targetY = btnCenter.y - (rect.top + rect.height/2);
+
+        ghost.style.transform = `translate(${targetX}px, ${targetY}px) scale(0.05) rotate(15deg)`;
+        ghost.style.opacity = '0';
+
+        setTimeout(() => ghost.remove(), 400);
+      }
+    });
+    
+    if(hasData) {
+      btnEl.classList.add('bin-catch');
+      setTimeout(() => btnEl.classList.remove('bin-catch'), 400);
+    }
+  }
+
   // ---------- Dropdown View Selector Logic ----------
   const viewSelector = document.getElementById('viewSelector');
   const dropdownMenu = document.getElementById('dropdownMenu');
@@ -1476,8 +1703,24 @@
     }
   });
 
-  dropdownItems.forEach(item => {
+  // --- ARROW NAVIGATION LOGIC ---
+  const dropdownItemsArray = Array.from(dropdownItems);
+  let currentTabIndex = 0; // Starts on Call Notes
+
+  function switchTab(index) {
+    if (index < 0) index = dropdownItemsArray.length - 1;
+    if (index >= dropdownItemsArray.length) index = 0;
+    currentTabIndex = index;
+    dropdownItemsArray[index].click();
+  }
+
+  document.getElementById('prevTabBtn').addEventListener('click', () => switchTab(currentTabIndex - 1));
+  document.getElementById('nextTabBtn').addEventListener('click', () => switchTab(currentTabIndex + 1));
+
+  dropdownItems.forEach((item, index) => {
     item.addEventListener('click', () => {
+      currentTabIndex = index; 
+      
       dropdownItems.forEach(i => {
         i.classList.remove('active');
         if(i.querySelector('svg')) { i.querySelector('svg').remove(); }
@@ -1561,6 +1804,17 @@
     applyTheme(currentThemeIndex, true);
   });
 
+  // ---------- Signature Copy Shortcut Logic ----------
+  document.getElementById('sigCopyBtn').addEventListener('click', () => {
+    const sigHtml = localStorage.getItem('emailSignature') || '';
+    if (!sigHtml || sigHtml.trim() === '') {
+      showToast('Signature is empty!');
+      return;
+    }
+    copyToClipboardHtml('', false, true);
+    showToast('Signature Copied!');
+  });
+
   // ---------- Field refs ----------
   const totalBalanceEl = document.getElementById('totalBalance');
   const monthsEl = document.getElementById('months');
@@ -1572,7 +1826,7 @@
   const notesEl = document.getElementById('notes');
   const paymentNotesEl = document.getElementById('paymentNotes');
   const pidFieldEl = document.getElementById('pidField');
-  const thNotesEl = document.getElementById('thNotes');
+  const notesTabInputEl = document.getElementById('notesTabInput');
   
   const templateSelector = document.getElementById('templateSelector');
   const savedEmailTemplateEl = document.getElementById('savedEmailTemplate');
@@ -1602,7 +1856,8 @@
   const scLabel = document.getElementById('scLabel');
 
   // --- Auto-Trimming ---
-  [fromFieldEl, agentFieldEl, codeFieldEl, pidFieldEl, callAgentNameEl, callAgentCodeEl].forEach(el => {
+  [fromFieldEl, agentFieldEl, codeFieldEl, pidFieldEl, callAgentNameEl, callAgentCodeEl, inqNameEl].forEach(el => {
+    if (!el) return;
     el.addEventListener('input', function() {
       if (this.value.startsWith(' ')) {
         this.value = this.value.trimStart();
@@ -1654,7 +1909,8 @@
       'Propose': `Hello,\n\nWe would like to propose the following plan:\n${baseDetails}\n\nThank you,`,
       'Delay03': `Hello,\n\nDetails of the plan:\n${baseDetails}\n\nThank you,`,
       'Payment': ``,
-      'Inquiry': `Name: [Nm]\nAmount: [AM]\nStart: [START]\nEnd: [END]\nRequestor: [REQ]\n\nST: \nSC: \nCB: \nA: \nB: \nC: \nD: `
+      'Inquiry': `Name: [Nm]\nAmount: [AM]\nStart: [START]\nEnd: [END]\nRequestor: [REQ]\n\nST: \nSC: \nCB: `,
+      'Notes': `A: Button A - Copy this text for A\nB: Button B - Copy this text for B\nC: Button C - Copy this text for C\nD: Button D - Copy this text for D`
   };
 
   function loadTemplateForScenario(scenarioName) {
@@ -1670,6 +1926,60 @@
       }
   }
 
+  // --- Dynamic Buttons Rendering for Notes (E-Z) & Inquiry (A-D) ---
+  function renderDynamicButtons() {
+      const text = localStorage.getItem('emailTemplate_Notes') || DEFAULT_TEMPLATES['Notes'] || '';
+      const regex = /^([A-Z]):\s*([^-]+?)\s*-\s*([\s\S]*?)(?=(?:^[A-Z]:)|$)/gmi;
+      let match;
+      const dynamicData = {};
+      
+      while ((match = regex.exec(text)) !== null) {
+          dynamicData[match[1].toUpperCase()] = {
+              name: match[2].trim(),
+              text: match[3].trim()
+          };
+      }
+
+      const notesContainer = document.getElementById('notesDynamicButtons');
+      notesContainer.innerHTML = '';
+      
+      const excludedKeys = ['A', 'B', 'C', 'D'];
+      
+      Object.keys(dynamicData).sort().forEach(letter => {
+          if (!excludedKeys.includes(letter)) {
+              const btn = document.createElement('button');
+              
+              const colorIndex = letter.charCodeAt(0) % 4; 
+              btn.className = `pill lrp-btn dyn-btn-small dyn-color-${colorIndex}`;
+              
+              btn.textContent = dynamicData[letter].name;
+              btn.onclick = () => {
+                  let processedLine = replaceInquiryTags(dynamicData[letter].text);
+                  processedLine = processedLine.replace(/\s*\/\/\s*/g, '\n\n');
+                  copyText(processedLine);
+              };
+              notesContainer.appendChild(btn);
+          }
+      });
+
+      ['A', 'B', 'C', 'D'].forEach(letter => {
+          const btn = document.getElementById('inqBtn' + letter);
+          if (btn) {
+            if (dynamicData[letter]) {
+                btn.style.display = 'block';
+                btn.textContent = dynamicData[letter].name;
+                btn.onclick = () => {
+                    let processedLine = replaceInquiryTags(dynamicData[letter].text);
+                    processedLine = processedLine.replace(/\s*\/\/\s*/g, '\n\n');
+                    copyText(processedLine);
+                };
+            } else {
+                btn.style.display = 'none';
+            }
+          }
+      });
+  }
+
   templateSelector.addEventListener('change', (e) => {
       loadTemplateForScenario(e.target.value);
   });
@@ -1680,6 +1990,8 @@
           
           if (templateSelector.value === 'Payment') {
               paymentNotesEl.value = savedEmailTemplateEl.value;
+          } else if (templateSelector.value === 'Notes') {
+              renderDynamicButtons();
           }
       }
   });
@@ -1705,6 +2017,8 @@
               
               if (currentScenario === 'Payment') {
                   paymentNotesEl.value = DEFAULT_TEMPLATES[currentScenario];
+              } else if (currentScenario === 'Notes') {
+                  renderDynamicButtons();
               }
               
               showToast('Template Reset!');
@@ -1712,7 +2026,9 @@
       }
   });
 
+  // Initialize correct view and dynamic buttons on load
   loadTemplateForScenario(templateSelector.value);
+  renderDynamicButtons();
 
   paymentNotesEl.value = localStorage.getItem('emailTemplate_Payment') !== null 
       ? localStorage.getItem('emailTemplate_Payment') 
@@ -1734,9 +2050,8 @@
     }
   }
 
-  // Bind formatting to Call Notes, T&H Notes, and Inquiry Notes
   notesEl.addEventListener('input', (e) => autoFormatNotesDigits(e.target));
-  thNotesEl.addEventListener('input', (e) => autoFormatNotesDigits(e.target));
+  notesTabInputEl.addEventListener('input', (e) => autoFormatNotesDigits(e.target));
   inqNotesEl.addEventListener('input', (e) => autoFormatNotesDigits(e.target));
 
   // ---------- Date Formatting for Non-Calendar Inputs (Inquiry Tab) ----------
@@ -1777,7 +2092,6 @@
   }
   resetStartDate();
 
-  // Escape key globally closes calendar
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && calPopup.classList.contains('open')) {
       calPopup.classList.remove('open');
@@ -1815,14 +2129,9 @@
 
     input.addEventListener('click', (e) => {
       e.stopPropagation();
-      
-      // If clicking the same open input, let them just type, don't close it immediately
-      if(currentCalInput === input && calPopup.classList.contains('open')) {
-        return;
-      }
+      if(currentCalInput === input && calPopup.classList.contains('open')) return;
       
       currentCalInput = input;
-      
       const val = input.value;
       if(val) {
         const parts = val.split('/');
@@ -2067,7 +2376,7 @@
   let selectedPill = null;
   const pillEls = document.querySelectorAll('.pill');
   pillEls.forEach(pill => {
-    if(!pill.classList.contains('payment-btn') && !pill.classList.contains('lrp-btn') && !pill.classList.contains('btn-a') && !pill.classList.contains('btn-b') && !pill.classList.contains('btn-c') && !pill.classList.contains('btn-d')) {
+    if(!pill.classList.contains('payment-btn') && !pill.classList.contains('lrp-btn')) {
       pill.addEventListener('click', () => {
         const name = pill.dataset.name;
         pillEls.forEach(p => p.classList.remove('selected'));
@@ -2138,7 +2447,8 @@
     showToast('Outlook Opened & Sig Copied!');
   });
 
-  document.getElementById('clearBtn').addEventListener('click', () => {
+  document.getElementById('clearBtn').addEventListener('click', (e) => {
+    suckToBin(e.currentTarget, 'call');
     totalBalanceEl.value = '';
     totalBalanceEl.classList.remove('invalid');
     monthsEl.value = '';
@@ -2189,7 +2499,7 @@
 
   function getGeneralNotes() {
     const text = getInquiryTemplateText();
-    const firstMarkerIndex = text.search(/^\s*(?:ST|SC|CB|A|B|C|D):/im);
+    const firstMarkerIndex = text.search(/^\s*(?:ST|SC|CB):/im);
     if (firstMarkerIndex !== -1) {
         return text.substring(0, firstMarkerIndex);
     }
@@ -2198,7 +2508,7 @@
 
   function extractInquiryBlock(marker) {
     const text = getInquiryTemplateText();
-    const regex = new RegExp('^\\s*' + marker + ':\\s*([\\s\\S]*?)(?=(?:^\\s*(?:ST|SC|CB|A|B|C|D):)|$)', 'im');
+    const regex = new RegExp('^\\s*' + marker + ':\\s*([\\s\\S]*?)(?=(?:^\\s*(?:ST|SC|CB):)|$)', 'im');
     const match = text.match(regex);
     return match ? match[1].trim() : '';
   }
@@ -2230,19 +2540,8 @@
     }
   });
 
-  ['A', 'B', 'C', 'D'].forEach(letter => {
-      document.getElementById('inqBtn' + letter).addEventListener('click', () => {
-          const lineContent = extractInquiryBlock(letter);
-          if (lineContent) {
-              const processedLine = replaceInquiryTags(lineContent);
-              copyText(processedLine);
-          } else {
-              showToast(`No ${letter}: line found in template`);
-          }
-      });
-  });
-
-  document.getElementById('clearInquiryBtn').addEventListener('click', () => {
+  document.getElementById('clearInquiryBtn').addEventListener('click', (e) => {
+    suckToBin(e.currentTarget, 'inquiryTab');
     inqNameEl.value = '';
     inqAmountEl.value = '';
     inqStartDateEl.value = '';
@@ -2531,14 +2830,16 @@
     if (confirm('Are you sure you want to delete all saved Payment tracking data? This cannot be undone.')) {
       paymentTrackerData = [];
       localStorage.removeItem('myPaymentTracker');
-      paymentDateBtnEl.value = localStorage.getItem('emailTemplate_Payment') !== null 
+      paymentDateBtnEl.value = '';
+      paymentNotesEl.value = localStorage.getItem('emailTemplate_Payment') !== null 
         ? localStorage.getItem('emailTemplate_Payment') 
         : (DEFAULT_TEMPLATES['Payment'] || '');
       showToast('Payment Tracker Reset.');
     }
   });
 
-  document.getElementById('clearPaymentBtn').addEventListener('click', () => {
+  document.getElementById('clearPaymentBtn').addEventListener('click', (e) => {
+    suckToBin(e.currentTarget, 'payment');
     pidFieldEl.value = '';
     fromFieldEl.value = '';
     codeFieldEl.value = '';
@@ -2558,9 +2859,10 @@
     showToast('Data Cleared');
   });
 
-  document.getElementById('clearThBtn').addEventListener('click', () => {
-    thNotesEl.value = '';
-    showToast('Data Cleared');
+  document.getElementById('clearNotesBtn').addEventListener('click', (e) => {
+    suckToBin(e.currentTarget, 'notesTab');
+    notesTabInputEl.value = '';
+    showToast('Notes Cleared');
   });
 </script>
 
