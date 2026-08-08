@@ -1717,6 +1717,71 @@
   document.getElementById('prevTabBtn').addEventListener('click', () => switchTab(currentTabIndex - 1));
   document.getElementById('nextTabBtn').addEventListener('click', () => switchTab(currentTabIndex + 1));
 
+  // Global Keyboard Arrow Nav, Escape, & Enter-to-Next-Field Logic
+  document.addEventListener('keydown', (e) => {
+    const calPopupEl = document.getElementById('global-cal-popup');
+    
+    // 1. Esc Key unselects any active field and closes calendar
+    if (e.key === 'Escape') {
+      if (calPopupEl && calPopupEl.classList.contains('open')) {
+        calPopupEl.classList.remove('open');
+      }
+      if (document.activeElement) {
+        const activeTag = document.activeElement.tagName.toLowerCase();
+        if (activeTag === 'input' || activeTag === 'textarea' || document.activeElement.isContentEditable) {
+          document.activeElement.blur();
+        }
+      }
+      return; 
+    }
+
+    const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+    const isInputActive = activeTag === 'input' || activeTag === 'textarea' || activeTag === 'select' || (document.activeElement && document.activeElement.isContentEditable);
+    
+    // 2. Input Active Rules (Enter-to-Next, Ignore Arrows)
+    if (isInputActive) {
+      // --- NEW ENTER KEY LOGIC ---
+      if (e.key === 'Enter') {
+        // Let Textareas and Rich Text Editor handle Enter natively (create a newline)
+        if (activeTag === 'textarea' || (document.activeElement && document.activeElement.isContentEditable)) {
+          return; 
+        }
+        
+        e.preventDefault(); // Stop default form submit or weird jumping
+        
+        // Close Calendar if open, and trigger 'change' to lock in the date
+        if (calPopupEl && calPopupEl.classList.contains('open')) {
+          calPopupEl.classList.remove('open');
+          document.activeElement.dispatchEvent(new Event('change'));
+        }
+
+        const activeTab = document.querySelector('.tab-content.active');
+        if (activeTab) {
+          // Grab all focusable inputs inside the current visible tab
+          const focusables = Array.from(activeTab.querySelectorAll('input:not([type="checkbox"]):not([type="hidden"]):not([readonly]), select, textarea, [contenteditable="true"]'))
+            .filter(el => el.offsetWidth > 0 || el.offsetHeight > 0);
+          
+          const currentIndex = focusables.indexOf(document.activeElement);
+          // If there's a next field, jump to it. Otherwise, just blur.
+          if (currentIndex > -1 && currentIndex < focusables.length - 1) {
+            focusables[currentIndex + 1].focus();
+          } else {
+            document.activeElement.blur();
+          }
+        }
+      }
+      // If typing inside an input, do NOT switch tabs with arrows
+      return;
+    }
+
+    // 3. Tab Switching (only if not typing in any field)
+    if (e.key === 'ArrowRight') {
+      switchTab(currentTabIndex + 1);
+    } else if (e.key === 'ArrowLeft') {
+      switchTab(currentTabIndex - 1);
+    }
+  });
+
   dropdownItems.forEach((item, index) => {
     item.addEventListener('click', () => {
       currentTabIndex = index; 
@@ -2000,7 +2065,7 @@
       localStorage.setItem('emailSignature', richSignature.innerHTML);
   });
 
-  document.getElementById('resetTemplateBtn').addEventListener('click', () => {
+  document.getElementById('resetTemplateBtn').addEventListener('click', (e) => {
       const currentScenario = templateSelector.value;
       const scenarioText = templateSelector.options[templateSelector.selectedIndex].text;
       
@@ -2092,25 +2157,10 @@
   }
   resetStartDate();
 
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && calPopup.classList.contains('open')) {
-      calPopup.classList.remove('open');
-    }
-  });
-
+  // Escape key handled in Global Keydown listener (see above)
+  
   document.querySelectorAll('.custom-date').forEach(input => {
     
-    input.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') {
-        e.preventDefault(); 
-        if (calPopup.classList.contains('open')) {
-          calPopup.classList.remove('open');
-          this.dispatchEvent(new Event('change'));
-          this.blur();
-        }
-      }
-    });
-
     input.addEventListener('input', function(e) {
       let v = this.value.replace(/\D/g, '');
       if (v.length >= 5) v = v.slice(0,2) + '/' + v.slice(2,4) + '/' + v.slice(4,8);
